@@ -3,8 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Power Automate Table Style Generator</title>
-    <style>
+    <title>Power Automate Table Style Generator - HTMLテーブルデザインツール</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Power AutomateのHTMLテーブルスタイルを簡単に作成できる無料ツール。リアルタイムプレビューで直感的にデザインし、コピペですぐに使えるCSSコードを生成。">
+    <meta name="keywords" content="Power Automate, HTMLテーブル, CSSスタイル, テーブルデザイン, Microsoft, 無料ツール, レスポンシブテーブル">
+    <meta name="author" content="takumarukobotools">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="ja">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Power Automate Table Style Generator - HTMLテーブルデザインツール">
+    <meta property="og:description" content="Power AutomateのHTMLテーブルスタイルを簡単に作成。リアルタイムプレビュー付きの無料ツールでプロ級のテーブルデザインが可能。">
+    <meta property="og:url" content="https://tools.takumarukobo.com/">
+    <meta property="og:site_name" content="takumarukobotools">
+    <meta property="og:locale" content="ja_JP">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Power Automate Table Style Generator">
+    <meta name="twitter:description" content="Power AutomateのHTMLテーブルスタイルを簡単に作成できる無料ツール">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="canonical" href="https://tools.takumarukobo.com/">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Power Automate Table Style Generator",
+        "applicationCategory": "DesignApplication",
+        "description": "Power AutomateのHTMLテーブルスタイルを簡単に作成できる無料ツール。リアルタイムプレビューで直感的にデザインし、コピペですぐに使えるCSSコードを生成。",
+        "url": "https://tools.takumarukobo.com/",
+        "author": {
+            "@type": "Person",
+            "name": "takumarukobotools"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "JPY"
+        },
+        "operatingSystem": "Web Browser",
+        "softwareVersion": "1.0",
+        "dateCreated": "2024-01-01",
+        "inLanguage": "ja",
+        "isAccessibleForFree": true,
+        "keywords": ["Power Automate", "HTMLテーブル", "CSSスタイル", "テーブルデザイン", "Microsoft", "無料ツール"],
+        "mainEntity": {
+            "@type": "SoftwareApplication",
+            "name": "Table Style Generator",
+            "applicationCategory": "UtilityApplication",
+            "description": "HTMLテーブルのCSSスタイルを視覚的にデザインできるツール"
+        }
+    }
+    </script>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -92,6 +153,41 @@
             display: flex;
             height: calc(100vh - 49px);
             flex-direction: row;
+            position: relative;
+        }
+
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
         }
 
         @media (max-width: 768px) {
@@ -105,8 +201,16 @@
             }
 
             .main-container {
-                flex-direction: column;
-                height: auto;
+                flex-direction: row;
+                height: calc(100vh - 49px);
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .sidebar-overlay.show {
+                display: block;
             }
         }
 
@@ -117,6 +221,7 @@
             overflow-y: auto;
             padding: 20px;
             flex-shrink: 0;
+            transition: transform 0.3s ease;
         }
 
         .sidebar::-webkit-scrollbar {
@@ -134,10 +239,19 @@
 
         @media (max-width: 768px) {
             .sidebar {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid #e0e0e0;
-                max-height: 50vh;
+                position: fixed;
+                left: 0;
+                top: 49px;
+                width: 85%;
+                max-width: 320px;
+                height: calc(100vh - 49px);
+                transform: translateX(-100%);
+                z-index: 999;
+                box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
             }
         }
 
@@ -259,6 +373,7 @@
             padding: 30px;
             overflow-y: auto;
             min-height: 400px;
+            height: 100%;
         }
 
         .preview-section {
@@ -572,7 +687,7 @@
         .help-text li {
             margin-bottom: 4px;
         }
-    </style>
+</style>
 </head>
 <body>
     <div class="header">
@@ -595,8 +710,11 @@
         </div>
     </div>
 
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+
     <div class="main-container">
-        <div class="sidebar">
+        <div class="sidebar" id="sidebar">
             <div class="section">
                 <div class="section-title">基本設定</div>
                 
@@ -1943,7 +2061,7 @@ tr:last-child td {
         }
 
         function shareOnX() {
-            const text = 'Power Automateのテーブルデザインが秒で完成！🚀 直感的な操作でプロ級のスタイルを生成できるツールを見つけました。コードをコピペするだけで即適用👍';
+            const text = 'Power Automateのテーブルデザインが直感的な操作でスタイルを生成できるツールを見つけました。テンプレートも豊富で無料で使える！';
             const url = window.location.href;
             const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
             window.open(twitterUrl, '_blank', 'width=550,height=420');
@@ -1960,6 +2078,20 @@ tr:last-child td {
                 closeHelpModal();
             }
         });
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            sidebar.classList.toggle('show');
+            overlay.classList.toggle('show');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+        }
 
         renderTemplateCards();
         updatePreview();
