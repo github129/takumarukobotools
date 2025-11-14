@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Automate Table Style Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            color: #333333;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .header {
+            background: #ffffff;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0078d4;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            background: #f0f0f0;
+            border: 1px solid #d0d0d0;
+            color: #333333;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .icon-btn.primary {
+            background: #0078d4;
+            color: white;
+            border: 1px solid #0078d4;
+        }
+
+        .icon-btn.primary:hover {
+            background: #106ebe;
+        }
+
+        .main-container {
+            display: flex;
+            height: calc(100vh - 49px);
+        }
+
+        .sidebar {
+            width: 320px;
+            background: #ffffff;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #c0c0c0;
+            border-radius: 4px;
+        }
+
+        .section {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #666666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .control-group {
+            margin-bottom: 16px;
+        }
+
+        .control-label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #333333;
+        }
+
+        .control-input {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #c0c0c0;
+            color: #333333;
+            padding: 8px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .control-input:focus {
+            outline: none;
+            border-color: #0078d4;
+        }
+
+        .color-input-wrapper {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .color-input {
+            width: 50px;
+            height: 36px;
+            border: 1px solid #c0c0c0;
+            border-radius: 4px;
+            cursor: pointer;
+            background: #ffffff;
+        }
+
+        .color-text {
+            flex: 1;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .checkbox-input {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .accordion {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            margin-top: 16px;
+        }
+
+        .accordion-header {
+            padding: 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .accordion-header:hover {
+            background: #f0f0f0;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s;
+        }
+
+        .accordion-icon.open {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 12px;
+        }
+
+        .accordion-content.open {
+            max-height: 1000px;
+            padding: 12px;
+        }
+
+        .preview-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            overflow: auto;
+        }
+
+        .preview-wrapper {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #666666;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .close-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .code-block {
+            background: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 16px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            color: #333333;
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin-bottom: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .copy-btn {
+            width: 100%;
+            background: #0078d4;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-btn:hover {
+            background: #106ebe;
+        }
+
+        .copy-btn.copied {
+            background: #107c10;
+        }
+
+        select.control-input {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">Power Automate Table Style Generator</div>
+        </div>
+        <div class="header-right">
+            <button class="icon-btn" onclick="resetSettings()">
+                <span>リセット</span>
+            </button>
+            <button class="icon-btn primary" onclick="showCodeModal()">
+                <span>コード出力</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="section">
+                <div class="section-title">基本設定</div>
+                
+                <div class="control-group">
+                    <label class="control-label">罫線スタイル</label>
+                    <select id="borderStyle" class="control-input" onchange="updatePreview()">
+                        <option value="solid">実線</option>
+                        <option value="none">なし</option>
+                        <option value="dashed">破線</option>
+                        <option value="dotted">点線</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">罫線の太さ (px)</label>
+                    <input type="number" id="borderWidth" class="control-input" value="1" min="0" max="10" onchange="updatePreview()">
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">罫線の色</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="borderColor" class="color-input" value="#dddddd" onchange="updatePreview()">
+                        <input type="text" id="borderColorText" class="control-input color-text" value="#dddddd" onchange="syncColor('borderColor', this.value)">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">ヘッダー背景色</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="headerBg" class="color-input" value="#0078d4" onchange="updatePreview()">
+                        <input type="text" id="headerBgText" class="control-input color-text" value="#0078d4" onchange="syncColor('headerBg', this.value)">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">ヘッダーフォント色</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="headerColor" class="color-input" value="#ffffff" onchange="updatePreview()">
+                        <input type="text" id="headerColorText" class="control-input color-text" value="#ffffff" onchange="syncColor('headerColor', this.value)">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">本文フォント色</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="bodyColor" class="color-input" value="#333333" onchange="updatePreview()">
+                        <input type="text" id="bodyColorText" class="control-input color-text" value="#333333" onchange="syncColor('bodyColor', this.value)">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">本文背景色</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="bodyBg" class="color-input" value="#ffffff" onchange="updatePreview()">
+                        <input type="text" id="bodyBgText" class="control-input color-text" value="#ffffff" onchange="syncColor('bodyBg', this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion()">
+                    <span>詳細設定</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content" id="accordionContent">
+                    <div class="control-group">
+                        <label class="control-label">テーブル幅</label>
+                        <select id="tableWidth" class="control-input" onchange="updatePreview()">
+                            <option value="auto">自動</option>
+                            <option value="100%">100%</option>
+                            <option value="80%">80%</option>
+                            <option value="60%">60%</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="stripedRows" class="checkbox-input" onchange="updatePreview()">
+                            <label class="control-label" for="stripedRows" style="margin: 0;">ストライプ行</label>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">ストライプ背景色</label>
+                        <div class="color-input-wrapper">
+                            <input type="color" id="stripeColor" class="color-input" value="#f5f5f5" onchange="updatePreview()">
+                            <input type="text" id="stripeColorText" class="control-input color-text" value="#f5f5f5" onchange="syncColor('stripeColor', this.value)">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">セル内余白 (padding, px)</label>
+                        <input type="number" id="cellPadding" class="control-input" value="12" min="0" max="50" onchange="updatePreview()">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">フォントサイズ (px)</label>
+                        <input type="number" id="fontSize" class="control-input" value="14" min="8" max="24" onchange="updatePreview()">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">テキスト配置</label>
+                        <select id="textAlign" class="control-input" onchange="updatePreview()">
+                            <option value="left">左揃え</option>
+                            <option value="center">中央揃え</option>
+                            <option value="right">右揃え</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">角丸 (border-radius, px)</label>
+                        <input type="number" id="borderRadius" class="control-input" value="0" min="0" max="20" onchange="updatePreview()">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="hoverEffect" class="checkbox-input" checked onchange="updatePreview()">
+                            <label class="control-label" for="hoverEffect" style="margin: 0;">ホバーエフェクト</label>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">ホバー背景色</label>
+                        <div class="color-input-wrapper">
+                            <input type="color" id="hoverColor" class="color-input" value="#e8f4fc" onchange="updatePreview()">
+                            <input type="text" id="hoverColorText" class="control-input color-text" value="#e8f4fc" onchange="syncColor('hoverColor', this.value)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-container">
+            <div class="preview-wrapper">
+                <table id="previewTable">
+                    <thead>
+                        <tr>
+                            <th>名前</th>
+                            <th>部署</th>
+                            <th>メール</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>山田 太郎</td>
+                            <td>営業部</td>
+                            <td>yamada@example.com</td>
+                        </tr>
+                        <tr>
+                            <td>佐藤 花子</td>
+                            <td>開発部</td>
+                            <td>sato@example.com</td>
+                        </tr>
+                        <tr>
+                            <td>鈴木 一郎</td>
+                            <td>人事部</td>
+                            <td>suzuki@example.com</td>
+                        </tr>
+                        <tr>
+                            <td>田中 美咲</td>
+                            <td>マーケティング部</td>
+                            <td>tanaka@example.com</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="codeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">生成されたコード</div>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="code-block" id="cssCode"></div>
+                <button class="copy-btn" id="copyCssBtn" onclick="copyCode('css')">CSSをコピー</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAccordion() {
+            const content = document.getElementById('accordionContent');
+            const icon = document.querySelector('.accordion-icon');
+            content.classList.toggle('open');
+            icon.classList.toggle('open');
+        }
+
+        function syncColor(inputId, value) {
+            document.getElementById(inputId).value = value;
+            document.getElementById(inputId + 'Text').value = value;
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const table = document.getElementById('previewTable');
+            const borderStyle = document.getElementById('borderStyle').value;
+            const borderWidth = document.getElementById('borderWidth').value;
+            const borderColor = document.getElementById('borderColor').value;
+            const headerBg = document.getElementById('headerBg').value;
+            const headerColor = document.getElementById('headerColor').value;
+            const bodyColor = document.getElementById('bodyColor').value;
+            const bodyBg = document.getElementById('bodyBg').value;
+            const tableWidth = document.getElementById('tableWidth').value;
+            const stripedRows = document.getElementById('stripedRows').checked;
+            const stripeColor = document.getElementById('stripeColor').value;
+            const cellPadding = document.getElementById('cellPadding').value;
+            const fontSize = document.getElementById('fontSize').value;
+            const textAlign = document.getElementById('textAlign').value;
+            const borderRadius = document.getElementById('borderRadius').value;
+            const hoverEffect = document.getElementById('hoverEffect').checked;
+            const hoverColor = document.getElementById('hoverColor').value;
+
+            document.getElementById('borderColorText').value = borderColor;
+            document.getElementById('headerBgText').value = headerBg;
+            document.getElementById('headerColorText').value = headerColor;
+            document.getElementById('bodyColorText').value = bodyColor;
+            document.getElementById('bodyBgText').value = bodyBg;
+            document.getElementById('stripeColorText').value = stripeColor;
+            document.getElementById('hoverColorText').value = hoverColor;
+
+            let style = `
+                border-collapse: collapse;
+                width: ${tableWidth};
+                font-size: ${fontSize}px;
+                text-align: ${textAlign};
+                border-radius: ${borderRadius}px;
+                overflow: hidden;
+            `;
+
+            if (borderStyle !== 'none') {
+                style += `border: ${borderWidth}px ${borderStyle} ${borderColor};`;
+            }
+
+            table.style.cssText = style;
+
+            const headers = table.querySelectorAll('th');
+            headers.forEach(th => {
+                th.style.cssText = `
+                    background-color: ${headerBg};
+                    color: ${headerColor};
+                    padding: ${cellPadding}px;
+                    font-weight: 600;
+                    ${borderStyle !== 'none' ? `border: ${borderWidth}px ${borderStyle} ${borderColor};` : ''}
+                `;
+            });
+
+            const cells = table.querySelectorAll('td');
+            cells.forEach(td => {
+                td.style.cssText = `
+                    color: ${bodyColor};
+                    background-color: ${bodyBg};
+                    padding: ${cellPadding}px;
+                    ${borderStyle !== 'none' ? `border: ${borderWidth}px ${borderStyle} ${borderColor};` : ''}
+                `;
+            });
+
+            if (stripedRows) {
+                const rows = table.querySelectorAll('tbody tr');
+                rows.forEach((row, index) => {
+                    if (index % 2 === 1) {
+                        row.querySelectorAll('td').forEach(td => {
+                            td.style.backgroundColor = stripeColor;
+                        });
+                    }
+                });
+            }
+
+            if (hoverEffect) {
+                const existingStyle = document.getElementById('hoverStyle');
+                if (existingStyle) existingStyle.remove();
+
+                const styleEl = document.createElement('style');
+                styleEl.id = 'hoverStyle';
+                styleEl.textContent = `
+                    #previewTable tbody tr:hover td {
+                        background-color: ${hoverColor} !important;
+                        transition: background-color 0.2s;
+                    }
+                `;
+                document.head.appendChild(styleEl);
+            } else {
+                const existingStyle = document.getElementById('hoverStyle');
+                if (existingStyle) existingStyle.remove();
+            }
+        }
+
+        function generateCode() {
+            const borderStyle = document.getElementById('borderStyle').value;
+            const borderWidth = document.getElementById('borderWidth').value;
+            const borderColor = document.getElementById('borderColor').value;
+            const headerBg = document.getElementById('headerBg').value;
+            const headerColor = document.getElementById('headerColor').value;
+            const bodyColor = document.getElementById('bodyColor').value;
+            const bodyBg = document.getElementById('bodyBg').value;
+            const tableWidth = document.getElementById('tableWidth').value;
+            const stripedRows = document.getElementById('stripedRows').checked;
+            const stripeColor = document.getElementById('stripeColor').value;
+            const cellPadding = document.getElementById('cellPadding').value;
+            const fontSize = document.getElementById('fontSize').value;
+            const textAlign = document.getElementById('textAlign').value;
+            const borderRadius = document.getElementById('borderRadius').value;
+            const hoverEffect = document.getElementById('hoverEffect').checked;
+            const hoverColor = document.getElementById('hoverColor').value;
+
+            let css = `<style>
+table {
+  border-collapse: collapse;
+  width: ${tableWidth};
+  font-size: ${fontSize}px;
+  text-align: ${textAlign};
+  border-radius: ${borderRadius}px;
+  overflow: hidden;`;
+
+            if (borderStyle !== 'none') {
+                css += `\n  border: ${borderWidth}px ${borderStyle} ${borderColor};`;
+            }
+
+            css += `
+}
+
+table th {
+  background-color: ${headerBg};
+  color: ${headerColor};
+  padding: ${cellPadding}px;
+  font-weight: 600;`;
+
+            if (borderStyle !== 'none') {
+                css += `\n  border: ${borderWidth}px ${borderStyle} ${borderColor};`;
+            }
+
+            css += `
+}
+
+table td {
+  color: ${bodyColor};
+  background-color: ${bodyBg};
+  padding: ${cellPadding}px;`;
+
+            if (borderStyle !== 'none') {
+                css += `\n  border: ${borderWidth}px ${borderStyle} ${borderColor};`;
+            }
+
+            css += `
+}`;
+
+            if (stripedRows) {
+                css += `
+
+table tbody tr:nth-child(even) td {
+  background-color: ${stripeColor};
+}`;
+            }
+
+            if (hoverEffect) {
+                css += `
+
+table tbody tr:hover td {
+  background-color: ${hoverColor};
+  transition: background-color 0.2s;
+}`;
+            }
+
+            css += `
+</style>`;
+
+            return { css };
+        }
+
+        function showCodeModal() {
+            const { css } = generateCode();
+            document.getElementById('cssCode').textContent = css;
+            document.getElementById('codeModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('codeModal').classList.remove('show');
+        }
+
+        function copyCode(type) {
+            const code = document.getElementById('cssCode').textContent;
+            const btn = document.getElementById('copyCssBtn');
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = btn.textContent;
+                btn.textContent = 'コピーしました!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function resetSettings() {
+            document.getElementById('borderStyle').value = 'solid';
+            document.getElementById('borderWidth').value = '1';
+            document.getElementById('borderColor').value = '#dddddd';
+            document.getElementById('headerBg').value = '#0078d4';
+            document.getElementById('headerColor').value = '#ffffff';
+            document.getElementById('bodyColor').value = '#333333';
+            document.getElementById('bodyBg').value = '#ffffff';
+            document.getElementById('tableWidth').value = 'auto';
+            document.getElementById('stripedRows').checked = false;
+            document.getElementById('stripeColor').value = '#f5f5f5';
+            document.getElementById('cellPadding').value = '12';
+            document.getElementById('fontSize').value = '14';
+            document.getElementById('textAlign').value = 'left';
+            document.getElementById('borderRadius').value = '0';
+            document.getElementById('hoverEffect').checked = true;
+            document.getElementById('hoverColor').value = '#e8f4fc';
+            updatePreview();
+        }
+
+        document.getElementById('codeModal').addEventListener('click', (e) => {
+            if (e.target.id === 'codeModal') {
+                closeModal();
+            }
+        });
+
+        updatePreview();
+    </script>
+</body>
+</html>
