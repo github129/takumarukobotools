@@ -800,21 +800,6 @@
                     </div>
 
                     <div class="control-group">
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox" id="stripedRows" class="checkbox-input" onchange="updatePreview()">
-                            <label class="control-label" for="stripedRows" style="margin: 0;">ストライプ行</label>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label class="control-label">ストライプ背景色</label>
-                        <div class="color-input-wrapper">
-                            <input type="color" id="stripeColor" class="color-input" value="#ecf0f1" onchange="updatePreview()">
-                            <input type="text" id="stripeColorText" class="control-input color-text" value="#ecf0f1" onchange="syncColor('stripeColor', this.value)">
-                        </div>
-                    </div>
-
-                    <div class="control-group">
                         <label class="control-label">セル内余白 (padding, px)</label>
                         <input type="number" id="cellPadding" class="control-input" value="14" min="0" max="50" onchange="updatePreview()">
                     </div>
@@ -877,26 +862,6 @@
                             <option value="600" selected>Semi-Bold (600)</option>
                             <option value="700">Bold (700)</option>
                         </select>
-                    </div>
-
-                    <div class="control-group">
-                        <label class="control-label">角丸 (border-radius, px)</label>
-                        <input type="number" id="borderRadius" class="control-input" value="0" min="0" max="20" onchange="updatePreview()">
-                    </div>
-
-                    <div class="control-group">
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox" id="hoverEffect" class="checkbox-input" checked onchange="updatePreview()">
-                            <label class="control-label" for="hoverEffect" style="margin: 0;">ホバーエフェクト</label>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label class="control-label">ホバー背景色</label>
-                        <div class="color-input-wrapper">
-                            <input type="color" id="hoverColor" class="color-input" value="#fafafa" onchange="updatePreview()">
-                            <input type="text" id="hoverColorText" class="control-input color-text" value="#fafafa" onchange="syncColor('hoverColor', this.value)">
-                        </div>
                     </div>
 
                     <div class="control-group">
@@ -1005,7 +970,6 @@
                         <ul>
                             <li><strong>ミニマルデザイン:</strong> ヘッダー背景を透明にし、下罫線のみで区切るとスタイリッシュに</li>
                             <li><strong>コントラスト:</strong> ヘッダーに濃い色を使い、本文を明るくすると視認性が向上します</li>
-                            <li><strong>ストライプ:</strong> 偶数行に背景色を付けると、データが読みやすくなります</li>
                             <li><strong>ホバー効果:</strong> マウスオーバー時の色変更で、インタラクティブ性を演出できます</li>
                             <li><strong>罫線の使い分け:</strong> ヘッダー下に太めの罫線、セル間は細めの罫線で区切るとメリハリが出ます</li>
                         </ul>
@@ -1041,8 +1005,6 @@
                 bodyColor: '#333333',
                 bodyBg: '#ffffff',
                 tableWidth: '100%',
-                stripedRows: false,
-                stripeColor: '#f5f5f5',
                 cellPadding: 14,
                 fontSize: 14,
                 textAlign: 'left',
@@ -1071,8 +1033,6 @@
                 bodyColor: '#333333',
                 bodyBg: '#ffffff',
                 tableWidth: '100%',
-                stripedRows: true,
-                stripeColor: '#ecf0f1',
                 cellPadding: 14,
                 fontSize: 14,
                 textAlign: 'left',
@@ -1101,8 +1061,6 @@
                 bodyColor: '#333333',
                 bodyBg: '#ffffff',
                 tableWidth: '100%',
-                stripedRows: false,
-                stripeColor: '#ecf0f1',
                 cellPadding: 12,
                 fontSize: 14,
                 textAlign: 'left',
@@ -1131,8 +1089,6 @@
                 bodyColor: '#333333',
                 bodyBg: '#ffffff',
                 tableWidth: '100%',
-                stripedRows: true,
-                stripeColor: '#e7f3ff',
                 cellPadding: 12,
                 fontSize: 14,
                 textAlign: 'left',
@@ -1161,8 +1117,6 @@
                 bodyColor: '#333333',
                 bodyBg: '#ffffff',
                 tableWidth: '100%',
-                stripedRows: true,
-                stripeColor: '#fff5f5',
                 cellPadding: 14,
                 fontSize: 14,
                 textAlign: 'left',
@@ -1191,8 +1145,6 @@
                 bodyColor: '#333333',
                 bodyBg: '#ffffff',
                 tableWidth: '100%',
-                stripedRows: true,
-                stripeColor: '#f1f8f4',
                 cellPadding: 12,
                 fontSize: 14,
                 textAlign: 'left',
@@ -1221,8 +1173,6 @@
                 bodyColor: '#333333',
                 bodyBg: '#ffffff',
                 tableWidth: '100%',
-                stripedRows: false,
-                stripeColor: '#f8f8f8',
                 cellPadding: 16,
                 fontSize: 14,
                 textAlign: 'left',
@@ -1251,8 +1201,6 @@
                 bodyColor: '#333333',
                 bodyBg: '#ffffff',
                 tableWidth: '100%',
-                stripedRows: true,
-                stripeColor: '#f0ffff',
                 cellPadding: 12,
                 fontSize: 14,
                 textAlign: 'left',
@@ -1281,8 +1229,6 @@
                 bodyColor: '#333333',
                 bodyBg: '#ffffff',
                 tableWidth: '100%',
-                stripedRows: true,
-                stripeColor: '#f9f3f9',
                 cellPadding: 14,
                 fontSize: 14,
                 textAlign: 'left',
@@ -1311,8 +1257,6 @@
                 bodyColor: '#333333',
                 bodyBg: '#ffffff',
                 tableWidth: '100%',
-                stripedRows: true,
-                stripeColor: '#f9f9f9',
                 cellPadding: 14,
                 fontSize: 14,
                 textAlign: 'left',
@@ -1340,8 +1284,6 @@
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#f4f7fa',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -1370,8 +1312,6 @@ vibrant: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#fce4ec',
     cellPadding: 12,
     fontSize: 14,
     textAlign: 'left',
@@ -1400,8 +1340,6 @@ monochrome: {
     bodyColor: '#000000',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: false,
-    stripeColor: '#f5f5f5',
     cellPadding: 16,
     fontSize: 14,
     textAlign: 'left',
@@ -1430,8 +1368,6 @@ retro: {
     bodyColor: '#3d2817',
     bodyBg: '#fef9f3',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#f5e6d3',
     cellPadding: 12,
     fontSize: 14,
     textAlign: 'left',
@@ -1460,8 +1396,6 @@ material: {
     bodyColor: '#424242',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: false,
-    stripeColor: '#f5f5f5',
     cellPadding: 16,
     fontSize: 14,
     textAlign: 'left',
@@ -1490,8 +1424,6 @@ gradient: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#f0f3ff',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -1520,8 +1452,6 @@ minimal_dark: {
     bodyColor: '#b0b0b0',
     bodyBg: '#1a1a1a',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#252525',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -1550,8 +1480,6 @@ autumn: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#fef5e7',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -1580,8 +1508,6 @@ neon: {
     bodyColor: '#c9d1d9',
     bodyBg: '#161b22',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#1c2128',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -1610,8 +1536,6 @@ classic: {
     bodyColor: '#000000',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: false,
-    stripeColor: '#f5f5f5',
     cellPadding: 10,
     fontSize: 13,
     textAlign: 'left',
@@ -1640,8 +1564,6 @@ sky: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#f0f8ff',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -1670,8 +1592,6 @@ mint: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#e8f8f3',
     cellPadding: 12,
     fontSize: 14,
     textAlign: 'left',
@@ -1700,8 +1620,6 @@ berry: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#f8f0f8',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -1730,8 +1648,6 @@ coral: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#fff5f5',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -1760,8 +1676,6 @@ charcoal: {
     bodyColor: '#333333',
     bodyBg: '#fafafa',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#f0f0f0',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -1790,8 +1704,6 @@ lavender: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#f5f0ff',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -1820,8 +1732,6 @@ bronze: {
     bodyColor: '#4a3728',
     bodyBg: '#fef9f3',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#f9f2e7',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -1850,8 +1760,6 @@ ice: {
     bodyColor: '#004d5c',
     bodyBg: '#f0ffff',
     tableWidth: '100%',
-    stripedRows: false,
-    stripeColor: '#e8f8fa',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -1880,8 +1788,6 @@ cherry: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#fff5f7',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -1910,8 +1816,6 @@ sand: {
     bodyColor: '#4a3f2e',
     bodyBg: '#fefaf5',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#f8f3e8',
     cellPadding: 12,
     fontSize: 14,
     textAlign: 'left',
@@ -1940,8 +1844,6 @@ emerald: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#efffef',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -1970,8 +1872,6 @@ peach: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#fff5f0',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2000,8 +1900,6 @@ slate: {
     bodyColor: '#2f4f4f',
     bodyBg: '#f8fafb',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#ecf0f3',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2030,8 +1928,6 @@ lemon: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#fffef0',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2060,8 +1956,6 @@ royal: {
     bodyColor: '#1e2952',
     bodyBg: '#f9f9fb',
     tableWidth: '100%',
-    stripedRows: false,
-    stripeColor: '#f0f0f5',
     cellPadding: 16,
     fontSize: 14,
     textAlign: 'left',
@@ -2090,8 +1984,6 @@ teal: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#e6f5f4',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2120,8 +2012,6 @@ burgundy: {
     bodyColor: '#4a1a1a',
     bodyBg: '#fef8f8',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#f9f0f0',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2150,8 +2040,6 @@ sage: {
     bodyColor: '#3d4a33',
     bodyBg: '#f9faf8',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#f2f5f0',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2180,8 +2068,6 @@ amber: {
     bodyColor: '#4a3000',
     bodyBg: '#fffef5',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#fff8e5',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2210,8 +2096,6 @@ crimson: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#fff0f3',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2240,8 +2124,6 @@ indigo: {
     bodyColor: '#2e1a47',
     bodyBg: '#f8f9ff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#f0f2ff',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2270,8 +2152,6 @@ ivory: {
     bodyColor: '#4a3f2e',
     bodyBg: '#fffff9',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#fefdf5',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2300,8 +2180,6 @@ magenta: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#fef0f8',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2330,8 +2208,6 @@ olive: {
     bodyColor: '#3d4020',
     bodyBg: '#fefef5',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#f8f9f0',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2360,8 +2236,6 @@ rose: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#fff5fa',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2390,8 +2264,6 @@ steel: {
     bodyColor: '#2f4858',
     bodyBg: '#f8f9fb',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#ecf0f5',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2420,8 +2292,6 @@ apricot: {
     bodyColor: '#4a3020',
     bodyBg: '#fffdf8',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#fff8f0',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2450,8 +2320,6 @@ graphite: {
     bodyColor: '#2a2a2a',
     bodyBg: '#f5f5f5',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#ebebeb',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2480,8 +2348,6 @@ turquoise: {
     bodyColor: '#333333',
     bodyBg: '#ffffff',
     tableWidth: '100%',
-    stripedRows: true,
-    stripeColor: '#f0fffd',
     cellPadding: 14,
     fontSize: 14,
     textAlign: 'left',
@@ -2530,7 +2396,7 @@ turquoise: {
                 for (let i = 0; i < 3; i++) {
                     const row = document.createElement('div');
                     row.className = 'template-preview-row';
-                    row.style.backgroundColor = (template.stripedRows && i % 2 === 1) ? template.stripeColor : template.bodyBg;
+                    row.style.backgroundColor = template.bodyBg;
                     row.style.color = template.bodyColor;
                     if (template.borderStyle !== 'none') {
                         row.style.borderBottom = `${template.borderWidth}px ${template.borderStyle} ${template.borderColor}`;
@@ -2578,9 +2444,6 @@ turquoise: {
             document.getElementById('bodyBg').value = template.bodyBg;
             document.getElementById('bodyBgText').value = template.bodyBg;
             document.getElementById('tableWidth').value = template.tableWidth;
-            document.getElementById('stripedRows').checked = template.stripedRows;
-            document.getElementById('stripeColor').value = template.stripeColor;
-            document.getElementById('stripeColorText').value = template.stripeColor;
             document.getElementById('cellPadding').value = template.cellPadding;
             document.getElementById('fontSize').value = template.fontSize;
             document.getElementById('textAlign').value = template.textAlign;
@@ -2592,10 +2455,18 @@ turquoise: {
             document.getElementById('uppercase').checked = template.uppercase;
             document.getElementById('letterSpacing').value = template.letterSpacing;
             document.getElementById('headerFontWeight').value = template.headerFontWeight;
-            document.getElementById('borderRadius').value = template.borderRadius;
-            document.getElementById('hoverEffect').checked = template.hoverEffect;
-            document.getElementById('hoverColor').value = template.hoverColor;
-            document.getElementById('hoverColorText').value = template.hoverColor;
+            if (document.getElementById('borderRadius')) {
+                document.getElementById('borderRadius').value = template.borderRadius;
+            }
+            if (document.getElementById('hoverEffect')) {
+                document.getElementById('hoverEffect').checked = template.hoverEffect;
+            }
+            if (document.getElementById('hoverColor')) {
+                document.getElementById('hoverColor').value = template.hoverColor;
+            }
+            if (document.getElementById('hoverColorText')) {
+                document.getElementById('hoverColorText').value = template.hoverColor;
+            }
             document.getElementById('tableBorder').checked = template.tableBorder;
             document.getElementById('tableBorderWidth').value = template.tableBorderWidth;
             document.getElementById('tableBorderColor').value = template.tableBorderColor;
@@ -2627,8 +2498,6 @@ turquoise: {
             const bodyColor = document.getElementById('bodyColor').value;
             const bodyBg = document.getElementById('bodyBg').value;
             const tableWidth = document.getElementById('tableWidth').value;
-            const stripedRows = document.getElementById('stripedRows').checked;
-            const stripeColor = document.getElementById('stripeColor').value;
             const cellPadding = document.getElementById('cellPadding').value;
             const fontSize = document.getElementById('fontSize').value;
             const textAlign = document.getElementById('textAlign').value;
@@ -2639,21 +2508,22 @@ turquoise: {
             const uppercase = document.getElementById('uppercase').checked;
             const letterSpacing = document.getElementById('letterSpacing').value;
             const headerFontWeight = document.getElementById('headerFontWeight').value;
-            const borderRadius = document.getElementById('borderRadius').value;
-            const hoverEffect = document.getElementById('hoverEffect').checked;
-            const hoverColor = document.getElementById('hoverColor').value;
             const tableBorder = document.getElementById('tableBorder').checked;
             const tableBorderWidth = document.getElementById('tableBorderWidth').value;
             const tableBorderColor = document.getElementById('tableBorderColor').value;
+            const hoverEffect = document.getElementById('hoverEffect')?.checked || false;
+            const hoverColor = document.getElementById('hoverColor')?.value || '#ecf0f1';
+            const borderRadius = document.getElementById('borderRadius')?.value || 0;
 
             document.getElementById('borderColorText').value = borderColor;
             document.getElementById('headerBgText').value = headerBg;
             document.getElementById('headerColorText').value = headerColor;
             document.getElementById('bodyColorText').value = bodyColor;
             document.getElementById('bodyBgText').value = bodyBg;
-            document.getElementById('stripeColorText').value = stripeColor;
             document.getElementById('headerBorderColorText').value = headerBorderColor;
-            document.getElementById('hoverColorText').value = hoverColor;
+            if (document.getElementById('hoverColorText')) {
+                document.getElementById('hoverColorText').value = hoverColor;
+            }
             document.getElementById('tableBorderColorText').value = tableBorderColor;
 
             let style = `
@@ -2713,17 +2583,6 @@ turquoise: {
                 td.style.cssText = tdStyle;
             });
 
-            if (stripedRows) {
-                const rows = table.querySelectorAll('tbody tr');
-                rows.forEach((row, index) => {
-                    if (index % 2 === 1) {
-                        row.querySelectorAll('td').forEach(td => {
-                            td.style.backgroundColor = stripeColor;
-                        });
-                    }
-                });
-            }
-
             if (lastRowBorder) {
                 const lastRow = table.querySelector('tbody tr:last-child');
                 if (lastRow) {
@@ -2761,8 +2620,6 @@ turquoise: {
             const bodyColor = document.getElementById('bodyColor').value;
             const bodyBg = document.getElementById('bodyBg').value;
             const tableWidth = document.getElementById('tableWidth').value;
-            const stripedRows = document.getElementById('stripedRows').checked;
-            const stripeColor = document.getElementById('stripeColor').value;
             const cellPadding = document.getElementById('cellPadding').value;
             const fontSize = document.getElementById('fontSize').value;
             const textAlign = document.getElementById('textAlign').value;
@@ -2773,9 +2630,9 @@ turquoise: {
             const uppercase = document.getElementById('uppercase').checked;
             const letterSpacing = document.getElementById('letterSpacing').value;
             const headerFontWeight = document.getElementById('headerFontWeight').value;
-            const borderRadius = document.getElementById('borderRadius').value;
-            const hoverEffect = document.getElementById('hoverEffect').checked;
-            const hoverColor = document.getElementById('hoverColor').value;
+            const borderRadius = document.getElementById('borderRadius')?.value || 0;
+            const hoverEffect = document.getElementById('hoverEffect')?.checked || false;
+            const hoverColor = document.getElementById('hoverColor')?.value || '#ecf0f1';
             const tableBorder = document.getElementById('tableBorder').checked;
             const tableBorderWidth = document.getElementById('tableBorderWidth').value;
             const tableBorderColor = document.getElementById('tableBorderColor').value;
@@ -2798,7 +2655,7 @@ table {
 }
 
 th {
-  background: ${headerBg};
+  background-color: ${headerBg};
   color: ${headerColor};
   padding: ${cellPadding}px;
   text-align: ${textAlign};
@@ -2835,7 +2692,7 @@ td {
                     css += `\n  color: ${bodyColor};`;
                 }
                 if (bodyBg !== '#ffffff') {
-                    css += `\n  background: ${bodyBg};`;
+                    css += `\n  background-color: ${bodyBg};`;
                 }
             }
 
@@ -2846,19 +2703,11 @@ td {
             css += `
 }`;
 
-            if (stripedRows) {
-                css += `
-
-tr:nth-child(even) {
-  background: ${stripeColor};
-}`;
-            }
-
             if (hoverEffect) {
                 css += `
 
-tr:hover {
-  background: ${hoverColor};
+tr:hover td {
+  background-color: ${hoverColor};
 }`;
             }
 
@@ -2918,8 +2767,6 @@ tr:last-child td {
             document.getElementById('bodyColor').value = '#333333';
             document.getElementById('bodyBg').value = '#ffffff';
             document.getElementById('tableWidth').value = '100%';
-            document.getElementById('stripedRows').checked = false;
-            document.getElementById('stripeColor').value = '#ecf0f1';
             document.getElementById('cellPadding').value = '14';
             document.getElementById('fontSize').value = '14';
             document.getElementById('textAlign').value = 'left';
@@ -2930,9 +2777,15 @@ tr:last-child td {
             document.getElementById('uppercase').checked = false;
             document.getElementById('letterSpacing').value = '0';
             document.getElementById('headerFontWeight').value = '600';
-            document.getElementById('borderRadius').value = '0';
-            document.getElementById('hoverEffect').checked = true;
-            document.getElementById('hoverColor').value = '#fafafa';
+            if (document.getElementById('borderRadius')) {
+                document.getElementById('borderRadius').value = '0';
+            }
+            if (document.getElementById('hoverEffect')) {
+                document.getElementById('hoverEffect').checked = true;
+            }
+            if (document.getElementById('hoverColor')) {
+                document.getElementById('hoverColor').value = '#fafafa';
+            }
             document.getElementById('tableBorder').checked = false;
             document.getElementById('tableBorderWidth').value = '2';
             document.getElementById('tableBorderColor').value = '#34495e';
