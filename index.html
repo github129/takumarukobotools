@@ -883,6 +883,26 @@
                             <input type="text" id="tableBorderColorText" class="control-input color-text" value="#34495e" onchange="syncColor('tableBorderColor', this.value)">
                         </div>
                     </div>
+
+                    <div class="control-group">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="hoverEffect" class="checkbox-input" checked onchange="updatePreview()">
+                            <label class="control-label" for="hoverEffect" style="margin: 0;">ホバー効果</label>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">ホバー時の背景色</label>
+                        <div class="color-input-wrapper">
+                            <input type="color" id="hoverColor" class="color-input" value="#fafafa" onchange="updatePreview()">
+                            <input type="text" id="hoverColorText" class="control-input color-text" value="#fafafa" onchange="syncColor('hoverColor', this.value)">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">角丸 (px)</label>
+                        <input type="number" id="borderRadius" class="control-input" value="0" min="0" max="20" onchange="updatePreview()">
+                    </div>
                 </div>
             </div>
         </div>
