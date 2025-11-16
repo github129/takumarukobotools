@@ -1,0 +1,2857 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Automate Table Style Generator - HTMLテーブルデザインツール</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Power AutomateのHTMLテーブルスタイルを簡単に作成できるツール。リアルタイムプレビューで直感的にデザインし、コピペですぐに使えるCSSコードを生成。">
+    <meta name="keywords" content="Power Automate, HTMLテーブル, CSSスタイル, テーブルデザイン, Microsoft, レスポンシブテーブル">
+    <meta name="author" content="takumarukobotools">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="ja">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Power Automate Table Style Generator - HTMLテーブルデザインツール">
+    <meta property="og:description" content="Power AutomateのHTMLテーブルスタイルを簡単に作成。リアルタイムプレビュー付きのツールでプロ級のテーブルデザインが可能。">
+    <meta property="og:url" content="https://takumarukobotools.github.io/power-automate-table-style-generator/">
+    <meta property="og:site_name" content="Takumaru Kobo Tools">
+    <meta property="og:locale" content="ja_JP">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Power Automate Table Style Generator">
+    <meta name="twitter:description" content="Power AutomateのHTMLテーブルスタイルを簡単に作成できるツール">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="canonical" href="https://takumarukobotools.github.io/power-automate-table-style-generator/">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Power Automate Table Style Generator",
+        "applicationCategory": "DesignApplication",
+        "description": "Power AutomateのHTMLテーブルスタイルを簡単に作成できるツール。リアルタイムプレビューで直感的にデザインし、コピペですぐに使えるCSSコードを生成。",
+        "url": "https://takumarukobotools.github.io/power-automate-table-style-generator/",
+        "author": {
+            "@type": "Organization",
+            "name": "Takumaru Kobo"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "JPY"
+        },
+        "operatingSystem": "Web Browser",
+        "softwareVersion": "1.0",
+        "dateCreated": "2024-01-01",
+        "inLanguage": "ja",
+        "isAccessibleForFree": true,
+        "keywords": ["Power Automate", "HTMLテーブル", "CSSスタイル", "テーブルデザイン", "Microsoft", "無料ツール"],
+        "mainEntity": {
+            "@type": "SoftwareApplication",
+            "name": "Table Style Generator",
+            "applicationCategory": "UtilityApplication",
+            "description": "HTMLテーブルのCSSスタイルを視覚的にデザインできるツール"
+        }
+    }
+    </script>
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            color: #333333;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .header {
+            background: #ffffff;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0078d4;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .icon-btn {
+            background: #f0f0f0;
+            border: 1px solid #d0d0d0;
+            color: #333333;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        .icon-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .icon-btn.primary {
+            background: #0078d4;
+            color: white;
+            border: 1px solid #0078d4;
+        }
+
+        .icon-btn.primary:hover {
+            background: #106ebe;
+        }
+
+        .icon-btn.share {
+            background: #1da1f2;
+            color: white;
+            border: 1px solid #1da1f2;
+        }
+
+        .icon-btn.share:hover {
+            background: #1a91da;
+        }
+
+        .main-container {
+            display: flex;
+            height: calc(100vh - 49px);
+            flex-direction: row;
+            position: relative;
+        }
+
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 14px;
+            }
+
+            .icon-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .main-container {
+                flex-direction: row;
+                height: calc(100vh - 49px);
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .sidebar-overlay.show {
+                display: block;
+            }
+        }
+
+        .sidebar {
+            width: 320px;
+            background: #ffffff;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+            padding: 20px;
+            padding-bottom: 60px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #c0c0c0;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 49px;
+                width: 85%;
+                max-width: 320px;
+                height: calc(100vh - 49px);
+                transform: translateX(-100%);
+                z-index: 999;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+        }
+
+        .section {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #666666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .control-group {
+            margin-bottom: 16px;
+        }
+
+        .control-label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #333333;
+        }
+
+        .control-input {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #c0c0c0;
+            color: #333333;
+            padding: 8px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .control-input:focus {
+            outline: none;
+            border-color: #0078d4;
+        }
+
+        .color-input-wrapper {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .color-input {
+            width: 50px;
+            height: 36px;
+            border: 1px solid #c0c0c0;
+            border-radius: 4px;
+            cursor: pointer;
+            background: #ffffff;
+        }
+
+        .color-text {
+            flex: 1;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .checkbox-input {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .accordion {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            margin-top: 16px;
+        }
+
+        .accordion-header {
+            padding: 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .accordion-header:hover {
+            background: #f0f0f0;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s;
+        }
+
+        .accordion-icon.open {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 12px;
+        }
+
+        .accordion-content.open {
+            max-height: 2000px;
+            padding: 12px;
+        }
+
+        .preview-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            overflow-y: hidden;
+            min-height: 400px;
+            height: 100%;
+            gap: 20px;
+        }
+
+        .preview-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+        }
+
+        .preview-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #666666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .preview-wrapper {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        .templates-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .template-card-large {
+            background: #fafafa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .template-card-large:hover {
+            border-color: #0078d4;
+            background: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .template-preview {
+            width: 100%;
+            height: 60px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .template-preview-lines {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .template-preview-header {
+            height: 20px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            font-size: 8px;
+            font-weight: 600;
+        }
+
+        .template-preview-row {
+            height: 13.33px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            font-size: 6px;
+        }
+
+        .template-name-large {
+            font-weight: 600;
+            color: #333333;
+            font-size: 14px;
+        }
+
+        .template-desc-large {
+            font-size: 12px;
+            color: #666666;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .preview-container {
+                padding: 20px;
+                min-height: 300px;
+                gap: 15px;
+            }
+
+            .preview-section {
+                padding: 15px;
+            }
+
+            .templates-section {
+                padding: 15px;
+                padding-bottom: 20px;
+            }
+
+            .templates-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 12px;
+            }
+
+            .template-card-large {
+                padding: 12px;
+            }
+
+            #previewTable {
+                font-size: 12px !important;
+            }
+
+            #previewTable th,
+            #previewTable td {
+                padding: 8px !important;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                max-height: 90vh;
+            }
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #666666;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .close-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .code-block {
+            background: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 16px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            color: #333333;
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin-bottom: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .code-block {
+                font-size: 10px;
+                padding: 12px;
+                max-height: 300px;
+            }
+        }
+
+        .copy-btn {
+            width: 100%;
+            background: #0078d4;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-btn:hover {
+            background: #106ebe;
+        }
+
+        .copy-btn.copied {
+            background: #107c10;
+        }
+
+        select.control-input {
+            cursor: pointer;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .template-card {
+            background: #ffffff;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .template-card:hover {
+            border-color: #0078d4;
+            background: #f8f9fa;
+        }
+
+        .template-name {
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .template-desc {
+            font-size: 11px;
+            color: #666666;
+        }
+
+        .help-section {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+
+        .help-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #0078d4;
+            margin-bottom: 8px;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #333333;
+            line-height: 1.5;
+        }
+
+        .help-text ul {
+            margin-top: 8px;
+            padding-left: 20px;
+        }
+
+        .help-text li {
+            margin-bottom: 4px;
+        }
+</style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">Power Automate Table Style Generator</div>
+        </div>
+        <div class="header-right">
+            <button class="icon-btn" onclick="showHelp()">
+                <span>使い方</span>
+            </button>
+            <button class="icon-btn" onclick="resetSettings()">
+                <span>リセット</span>
+            </button>
+            <button class="icon-btn share" onclick="shareOnX()">
+                <span>X共有</span>
+            </button>
+            <button class="icon-btn primary" onclick="showCodeModal()">
+                <span>コード出力</span>
+            </button>
+        </div>
+    </div>
+
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <div class="main-container">
+        <div class="sidebar" id="sidebar">
+            <div class="section">
+                <div class="section-title">基本設定</div>
+                
+                <div class="control-group">
+                    <label class="control-label">罫線スタイル</label>
+                    <select id="borderStyle" class="control-input" onchange="updatePreview()">
+                        <option value="solid">実線</option>
+                        <option value="none">なし</option>
+                        <option value="dashed">破線</option>
+                        <option value="dotted">点線</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">罫線の太さ (px)</label>
+                    <input type="number" id="borderWidth" class="control-input" value="1" min="0" max="10" onchange="updatePreview()">
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">罫線の色</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="borderColor" class="color-input" value="#e0e0e0" onchange="updatePreview()">
+                        <input type="text" id="borderColorText" class="control-input color-text" value="#e0e0e0" onchange="syncColor('borderColor', this.value)">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">ヘッダー背景色</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="headerBg" class="color-input" value="#ffffff" onchange="updatePreview()">
+                        <input type="text" id="headerBgText" class="control-input color-text" value="#ffffff" onchange="syncColor('headerBg', this.value)">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">ヘッダーフォント色</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="headerColor" class="color-input" value="#333333" onchange="updatePreview()">
+                        <input type="text" id="headerColorText" class="control-input color-text" value="#333333" onchange="syncColor('headerColor', this.value)">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">本文フォント色</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="bodyColor" class="color-input" value="#333333" onchange="updatePreview()">
+                        <input type="text" id="bodyColorText" class="control-input color-text" value="#333333" onchange="syncColor('bodyColor', this.value)">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">本文背景色</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="bodyBg" class="color-input" value="#ffffff" onchange="updatePreview()">
+                        <input type="text" id="bodyBgText" class="control-input color-text" value="#ffffff" onchange="syncColor('bodyBg', this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion()">
+                    <span>詳細設定</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content" id="accordionContent">
+                    <div class="control-group">
+                        <label class="control-label">テーブル幅</label>
+                        <select id="tableWidth" class="control-input" onchange="updatePreview()">
+                            <option value="auto">自動</option>
+                            <option value="100%" selected>100%</option>
+                            <option value="80%">80%</option>
+                            <option value="60%">60%</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">セル内余白 (padding, px)</label>
+                        <input type="number" id="cellPadding" class="control-input" value="14" min="0" max="50" onchange="updatePreview()">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">フォントサイズ (px)</label>
+                        <input type="number" id="fontSize" class="control-input" value="14" min="8" max="24" onchange="updatePreview()">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">テキスト配置</label>
+                        <select id="textAlign" class="control-input" onchange="updatePreview()">
+                            <option value="left" selected>左揃え</option>
+                            <option value="center">中央揃え</option>
+                            <option value="right">右揃え</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">ヘッダー下罫線の太さ (px)</label>
+                        <input type="number" id="headerBorderWidth" class="control-input" value="2" min="0" max="10" onchange="updatePreview()">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">ヘッダー下罫線の色</label>
+                        <div class="color-input-wrapper">
+                            <input type="color" id="headerBorderColor" class="color-input" value="#333333" onchange="updatePreview()">
+                            <input type="text" id="headerBorderColorText" class="control-input color-text" value="#333333" onchange="syncColor('headerBorderColor', this.value)">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="lastRowBorder" class="checkbox-input" onchange="updatePreview()">
+                            <label class="control-label" for="lastRowBorder" style="margin: 0;">最終行に太い罫線</label>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">最終行罫線の太さ (px)</label>
+                        <input type="number" id="lastRowBorderWidth" class="control-input" value="2" min="0" max="10" onchange="updatePreview()">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="uppercase" class="checkbox-input" onchange="updatePreview()">
+                            <label class="control-label" for="uppercase" style="margin: 0;">ヘッダーを大文字に</label>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">文字間隔 (letter-spacing, px)</label>
+                        <input type="number" id="letterSpacing" class="control-input" value="0" min="0" max="5" step="0.5" onchange="updatePreview()">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">ヘッダーフォントウェイト</label>
+                        <select id="headerFontWeight" class="control-input" onchange="updatePreview()">
+                            <option value="400">Normal (400)</option>
+                            <option value="600" selected>Semi-Bold (600)</option>
+                            <option value="700">Bold (700)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="tableBorder" class="checkbox-input" onchange="updatePreview()">
+                            <label class="control-label" for="tableBorder" style="margin: 0;">テーブル外枠</label>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">テーブル外枠の太さ (px)</label>
+                        <input type="number" id="tableBorderWidth" class="control-input" value="2" min="0" max="10" onchange="updatePreview()">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">テーブル外枠の色</label>
+                        <div class="color-input-wrapper">
+                            <input type="color" id="tableBorderColor" class="color-input" value="#34495e" onchange="updatePreview()">
+                            <input type="text" id="tableBorderColorText" class="control-input color-text" value="#34495e" onchange="syncColor('tableBorderColor', this.value)">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="hoverEffect" class="checkbox-input" checked onchange="updatePreview()">
+                            <label class="control-label" for="hoverEffect" style="margin: 0;">ホバー効果</label>
+                        </div>
+                    </div>
+
+                    <div class="control-group" style="background: #f0f0f0; padding: 10px; margin: 10px 0;">
+                        <label class="control-label">ホバー時の背景色</label>
+                        <div class="color-input-wrapper">
+                            <input type="color" id="hoverColor" class="color-input" value="#fafafa" onchange="updatePreview()" style="display: block !important;">
+                            <input type="text" id="hoverColorText" class="control-input color-text" value="#fafafa" onchange="syncColor('hoverColor', this.value)" style="display: block !important;">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">角丸 (px)</label>
+                        <input type="number" id="borderRadius" class="control-input" value="0" min="0" max="20" onchange="updatePreview()">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-container">
+            <div class="preview-section">
+                <div class="preview-title">プレビュー</div>
+                <div class="preview-wrapper">
+                    <table id="previewTable">
+                        <thead>
+                            <tr>
+                                <th>名前</th>
+                                <th>部署</th>
+                                <th>メール</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>山田 太郎</td>
+                                <td>営業部</td>
+                                <td>yamada@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>佐藤 花子</td>
+                                <td>開発部</td>
+                                <td>sato@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>鈴木 一郎</td>
+                                <td>人事部</td>
+                                <td>suzuki@example.com</td>
+                            </tr>
+                            <tr>
+                                <td>田中 美咲</td>
+                                <td>マーケティング部</td>
+                                <td>tanaka@example.com</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="templates-section">
+                <div class="preview-title">テンプレート一覧</div>
+                <div class="templates-grid" id="templatesGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="codeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">生成されたコード</div>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="code-block" id="cssCode"></div>
+                <button class="copy-btn" id="copyCssBtn" onclick="copyCode('css')">CSSをコピー</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">使い方ガイド</div>
+                <button class="close-btn" onclick="closeHelpModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="help-section">
+                    <div class="help-title">基本的な使い方</div>
+                    <div class="help-text">
+                        <ul>
+                            <li><strong>テンプレート選択:</strong> 左側のテンプレートカードをクリックすると、プリセットのデザインが適用されます</li>
+                            <li><strong>カスタマイズ:</strong> 各種設定項目を変更すると、右側のプレビューがリアルタイムで更新されます</li>
+                            <li><strong>コード出力:</strong> 右上の「コード出力」ボタンで、生成されたCSSコードをコピーできます</li>
+                            <li><strong>リセット:</strong> 「リセット」ボタンで初期状態に戻せます</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="help-section">
+                    <div class="help-title">デザインのコツ</div>
+                    <div class="help-text">
+                        <ul>
+                            <li><strong>ミニマルデザイン:</strong> ヘッダー背景を透明にし、下罫線のみで区切るとスタイリッシュに</li>
+                            <li><strong>コントラスト:</strong> ヘッダーに濃い色を使い、本文を明るくすると視認性が向上します</li>
+                            <li><strong>ホバー効果:</strong> マウスオーバー時の色変更で、インタラクティブ性を演出できます</li>
+                            <li><strong>罫線の使い分け:</strong> ヘッダー下に太めの罫線、セル間は細めの罫線で区切るとメリハリが出ます</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="help-section">
+                    <div class="help-title">詳細設定の活用</div>
+                    <div class="help-text">
+                        <ul>
+                            <li><strong>ヘッダー下罫線:</strong> 太さと色を変えることで、ヘッダーを際立たせられます</li>
+                            <li><strong>最終行罫線:</strong> テーブルの終わりを明確に示すために有効です</li>
+                            <li><strong>大文字変換:</strong> ヘッダーを大文字にすることで、よりフォーマルな印象に</li>
+                            <li><strong>文字間隔:</strong> letter-spacingを調整すると、洗練された印象を与えられます</li>
+                            <li><strong>テーブル外枠:</strong> 外枠を付けることで、テーブル全体を囲んだデザインに</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const templates = {
+            minimal: {
+                name: 'ミニマル',
+                desc: 'シンプルで洗練されたデザイン',
+                borderStyle: 'none',
+                borderWidth: 0,
+                borderColor: '#e0e0e0',
+                headerBg: '#ffffff',
+                headerColor: '#333333',
+                bodyColor: '#333333',
+                bodyBg: '#ffffff',
+                tableWidth: '100%',
+                cellPadding: 14,
+                fontSize: 14,
+                textAlign: 'left',
+                headerBorderWidth: 2,
+                headerBorderColor: '#333333',
+                lastRowBorder: true,
+                lastRowBorderWidth: 2,
+                uppercase: true,
+                letterSpacing: 1,
+                headerFontWeight: '700',
+                borderRadius: 0,
+                hoverEffect: true,
+                hoverColor: '#fafafa',
+                tableBorder: false,
+                tableBorderWidth: 0,
+                tableBorderColor: '#333333'
+            },
+            modern: {
+                name: 'モダン',
+                desc: 'ダークヘッダーとアクセントカラー',
+                borderStyle: 'none',
+                borderWidth: 0,
+                borderColor: '#e0e0e0',
+                headerBg: '#2c3e50',
+                headerColor: '#ffffff',
+                bodyColor: '#333333',
+                bodyBg: '#ffffff',
+                tableWidth: '100%',
+                cellPadding: 14,
+                fontSize: 14,
+                textAlign: 'left',
+                headerBorderWidth: 3,
+                headerBorderColor: '#e74c3c',
+                lastRowBorder: false,
+                lastRowBorderWidth: 0,
+                uppercase: false,
+                letterSpacing: 0,
+                headerFontWeight: '600',
+                borderRadius: 0,
+                hoverEffect: true,
+                hoverColor: '#d5dbdd',
+                tableBorder: false,
+                tableBorderWidth: 0,
+                tableBorderColor: '#2c3e50'
+            },
+            corporate: {
+                name: 'コーポレート',
+                desc: 'ビジネス向けの堅実なデザイン',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: '#bdc3c7',
+                headerBg: '#34495e',
+                headerColor: '#ffffff',
+                bodyColor: '#333333',
+                bodyBg: '#ffffff',
+                tableWidth: '100%',
+                cellPadding: 12,
+                fontSize: 14,
+                textAlign: 'left',
+                headerBorderWidth: 0,
+                headerBorderColor: '#34495e',
+                lastRowBorder: false,
+                lastRowBorderWidth: 0,
+                uppercase: false,
+                letterSpacing: 0,
+                headerFontWeight: '600',
+                borderRadius: 0,
+                hoverEffect: true,
+                hoverColor: '#ecf0f1',
+                tableBorder: true,
+                tableBorderWidth: 2,
+                tableBorderColor: '#34495e'
+            },
+            ocean: {
+                name: 'オーシャン',
+                desc: '青を基調とした爽やかなデザイン',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: '#b3d9ff',
+                headerBg: '#0078d4',
+                headerColor: '#ffffff',
+                bodyColor: '#333333',
+                bodyBg: '#ffffff',
+                tableWidth: '100%',
+                cellPadding: 12,
+                fontSize: 14,
+                textAlign: 'left',
+                headerBorderWidth: 0,
+                headerBorderColor: '#0078d4',
+                lastRowBorder: false,
+                lastRowBorderWidth: 0,
+                uppercase: false,
+                letterSpacing: 0,
+                headerFontWeight: '600',
+                borderRadius: 8,
+                hoverEffect: true,
+                hoverColor: '#d4e9ff',
+                tableBorder: false,
+                tableBorderWidth: 0,
+                tableBorderColor: '#0078d4'
+            },
+            sunset: {
+                name: 'サンセット',
+                desc: '暖色系の温かみのあるデザイン',
+                borderStyle: 'none',
+                borderWidth: 0,
+                borderColor: '#e0e0e0',
+                headerBg: '#ff6b6b',
+                headerColor: '#ffffff',
+                bodyColor: '#333333',
+                bodyBg: '#ffffff',
+                tableWidth: '100%',
+                cellPadding: 14,
+                fontSize: 14,
+                textAlign: 'left',
+                headerBorderWidth: 3,
+                headerBorderColor: '#ffa500',
+                lastRowBorder: false,
+                lastRowBorderWidth: 0,
+                uppercase: false,
+                letterSpacing: 0.5,
+                headerFontWeight: '700',
+                borderRadius: 0,
+                hoverEffect: true,
+                hoverColor: '#ffe8e8',
+                tableBorder: false,
+                tableBorderWidth: 0,
+                tableBorderColor: '#ff6b6b'
+            },
+            forest: {
+                name: 'フォレスト',
+                desc: '緑を基調としたナチュラルなデザイン',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: '#d4edda',
+                headerBg: '#28a745',
+                headerColor: '#ffffff',
+                bodyColor: '#333333',
+                bodyBg: '#ffffff',
+                tableWidth: '100%',
+                cellPadding: 12,
+                fontSize: 14,
+                textAlign: 'left',
+                headerBorderWidth: 2,
+                headerBorderColor: '#1e7e34',
+                lastRowBorder: false,
+                lastRowBorderWidth: 0,
+                uppercase: false,
+                letterSpacing: 0,
+                headerFontWeight: '600',
+                borderRadius: 0,
+                hoverEffect: true,
+                hoverColor: '#e2f3e6',
+                tableBorder: false,
+                tableBorderWidth: 0,
+                tableBorderColor: '#28a745'
+            },
+            elegant: {
+                name: 'エレガント',
+                desc: 'シックで高級感のあるデザイン',
+                borderStyle: 'none',
+                borderWidth: 0,
+                borderColor: '#e0e0e0',
+                headerBg: '#1a1a1a',
+                headerColor: '#d4af37',
+                bodyColor: '#333333',
+                bodyBg: '#ffffff',
+                tableWidth: '100%',
+                cellPadding: 16,
+                fontSize: 14,
+                textAlign: 'left',
+                headerBorderWidth: 1,
+                headerBorderColor: '#d4af37',
+                lastRowBorder: true,
+                lastRowBorderWidth: 1,
+                uppercase: true,
+                letterSpacing: 2,
+                headerFontWeight: '400',
+                borderRadius: 0,
+                hoverEffect: true,
+                hoverColor: '#f5f5f5',
+                tableBorder: false,
+                tableBorderWidth: 0,
+                tableBorderColor: '#1a1a1a'
+            },
+            tech: {
+                name: 'テック',
+                desc: 'テクノロジー系のクールなデザイン',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: '#00ffff',
+                headerBg: '#0a0e27',
+                headerColor: '#00ffff',
+                bodyColor: '#333333',
+                bodyBg: '#ffffff',
+                tableWidth: '100%',
+                cellPadding: 12,
+                fontSize: 14,
+                textAlign: 'left',
+                headerBorderWidth: 2,
+                headerBorderColor: '#00ffff',
+                lastRowBorder: false,
+                lastRowBorderWidth: 0,
+                uppercase: true,
+                letterSpacing: 1,
+                headerFontWeight: '700',
+                borderRadius: 0,
+                hoverEffect: true,
+                hoverColor: '#e0ffff',
+                tableBorder: true,
+                tableBorderWidth: 2,
+                tableBorderColor: '#00ffff'
+            },
+            pastel: {
+                name: 'パステル',
+                desc: '柔らかい色合いの優しいデザイン',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: '#e8d5e8',
+                headerBg: '#d4a5d4',
+                headerColor: '#ffffff',
+                bodyColor: '#333333',
+                bodyBg: '#ffffff',
+                tableWidth: '100%',
+                cellPadding: 14,
+                fontSize: 14,
+                textAlign: 'left',
+                headerBorderWidth: 0,
+                headerBorderColor: '#d4a5d4',
+                lastRowBorder: false,
+                lastRowBorderWidth: 0,
+                uppercase: false,
+                letterSpacing: 0,
+                headerFontWeight: '600',
+                borderRadius: 12,
+                hoverEffect: true,
+                hoverColor: '#f5ebf5',
+                tableBorder: false,
+                tableBorderWidth: 0,
+                tableBorderColor: '#d4a5d4'
+            },
+            professional: {
+                name: 'プロフェッショナル',
+                desc: 'フォーマルで信頼感のあるデザイン',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: '#cccccc',
+                headerBg: '#2e3b4e',
+                headerColor: '#ffffff',
+                bodyColor: '#333333',
+                bodyBg: '#ffffff',
+                tableWidth: '100%',
+                cellPadding: 14,
+                fontSize: 14,
+                textAlign: 'left',
+                headerBorderWidth: 2,
+                headerBorderColor: '#2e3b4e',
+                lastRowBorder: true,
+                lastRowBorderWidth: 2,
+                uppercase: false,
+                letterSpacing: 0,
+                headerFontWeight: '600',
+                borderRadius: 0,
+                hoverEffect: true,
+                hoverColor: '#f0f0f0',
+                tableBorder: true,
+                tableBorderWidth: 1,
+                tableBorderColor: '#999999'
+            },navy: {
+    name: 'ネイビー',
+    desc: '落ち着いた紺色の上品なデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#d4dce6',
+    headerBg: '#1e3a5f',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 3,
+    headerBorderColor: '#7d97b8',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0.5,
+    headerFontWeight: '600',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#e8eef5',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#1e3a5f'
+},
+vibrant: {
+    name: 'ヴィヴィッド',
+    desc: '鮮やかな色使いのポップなデザイン',
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderColor: '#e0e0e0',
+    headerBg: '#e91e63',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 12,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 3,
+    headerBorderColor: '#ff6090',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: true,
+    letterSpacing: 1,
+    headerFontWeight: '700',
+    borderRadius: 8,
+    hoverEffect: true,
+    hoverColor: '#ffeef4',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#e91e63'
+},
+monochrome: {
+    name: 'モノクローム',
+    desc: '白黒のミニマルでモダンなデザイン',
+    borderStyle: 'solid',
+    borderWidth: 2,
+    borderColor: '#000000',
+    headerBg: '#000000',
+    headerColor: '#ffffff',
+    bodyColor: '#000000',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 16,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 0,
+    headerBorderColor: '#000000',
+    lastRowBorder: true,
+    lastRowBorderWidth: 2,
+    uppercase: true,
+    letterSpacing: 2,
+    headerFontWeight: '700',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#f0f0f0',
+    tableBorder: true,
+    tableBorderWidth: 3,
+    tableBorderColor: '#000000'
+},
+retro: {
+    name: 'レトロ',
+    desc: 'ヴィンテージ風の懐かしいデザイン',
+    borderStyle: 'solid',
+    borderWidth: 2,
+    borderColor: '#8b7355',
+    headerBg: '#d4a574',
+    headerColor: '#3d2817',
+    bodyColor: '#3d2817',
+    bodyBg: '#fef9f3',
+    tableWidth: '100%',
+    cellPadding: 12,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#8b7355',
+    lastRowBorder: true,
+    lastRowBorderWidth: 2,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#f0ddc4',
+    tableBorder: true,
+    tableBorderWidth: 2,
+    tableBorderColor: '#8b7355'
+},
+material: {
+    name: 'マテリアル',
+    desc: 'Material Designに基づいたデザイン',
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderColor: '#e0e0e0',
+    headerBg: '#ffffff',
+    headerColor: '#212121',
+    bodyColor: '#424242',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 16,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#6200ea',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0.5,
+    headerFontWeight: '600',
+    borderRadius: 4,
+    hoverEffect: true,
+    hoverColor: '#f5f5f5',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#6200ea'
+},
+gradient: {
+    name: 'アジュールミント',
+    desc: 'アジュールミントを活用した華やかなデザイン',
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderColor: '#e0e0e0',
+    headerBg: '#667eea',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 0,
+    headerBorderColor: '#667eea',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0.5,
+    headerFontWeight: '600',
+    borderRadius: 12,
+    hoverEffect: true,
+    hoverColor: '#e5e9ff',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#667eea'
+},
+minimal_dark: {
+    name: 'ミニマルダーク',
+    desc: 'ダークモード対応のシンプルなデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#404040',
+    headerBg: '#2a2a2a',
+    headerColor: '#e0e0e0',
+    bodyColor: '#b0b0b0',
+    bodyBg: '#1a1a1a',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#505050',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#303030',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#404040'
+},
+autumn: {
+    name: 'オータム',
+    desc: '秋をイメージした温かみのあるデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#d4a574',
+    headerBg: '#c87137',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#a85c2f',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 6,
+    hoverEffect: true,
+    hoverColor: '#fef9f2',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#c87137'
+},
+neon: {
+    name: 'ネオン',
+    desc: 'ネオンカラーを使った未来的なデザイン',
+    borderStyle: 'solid',
+    borderWidth: 2,
+    borderColor: '#00ff99',
+    headerBg: '#0d1117',
+    headerColor: '#00ff99',
+    bodyColor: '#c9d1d9',
+    bodyBg: '#161b22',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 3,
+    headerBorderColor: '#00ff99',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: true,
+    letterSpacing: 1.5,
+    headerFontWeight: '700',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#21262d',
+    tableBorder: true,
+    tableBorderWidth: 2,
+    tableBorderColor: '#00ff99'
+},
+classic: {
+    name: 'クラシック',
+    desc: '伝統的な新聞・書籍スタイルのデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#333333',
+    headerBg: '#f8f8f8',
+    headerColor: '#000000',
+    bodyColor: '#000000',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 10,
+    fontSize: 13,
+    textAlign: 'left',
+    headerBorderWidth: 3,
+    headerBorderColor: '#000000',
+    lastRowBorder: true,
+    lastRowBorderWidth: 3,
+    uppercase: true,
+    letterSpacing: 0.5,
+    headerFontWeight: '700',
+    borderRadius: 0,
+    hoverEffect: false,
+    hoverColor: '#f5f5f5',
+    tableBorder: true,
+    tableBorderWidth: 2,
+    tableBorderColor: '#000000'
+},
+sky: {
+    name: 'スカイ',
+    desc: '空のような爽やかな水色デザイン',
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderColor: '#e0e0e0',
+    headerBg: '#87ceeb',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#4682b4',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 6,
+    hoverEffect: true,
+    hoverColor: '#e0f2ff',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#87ceeb'
+},
+mint: {
+    name: 'ミント',
+    desc: 'ミントグリーンの清涼感あるデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#b2f2e1',
+    headerBg: '#3eb489',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 12,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#2d8b6a',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 8,
+    hoverEffect: true,
+    hoverColor: '#d4f4e8',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#3eb489'
+},
+berry: {
+    name: 'ベリー',
+    desc: 'ベリー系の深みのある紫デザイン',
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderColor: '#e0e0e0',
+    headerBg: '#8b4789',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 3,
+    headerBorderColor: '#a855a5',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0.5,
+    headerFontWeight: '600',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#f3e8f3',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#8b4789'
+},
+coral: {
+    name: 'コーラル',
+    desc: '珊瑚色の明るく華やかなデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#ffcccc',
+    headerBg: '#ff7f7f',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 0,
+    headerBorderColor: '#ff7f7f',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 10,
+    hoverEffect: true,
+    hoverColor: '#ffe8e8',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#ff7f7f'
+},
+charcoal: {
+    name: 'チャコール',
+    desc: '炭色のシックで洗練されたデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#555555',
+    headerBg: '#36454f',
+    headerColor: '#e0e0e0',
+    bodyColor: '#333333',
+    bodyBg: '#fafafa',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#708090',
+    lastRowBorder: true,
+    lastRowBorderWidth: 2,
+    uppercase: true,
+    letterSpacing: 1,
+    headerFontWeight: '700',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#e8e8e8',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#36454f'
+},
+lavender: {
+    name: 'ラベンダー',
+    desc: 'ラベンダー色の優雅なデザイン',
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderColor: '#e0e0e0',
+    headerBg: '#9370db',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#ba90ff',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 8,
+    hoverEffect: true,
+    hoverColor: '#ede5ff',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#9370db'
+},
+bronze: {
+    name: 'ブロンズ',
+    desc: '青銅色のクラシカルなデザイン',
+    borderStyle: 'solid',
+    borderWidth: 2,
+    borderColor: '#cd7f32',
+    headerBg: '#b8732d',
+    headerColor: '#fef9e7',
+    bodyColor: '#4a3728',
+    bodyBg: '#fef9f3',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 3,
+    headerBorderColor: '#8b5a2b',
+    lastRowBorder: true,
+    lastRowBorderWidth: 3,
+    uppercase: true,
+    letterSpacing: 1,
+    headerFontWeight: '700',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#f5ede0',
+    tableBorder: true,
+    tableBorderWidth: 2,
+    tableBorderColor: '#cd7f32'
+},
+ice: {
+    name: 'アイス',
+    desc: '氷のようなクールなデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#b8e6f0',
+    headerBg: '#b0e0e6',
+    headerColor: '#003d4d',
+    bodyColor: '#004d5c',
+    bodyBg: '#f0ffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#7fc8d6',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 6,
+    hoverEffect: true,
+    hoverColor: '#d8f5f8',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#b0e0e6'
+},
+cherry: {
+    name: 'チェリー',
+    desc: 'チェリーレッドの情熱的なデザイン',
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderColor: '#e0e0e0',
+    headerBg: '#dc143c',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 3,
+    headerBorderColor: '#ff1744',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0.5,
+    headerFontWeight: '700',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#ffeaee',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#dc143c'
+},
+sand: {
+    name: 'サンド',
+    desc: '砂色のナチュラルなデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#d4c5b0',
+    headerBg: '#c2b280',
+    headerColor: '#3d3020',
+    bodyColor: '#4a3f2e',
+    bodyBg: '#fefaf5',
+    tableWidth: '100%',
+    cellPadding: 12,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#a08060',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 4,
+    hoverEffect: true,
+    hoverColor: '#f5efe0',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#c2b280'
+},
+emerald: {
+    name: 'エメラルド',
+    desc: 'エメラルドグリーンの高級感あるデザイン',
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderColor: '#e0e0e0',
+    headerBg: '#50c878',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 3,
+    headerBorderColor: '#3ea862',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 1,
+    headerFontWeight: '600',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#e0f8e0',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#50c878'
+},
+peach: {
+    name: 'ピーチ',
+    desc: '桃色の柔らかく可愛いデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#ffd9cc',
+    headerBg: '#ffb399',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 0,
+    headerBorderColor: '#ffb399',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 12,
+    hoverEffect: true,
+    hoverColor: '#ffede5',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#ffb399'
+},
+slate: {
+    name: 'スレート',
+    desc: '青灰色のプロフェッショナルなデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#b0c4de',
+    headerBg: '#708090',
+    headerColor: '#ffffff',
+    bodyColor: '#2f4f4f',
+    bodyBg: '#f8fafb',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#556b7f',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 4,
+    hoverEffect: true,
+    hoverColor: '#e0e8ed',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#708090'
+},
+lemon: {
+    name: 'レモン',
+    desc: 'レモン色の明るく元気なデザイン',
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderColor: '#e0e0e0',
+    headerBg: '#fff44f',
+    headerColor: '#333333',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#ffd700',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '700',
+    borderRadius: 8,
+    hoverEffect: true,
+    hoverColor: '#fffce0',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#fff44f'
+},
+royal: {
+    name: 'ロイヤル',
+    desc: '王室風の豪華で格調高いデザイン',
+    borderStyle: 'solid',
+    borderWidth: 2,
+    borderColor: '#d4af37',
+    headerBg: '#4169e1',
+    headerColor: '#ffd700',
+    bodyColor: '#1e2952',
+    bodyBg: '#f9f9fb',
+    tableWidth: '100%',
+    cellPadding: 16,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 3,
+    headerBorderColor: '#d4af37',
+    lastRowBorder: true,
+    lastRowBorderWidth: 3,
+    uppercase: true,
+    letterSpacing: 2,
+    headerFontWeight: '700',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#ededf5',
+    tableBorder: true,
+    tableBorderWidth: 2,
+    tableBorderColor: '#d4af37'
+},
+teal: {
+    name: 'ティール',
+    desc: '青緑色の落ち着いたデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#9fd9d6',
+    headerBg: '#008080',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#006666',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#d1efed',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#008080'
+},
+burgundy: {
+    name: 'バーガンディ',
+    desc: 'ワインレッドの上品なデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#d4a5a5',
+    headerBg: '#800020',
+    headerColor: '#ffffff',
+    bodyColor: '#4a1a1a',
+    bodyBg: '#fef8f8',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#600018',
+    lastRowBorder: true,
+    lastRowBorderWidth: 2,
+    uppercase: false,
+    letterSpacing: 0.5,
+    headerFontWeight: '600',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#f5e8e8',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#800020'
+},
+sage: {
+    name: 'セージ',
+    desc: 'セージグリーンの穏やかなデザイン',
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderColor: '#e0e0e0',
+    headerBg: '#9caf88',
+    headerColor: '#ffffff',
+    bodyColor: '#3d4a33',
+    bodyBg: '#f9faf8',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#7a8d6b',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 6,
+    hoverEffect: true,
+    hoverColor: '#e8ede5',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#9caf88'
+},
+amber: {
+    name: 'アンバー',
+    desc: '琥珀色の温かみのあるデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#ffd699',
+    headerBg: '#ffbf00',
+    headerColor: '#4a3000',
+    bodyColor: '#4a3000',
+    bodyBg: '#fffef5',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#cc9900',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 4,
+    hoverEffect: true,
+    hoverColor: '#fff5d9',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#ffbf00'
+},
+crimson: {
+    name: 'クリムゾン',
+    desc: '深紅色の力強いデザイン',
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderColor: '#e0e0e0',
+    headerBg: '#dc143c',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 3,
+    headerBorderColor: '#b01030',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: true,
+    letterSpacing: 1,
+    headerFontWeight: '700',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#ffe5ea',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#dc143c'
+},
+indigo: {
+    name: 'インディゴ',
+    desc: '藍色の深みのあるデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#b8c5e6',
+    headerBg: '#4b0082',
+    headerColor: '#e6e6fa',
+    bodyColor: '#2e1a47',
+    bodyBg: '#f8f9ff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#6a00a8',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0.5,
+    headerFontWeight: '600',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#e8ebff',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#4b0082'
+},
+ivory: {
+    name: 'アイボリー',
+    desc: '象牙色の上品でシンプルなデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#e6ddc4',
+    headerBg: '#fffff0',
+    headerColor: '#5a4a2a',
+    bodyColor: '#4a3f2e',
+    bodyBg: '#fffff9',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#d4c5a0',
+    lastRowBorder: true,
+    lastRowBorderWidth: 2,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#faf8ed',
+    tableBorder: true,
+    tableBorderWidth: 1,
+    tableBorderColor: '#d4c5a0'
+},
+magenta: {
+    name: 'マゼンタ',
+    desc: '赤紫色の鮮やかなデザイン',
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderColor: '#e0e0e0',
+    headerBg: '#c71585',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 3,
+    headerBorderColor: '#ff1493',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0.5,
+    headerFontWeight: '700',
+    borderRadius: 8,
+    hoverEffect: true,
+    hoverColor: '#fee8f5',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#c71585'
+},
+olive: {
+    name: 'オリーブ',
+    desc: 'オリーブ色の落ち着いたデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#c9d1a8',
+    headerBg: '#808000',
+    headerColor: '#ffffff',
+    bodyColor: '#3d4020',
+    bodyBg: '#fefef5',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#666600',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#f0f2e8',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#808000'
+},
+rose: {
+    name: 'ローズ',
+    desc: '薔薇色のエレガントなデザイン',
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderColor: '#e0e0e0',
+    headerBg: '#ff007f',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#ff3399',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0.5,
+    headerFontWeight: '600',
+    borderRadius: 10,
+    hoverEffect: true,
+    hoverColor: '#ffebf5',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#ff007f'
+},
+steel: {
+    name: 'スチール',
+    desc: '鋼色のモダンでクールなデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#b8c5d6',
+    headerBg: '#4682b4',
+    headerColor: '#ffffff',
+    bodyColor: '#2f4858',
+    bodyBg: '#f8f9fb',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#36688d',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 4,
+    hoverEffect: true,
+    hoverColor: '#e0e8f0',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#4682b4'
+},
+apricot: {
+    name: 'アプリコット',
+    desc: '杏色の優しく温かいデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#ffd9b3',
+    headerBg: '#fbceb1',
+    headerColor: '#4a3020',
+    bodyColor: '#4a3020',
+    bodyBg: '#fffdf8',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#e0a882',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 8,
+    hoverEffect: true,
+    hoverColor: '#fff3e5',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#fbceb1'
+},
+graphite: {
+    name: 'グラファイト',
+    desc: '黒鉛色のスタイリッシュなデザイン',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#707070',
+    headerBg: '#383838',
+    headerColor: '#d0d0d0',
+    bodyColor: '#2a2a2a',
+    bodyBg: '#f5f5f5',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#505050',
+    lastRowBorder: true,
+    lastRowBorderWidth: 2,
+    uppercase: true,
+    letterSpacing: 1,
+    headerFontWeight: '700',
+    borderRadius: 0,
+    hoverEffect: true,
+    hoverColor: '#e0e0e0',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#383838'
+},
+turquoise: {
+    name: 'ターコイズ',
+    desc: 'ターコイズブルーの鮮やかなデザイン',
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderColor: '#e0e0e0',
+    headerBg: '#40e0d0',
+    headerColor: '#ffffff',
+    bodyColor: '#333333',
+    bodyBg: '#ffffff',
+    tableWidth: '100%',
+    cellPadding: 14,
+    fontSize: 14,
+    textAlign: 'left',
+    headerBorderWidth: 2,
+    headerBorderColor: '#2ebfaf',
+    lastRowBorder: false,
+    lastRowBorderWidth: 0,
+    uppercase: false,
+    letterSpacing: 0,
+    headerFontWeight: '600',
+    borderRadius: 8,
+    hoverEffect: true,
+    hoverColor: '#e0fff8',
+    tableBorder: false,
+    tableBorderWidth: 0,
+    tableBorderColor: '#40e0d0'
+}
+        };
+
+        function renderTemplateCards() {
+            const grid = document.getElementById('templatesGrid');
+            grid.innerHTML = '';
+
+            Object.keys(templates).forEach(key => {
+                const template = templates[key];
+                const card = document.createElement('div');
+                card.className = 'template-card-large';
+                card.onclick = () => applyTemplate(key);
+
+                const preview = document.createElement('div');
+                preview.className = 'template-preview';
+                
+                const previewLines = document.createElement('div');
+                previewLines.className = 'template-preview-lines';
+
+                const header = document.createElement('div');
+                header.className = 'template-preview-header';
+                header.style.backgroundColor = template.headerBg;
+                header.style.color = template.headerColor;
+                if (template.headerBorderWidth > 0) {
+                    header.style.borderBottom = `${template.headerBorderWidth}px solid ${template.headerBorderColor}`;
+                }
+                header.textContent = 'ヘッダー';
+                previewLines.appendChild(header);
+
+                for (let i = 0; i < 3; i++) {
+                    const row = document.createElement('div');
+                    row.className = 'template-preview-row';
+                    row.style.backgroundColor = template.bodyBg;
+                    row.style.color = template.bodyColor;
+                    if (template.borderStyle !== 'none') {
+                        row.style.borderBottom = `${template.borderWidth}px ${template.borderStyle} ${template.borderColor}`;
+                    }
+                    row.textContent = 'データ';
+                    previewLines.appendChild(row);
+                }
+
+                preview.appendChild(previewLines);
+                card.appendChild(preview);
+
+                const name = document.createElement('div');
+                name.className = 'template-name-large';
+                name.textContent = template.name;
+                card.appendChild(name);
+
+                const desc = document.createElement('div');
+                desc.className = 'template-desc-large';
+                desc.textContent = template.desc;
+                card.appendChild(desc);
+
+                grid.appendChild(card);
+            });
+        }
+
+        function showAllTemplates() {
+            const templatesSection = document.querySelector('.templates-section');
+            templatesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function applyTemplate(templateName) {
+            const template = templates[templateName];
+            if (!template) return;
+
+            document.getElementById('borderStyle').value = template.borderStyle;
+            document.getElementById('borderWidth').value = template.borderWidth;
+            document.getElementById('borderColor').value = template.borderColor;
+            document.getElementById('borderColorText').value = template.borderColor;
+            document.getElementById('headerBg').value = template.headerBg;
+            document.getElementById('headerBgText').value = template.headerBg;
+            document.getElementById('headerColor').value = template.headerColor;
+            document.getElementById('headerColorText').value = template.headerColor;
+            document.getElementById('bodyColor').value = template.bodyColor;
+            document.getElementById('bodyColorText').value = template.bodyColor;
+            document.getElementById('bodyBg').value = template.bodyBg;
+            document.getElementById('bodyBgText').value = template.bodyBg;
+            document.getElementById('tableWidth').value = template.tableWidth;
+            document.getElementById('cellPadding').value = template.cellPadding;
+            document.getElementById('fontSize').value = template.fontSize;
+            document.getElementById('textAlign').value = template.textAlign;
+            document.getElementById('headerBorderWidth').value = template.headerBorderWidth;
+            document.getElementById('headerBorderColor').value = template.headerBorderColor;
+            document.getElementById('headerBorderColorText').value = template.headerBorderColor;
+            document.getElementById('lastRowBorder').checked = template.lastRowBorder;
+            document.getElementById('lastRowBorderWidth').value = template.lastRowBorderWidth;
+            document.getElementById('uppercase').checked = template.uppercase;
+            document.getElementById('letterSpacing').value = template.letterSpacing;
+            document.getElementById('headerFontWeight').value = template.headerFontWeight;
+            if (document.getElementById('borderRadius')) {
+                document.getElementById('borderRadius').value = template.borderRadius;
+            }
+            if (document.getElementById('hoverEffect')) {
+                document.getElementById('hoverEffect').checked = template.hoverEffect;
+            }
+            if (document.getElementById('hoverColor')) {
+                document.getElementById('hoverColor').value = template.hoverColor;
+            }
+            if (document.getElementById('hoverColorText')) {
+                document.getElementById('hoverColorText').value = template.hoverColor;
+            }
+            document.getElementById('tableBorder').checked = template.tableBorder;
+            document.getElementById('tableBorderWidth').value = template.tableBorderWidth;
+            document.getElementById('tableBorderColor').value = template.tableBorderColor;
+            document.getElementById('tableBorderColorText').value = template.tableBorderColor;
+
+            updatePreview();
+        }
+
+        function toggleAccordion() {
+            const content = document.getElementById('accordionContent');
+            const icon = document.querySelector('.accordion-icon');
+            content.classList.toggle('open');
+            icon.classList.toggle('open');
+        }
+
+        function syncColor(inputId, value) {
+            document.getElementById(inputId).value = value;
+            document.getElementById(inputId + 'Text').value = value;
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const table = document.getElementById('previewTable');
+            const borderStyle = document.getElementById('borderStyle').value;
+            const borderWidth = document.getElementById('borderWidth').value;
+            const borderColor = document.getElementById('borderColor').value;
+            const headerBg = document.getElementById('headerBg').value;
+            const headerColor = document.getElementById('headerColor').value;
+            const bodyColor = document.getElementById('bodyColor').value;
+            const bodyBg = document.getElementById('bodyBg').value;
+            const tableWidth = document.getElementById('tableWidth').value;
+            const cellPadding = document.getElementById('cellPadding').value;
+            const fontSize = document.getElementById('fontSize').value;
+            const textAlign = document.getElementById('textAlign').value;
+            const headerBorderWidth = document.getElementById('headerBorderWidth').value;
+            const headerBorderColor = document.getElementById('headerBorderColor').value;
+            const lastRowBorder = document.getElementById('lastRowBorder').checked;
+            const lastRowBorderWidth = document.getElementById('lastRowBorderWidth').value;
+            const uppercase = document.getElementById('uppercase').checked;
+            const letterSpacing = document.getElementById('letterSpacing').value;
+            const headerFontWeight = document.getElementById('headerFontWeight').value;
+            const tableBorder = document.getElementById('tableBorder').checked;
+            const tableBorderWidth = document.getElementById('tableBorderWidth').value;
+            const tableBorderColor = document.getElementById('tableBorderColor').value;
+            const hoverEffect = document.getElementById('hoverEffect')?.checked || false;
+            const hoverColor = document.getElementById('hoverColor')?.value || '#ecf0f1';
+            const borderRadius = document.getElementById('borderRadius')?.value || 0;
+
+            document.getElementById('borderColorText').value = borderColor;
+            document.getElementById('headerBgText').value = headerBg;
+            document.getElementById('headerColorText').value = headerColor;
+            document.getElementById('bodyColorText').value = bodyColor;
+            document.getElementById('bodyBgText').value = bodyBg;
+            document.getElementById('headerBorderColorText').value = headerBorderColor;
+            if (document.getElementById('hoverColorText')) {
+                document.getElementById('hoverColorText').value = hoverColor;
+            }
+            document.getElementById('tableBorderColorText').value = tableBorderColor;
+
+            let style = `
+                border-collapse: ${tableBorder ? 'separate' : 'collapse'};
+                border-spacing: 0;
+                width: ${tableWidth};
+                font-size: ${fontSize}px;
+                overflow: hidden;
+            `;
+
+            if (borderRadius > 0) {
+                style += `border-radius: ${borderRadius}px;`;
+            }
+
+            if (tableBorder) {
+                style += `border: ${tableBorderWidth}px solid ${tableBorderColor};`;
+            }
+
+            table.style.cssText = style;
+
+            const headers = table.querySelectorAll('th');
+            headers.forEach(th => {
+                let thStyle = `
+                    background-color: ${headerBg};
+                    color: ${headerColor};
+                    padding: ${cellPadding}px;
+                    font-weight: ${headerFontWeight};
+                    text-align: ${textAlign};
+                    border-bottom: ${headerBorderWidth}px solid ${headerBorderColor};
+                `;
+                
+                if (uppercase) {
+                    thStyle += `text-transform: uppercase;`;
+                }
+                
+                if (letterSpacing > 0) {
+                    thStyle += `letter-spacing: ${letterSpacing}px;`;
+                }
+
+                th.style.cssText = thStyle;
+            });
+
+            const cells = table.querySelectorAll('td');
+            cells.forEach(td => {
+                let tdStyle = `
+                    color: ${bodyColor};
+                    background-color: ${bodyBg};
+                    padding: ${cellPadding}px;
+                    text-align: ${textAlign};
+                `;
+                
+                if (borderStyle !== 'none') {
+                    tdStyle += `border-bottom: ${borderWidth}px ${borderStyle} ${borderColor};`;
+                }
+                
+                if (borderStyle !== 'none' && tableBorder) {
+                    tdStyle += `border-left: ${borderWidth}px ${borderStyle} ${borderColor};`;
+                    tdStyle += `border-right: ${borderWidth}px ${borderStyle} ${borderColor};`;
+                }
+
+                td.style.cssText = tdStyle;
+            });
+
+            if (lastRowBorder) {
+                const lastRow = table.querySelector('tbody tr:last-child');
+                if (lastRow) {
+                    lastRow.querySelectorAll('td').forEach(td => {
+                        td.style.borderBottom = `${lastRowBorderWidth}px solid ${headerBorderColor}`;
+                    });
+                }
+            }
+
+            if (hoverEffect) {
+                const existingStyle = document.getElementById('hoverStyle');
+                if (existingStyle) existingStyle.remove();
+
+                const styleEl = document.createElement('style');
+                styleEl.id = 'hoverStyle';
+                styleEl.textContent = `
+                    #previewTable tbody tr:hover td {
+                        background-color: ${hoverColor} !important;
+                        transition: background-color 0.2s;
+                    }
+                `;
+                document.head.appendChild(styleEl);
+            } else {
+                const existingStyle = document.getElementById('hoverStyle');
+                if (existingStyle) existingStyle.remove();
+            }
+        }
+
+        function generateCode() {
+            const borderStyle = document.getElementById('borderStyle').value;
+            const borderWidth = document.getElementById('borderWidth').value;
+            const borderColor = document.getElementById('borderColor').value;
+            const headerBg = document.getElementById('headerBg').value;
+            const headerColor = document.getElementById('headerColor').value;
+            const bodyColor = document.getElementById('bodyColor').value;
+            const bodyBg = document.getElementById('bodyBg').value;
+            const tableWidth = document.getElementById('tableWidth').value;
+            const cellPadding = document.getElementById('cellPadding').value;
+            const fontSize = document.getElementById('fontSize').value;
+            const textAlign = document.getElementById('textAlign').value;
+            const headerBorderWidth = document.getElementById('headerBorderWidth').value;
+            const headerBorderColor = document.getElementById('headerBorderColor').value;
+            const lastRowBorder = document.getElementById('lastRowBorder').checked;
+            const lastRowBorderWidth = document.getElementById('lastRowBorderWidth').value;
+            const uppercase = document.getElementById('uppercase').checked;
+            const letterSpacing = document.getElementById('letterSpacing').value;
+            const headerFontWeight = document.getElementById('headerFontWeight').value;
+            const borderRadius = document.getElementById('borderRadius')?.value || 0;
+            const hoverEffect = document.getElementById('hoverEffect')?.checked || false;
+            const hoverColor = document.getElementById('hoverColor')?.value || '#ecf0f1';
+            const tableBorder = document.getElementById('tableBorder').checked;
+            const tableBorderWidth = document.getElementById('tableBorderWidth').value;
+            const tableBorderColor = document.getElementById('tableBorderColor').value;
+
+            let css = `<style>
+table {
+  width: ${tableWidth};
+  border-collapse: ${tableBorder ? 'separate' : 'collapse'};
+  border-spacing: 0;`;
+
+            if (tableBorder) {
+                css += `\n  border: ${tableBorderWidth}px solid ${tableBorderColor};`;
+            }
+
+            if (borderRadius > 0) {
+                css += `\n  border-radius: ${borderRadius}px;
+  overflow: hidden;`;
+            }
+
+            css += `
+}
+
+th {
+  background-color: ${headerBg};
+  color: ${headerColor};
+  padding: ${cellPadding}px;
+  text-align: ${textAlign};
+  font-weight: ${headerFontWeight};`;
+
+            if (headerBorderWidth > 0) {
+                css += `\n  border-bottom: ${headerBorderWidth}px solid ${headerBorderColor};`;
+            }
+
+            if (uppercase) {
+                css += `\n  text-transform: uppercase;`;
+            }
+
+            if (fontSize != 14) {
+                css += `\n  font-size: ${fontSize / 14}em;`;
+            }
+
+            if (letterSpacing > 0) {
+                css += `\n  letter-spacing: ${letterSpacing}px;`;
+            }
+
+            css += `
+}
+
+td {
+  padding: ${cellPadding}px;`;
+
+            if (borderStyle !== 'none') {
+                css += `\n  border-bottom: ${borderWidth}px ${borderStyle} ${borderColor};`;
+            }
+
+            if (bodyColor !== '#333333' || bodyBg !== '#ffffff') {
+                if (bodyColor !== '#333333') {
+                    css += `\n  color: ${bodyColor};`;
+                }
+                if (bodyBg !== '#ffffff') {
+                    css += `\n  background-color: ${bodyBg};`;
+                }
+            }
+
+            if (textAlign !== 'left') {
+                css += `\n  text-align: ${textAlign};`;
+            }
+
+            css += `
+}`;
+
+            if (hoverEffect) {
+                css += `
+
+tr:hover td {
+  background-color: ${hoverColor};
+}`;
+            }
+
+            if (lastRowBorder) {
+                css += `
+
+tr:last-child td {
+  border-bottom: ${lastRowBorderWidth}px solid ${headerBorderColor};
+}`;
+            }
+
+            css += `
+</style>`;
+
+            return { css };
+        }
+
+        function showCodeModal() {
+            const { css } = generateCode();
+            document.getElementById('cssCode').textContent = css;
+            document.getElementById('codeModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('codeModal').classList.remove('show');
+        }
+
+        function showHelp() {
+            document.getElementById('helpModal').classList.add('show');
+        }
+
+        function closeHelpModal() {
+            document.getElementById('helpModal').classList.remove('show');
+        }
+
+        function copyCode(type) {
+            const code = document.getElementById('cssCode').textContent;
+            const btn = document.getElementById('copyCssBtn');
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = btn.textContent;
+                btn.textContent = 'コピーしました!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function resetSettings() {
+            document.getElementById('borderStyle').value = 'solid';
+            document.getElementById('borderWidth').value = '1';
+            document.getElementById('borderColor').value = '#e0e0e0';
+            document.getElementById('headerBg').value = '#ffffff';
+            document.getElementById('headerColor').value = '#333333';
+            document.getElementById('bodyColor').value = '#333333';
+            document.getElementById('bodyBg').value = '#ffffff';
+            document.getElementById('tableWidth').value = '100%';
+            document.getElementById('cellPadding').value = '14';
+            document.getElementById('fontSize').value = '14';
+            document.getElementById('textAlign').value = 'left';
+            document.getElementById('headerBorderWidth').value = '2';
+            document.getElementById('headerBorderColor').value = '#333333';
+            document.getElementById('lastRowBorder').checked = false;
+            document.getElementById('lastRowBorderWidth').value = '2';
+            document.getElementById('uppercase').checked = false;
+            document.getElementById('letterSpacing').value = '0';
+            document.getElementById('headerFontWeight').value = '600';
+            if (document.getElementById('borderRadius')) {
+                document.getElementById('borderRadius').value = '0';
+            }
+            if (document.getElementById('hoverEffect')) {
+                document.getElementById('hoverEffect').checked = true;
+            }
+            if (document.getElementById('hoverColor')) {
+                document.getElementById('hoverColor').value = '#fafafa';
+            }
+            document.getElementById('tableBorder').checked = false;
+            document.getElementById('tableBorderWidth').value = '2';
+            document.getElementById('tableBorderColor').value = '#34495e';
+            updatePreview();
+        }
+
+        function shareOnX() {
+            const text = 'Power Automateのテーブルデザインが直感的な操作でスタイルを生成できるツールを見つけました。テンプレートも豊富で使える！';
+            const url = window.location.href;
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+            window.open(twitterUrl, '_blank', 'width=550,height=420');
+        }
+
+        document.getElementById('codeModal').addEventListener('click', (e) => {
+            if (e.target.id === 'codeModal') {
+                closeModal();
+            }
+        });
+
+        document.getElementById('helpModal').addEventListener('click', (e) => {
+            if (e.target.id === 'helpModal') {
+                closeHelpModal();
+            }
+        });
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            sidebar.classList.toggle('show');
+            overlay.classList.toggle('show');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+        }
+
+        renderTemplateCards();
+        updatePreview();
+    </script>
+</body>
+</html>
