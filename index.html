@@ -2547,12 +2547,16 @@ turquoise: {
             document.getElementById('tableBorderColorText').value = tableBorderColor;
 
             let style = `
-                border-collapse: collapse;
+                border-collapse: ${tableBorder ? 'separate' : 'collapse'};
+                border-spacing: 0;
                 width: ${tableWidth};
                 font-size: ${fontSize}px;
-                border-radius: ${borderRadius}px;
                 overflow: hidden;
             `;
+
+            if (borderRadius > 0) {
+                style += `border-radius: ${borderRadius}px;`;
+            }
 
             if (tableBorder) {
                 style += `border: ${tableBorderWidth}px solid ${tableBorderColor};`;
@@ -2660,7 +2664,8 @@ turquoise: {
             let css = `<style>
 table {
   width: ${tableWidth};
-  border-collapse: collapse;`;
+  border-collapse: ${tableBorder ? 'separate' : 'collapse'};
+  border-spacing: 0;`;
 
             if (tableBorder) {
                 css += `\n  border: ${tableBorderWidth}px solid ${tableBorderColor};`;
