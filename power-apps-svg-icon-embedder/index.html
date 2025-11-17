@@ -1142,7 +1142,7 @@
                 }
 
                 // Power Apps用のSVG生成
-                svgString = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960' width='48px' height='48px' fill='${encodeURIComponent(color)}'><path d='${currentIconSvg}'/></svg>`;
+                svgString = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960' width='48px' height='48px' fill='${color}'><path d='${currentIconSvg}'/></svg>`;
             } else {
                 const color1 = document.getElementById('gradientColor1').value;
                 const color2 = document.getElementById('gradientColor2').value;
@@ -1214,7 +1214,7 @@
                 }
             }
 
-            const powerAppsSvg = `"data:image/svg+xml,"& EncodeUrl("${svgString}")`;
+            const powerAppsSvg = `"data:image/svg+xml," & EncodeUrl("${svgString}")`;
             svgCode.textContent = powerAppsSvg;
         }
 
@@ -1296,7 +1296,7 @@
                 }
             }
 
-            const powerAppsSvg = `"data:image/svg+xml,"& EncodeUrl("${svgString}")`;
+            const powerAppsSvg = `"data:image/svg+xml," & EncodeUrl("${svgString}")`;
             const btn = document.getElementById('copySvgThemeBtn');
             const headerBtn = document.getElementById('headerCopySvgThemeBtn');
 
