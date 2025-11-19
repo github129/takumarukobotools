@@ -3,902 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Takumaru Kobo Tools - 業務効率化のための便利ツール集 | たく丸工房</title>
-
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="たく丸工房が提供する業務効率化ツール集。Power Automate用のテーブルスタイルジェネレーターなど、業務を効率化するツールを多数公開しています。">
-    <meta name="keywords" content="たく丸工房,Takumaru Kobo,業務効率化,Power Automate,ツール,HTMLテーブル,スタイルジェネレーター">
-    <meta name="author" content="Takumaru Kobo">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://takumarukobotools.github.io/">
-
-    <!-- Open Graph / Facebook -->
+    
+    <title>Power Platform Tools | たく丸工房</title>
+    <meta name="description" content="Power Platform（Power Apps, Power Automate, Copilot Studio など）開発を効率化するツール集。テーブルスタイル作成やSVG埋め込みコード生成など、実用的なツールを提供しています。">
+    <meta property="og:title" content="Power Platform Tools | たく丸工房">
+    <meta property="og:description" content="Power Platform開発者のための業務効率化ツールセット。">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://takumarukobotools.github.io/">
-    <meta property="og:title" content="Takumaru Kobo Tools - 業務効率化のための便利ツール集">
-    <meta property="og:description" content="たく丸工房が提供する業務効率化ツール集。Power Automate用のテーブルスタイルジェネレーターなど、業務を効率化するツールを多数公開しています。">
-    <meta property="og:image" content="https://takumarukobotools.github.io/favicon.ico">
-    <meta property="og:site_name" content="Takumaru Kobo Tools">
-    <meta property="og:locale" content="ja_JP">
+    <meta property="og:url" content="https://tools.takumarukobo.com/">
+    <meta property="og:image" content="https://tools.takumarukobo.com/logo.png">
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://takumarukobotools.github.io/">
-    <meta name="twitter:title" content="Takumaru Kobo Tools - 業務効率化のための便利ツール集">
-    <meta name="twitter:description" content="たく丸工房が提供する業務効率化ツール集。Power Automate用のテーブルスタイルジェネレーターなど、業務を効率化するツールを多数公開しています。">
-    <meta name="twitter:image" content="https://takumarukobotools.github.io/favicon.ico">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-
-    <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Takumaru Kobo Tools",
-      "url": "https://takumarukobotools.github.io/",
-      "description": "たく丸工房が提供する業務効率化のための便利ツール集",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Takumaru Kobo",
-        "url": "https://takumarukobo.com/",
-        "sameAs": [
-          "https://www.youtube.com/channel/UClAwgSz5vwnyJZNFA4g6p3w/"
-        ]
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://takumarukobotools.github.io/#tools",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-            background: #ffffff;
-            color: #333333;
-            min-height: 100vh;
-            line-height: 1.6;
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #F5F5F7;
+            color: #1D1D1F;
+        }
+        html { scroll-behavior: smooth; }
+
+        .material-symbols-rounded {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
 
-        .header {
-            background: #ffffff;
-            padding: 24px 0;
-            border-bottom: 1px solid #e8e8e8;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        .bento-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
+        .bento-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.12);
         }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 50px;
-            width: auto;
-        }
-
-        .nav {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .nav a {
-            color: #333333;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav a:hover {
-            color: #747474;
-        }
-
-        .nav a::after {
-            content: '';
+        
+        .blob {
             position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #333333;
-            transition: width 0.3s ease;
-        }
-
-        .nav a:hover::after {
-            width: 100%;
-        }
-
-        .hero {
-            background: #000000;
-            padding: 120px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            min-height: 600px;
-            display: flex;
-            align-items: center;
-        }
-
-        .hero-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
+            filter: blur(90px);
+            z-index: -1;
             opacity: 0.5;
-            z-index: 0;
-            object-fit: cover;
-            filter: brightness(0.7);
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.7) 100%);
-            z-index: 1;
-        }
-
-        .hero .container {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-        }
-
-        .hero-content {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 56px;
-            font-weight: 800;
-            margin-bottom: 28px;
-            color: #ffffff;
-            letter-spacing: -1.5px;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero-subtitle {
-            font-size: 22px;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 40px;
-            font-weight: 400;
-            line-height: 1.7;
-            text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-cta {
-            display: inline-flex;
-            gap: 16px;
-            margin-top: 20px;
-        }
-
-        .btn {
-            padding: 14px 32px;
-            border-radius: 9999px;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: #ffffff;
-            color: #000000;
-        }
-
-        .btn-primary:hover {
-            background: #f0f0f0;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #ffffff;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #ffffff;
-        }
-
-        .tools-section {
-            padding: 80px 0;
-            background: #ffffff;
-        }
-
-        .section-title {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #333333;
-            text-align: center;
-        }
-
-        .section-subtitle {
-            font-size: 18px;
-            color: #6d6d6d;
-            text-align: center;
-            margin-bottom: 60px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 32px;
-            margin-bottom: 40px;
-        }
-
-        .tool-card {
-            background: #ffffff;
-            border: 1px solid #e8e8e8;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .tool-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            border-color: #d0d0d0;
-        }
-
-        .tool-thumbnail {
-            width: 100%;
-            height: 220px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tool-thumbnail-text {
-            color: #ffffff;
-            font-size: 22px;
-            font-weight: 700;
-            text-align: center;
-            padding: 0 24px;
-            z-index: 1;
-        }
-
-        .tool-content {
-            padding: 28px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .tool-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #333333;
-        }
-
-        .tool-description {
-            font-size: 14px;
-            color: #6d6d6d;
-            line-height: 1.7;
-            margin-bottom: 20px;
-            flex: 1;
-        }
-
-        .tool-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .tool-tag {
-            background: #f5f5f5;
-            padding: 6px 14px;
-            border-radius: 9999px;
-            font-size: 12px;
-            color: #666666;
-            font-weight: 500;
-        }
-
-        .cta-section {
-            background: #000000;
-            padding: 100px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            min-height: 500px;
-            display: flex;
-            align-items: center;
-            margin-top: 80px;
-        }
-
-        .cta-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            opacity: 0.5;
-            z-index: 0;
-            object-fit: cover;
-            filter: brightness(0.7);
-        }
-
-        .cta-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.8) 100%);
-            z-index: 1;
-        }
-
-        .cta-section .container {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-        }
-
-        .cta-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .cta-section h2 {
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 24px;
-            color: #ffffff;
-            letter-spacing: -1px;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .cta-section p {
-            font-size: 20px;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 40px;
-            line-height: 1.7;
-            text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .cta-buttons {
-            display: inline-flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .footer {
-            background: #f0f0f0;
-            padding: 60px 0 30px;
-            margin-top: 0;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-section h3 {
-            font-size: 16px;
-            font-weight: 700;
-            color: #333333;
-            margin-bottom: 16px;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .footer-links a {
-            color: #6d6d6d;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: #333333;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #e0e0e0;
-            padding-top: 24px;
-            text-align: center;
-            color: #6d6d6d;
-            font-size: 14px;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 16px;
-            margin-top: 16px;
-        }
-
-        .social-icon {
-            width: 40px;
-            height: 40px;
-            background: #ffffff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: #333333;
-        }
-
-        .social-icon:hover {
-            background: #333333;
-            color: #ffffff;
-            transform: translateY(-2px);
-        }
-
-        .about-section {
-            background: #fafafa;
-            padding: 80px 0;
-        }
-
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        .about-content h2 {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            color: #333333;
-            text-align: center;
-        }
-
-        .about-content h3 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-top: 40px;
-            margin-bottom: 16px;
-            color: #333333;
-        }
-
-        .about-content p {
-            font-size: 16px;
-            color: #6d6d6d;
-            margin-bottom: 20px;
-            line-height: 1.8;
-        }
-
-        .social-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
-        }
-
-        .social-link-item {
-            display: flex;
-            align-items: center;
-            padding: 24px;
-            background: #ffffff;
-            border: 1px solid #e8e8e8;
-            border-radius: 12px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .social-link-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            border-color: #d0d0d0;
-        }
-
-        .link-icon {
-            width: 56px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #333333;
-            border-radius: 12px;
-            margin-right: 20px;
-            flex-shrink: 0;
-        }
-
-        .link-icon svg {
-            width: 30px;
-            height: 30px;
-            fill: #ffffff;
-        }
-
-        .link-text {
-            flex: 1;
-        }
-
-        .link-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #333333;
-            margin-bottom: 6px;
-        }
-
-        .link-description {
-            font-size: 14px;
-            color: #6d6d6d;
-            line-height: 1.5;
-        }
-
-        .feature-list {
-            list-style: none;
-            margin: 24px 0;
-            padding: 0;
-        }
-
-        .feature-list li {
-            padding: 12px 0 12px 32px;
-            position: relative;
-            color: #6d6d6d;
-            font-size: 16px;
-        }
-
-        .feature-list li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #333333;
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 20px;
-            }
-
-            .hero {
-                padding: 80px 0;
-                min-height: 500px;
-            }
-
-            .hero h1 {
-                font-size: 36px;
-                letter-spacing: -1px;
-            }
-
-            .hero-subtitle {
-                font-size: 18px;
-            }
-
-            .hero-subtitle br {
-                display: none;
-            }
-
-            .hero-cta {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .btn {
-                width: 100%;
-                text-align: center;
-            }
-
-            .section-title {
-                font-size: 28px;
-            }
-
-            .section-subtitle {
-                font-size: 16px;
-            }
-
-            .tools-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav {
-                display: none;
-            }
-
-            .social-links {
-                grid-template-columns: 1fr;
-            }
-
-            .about-content h2 {
-                font-size: 28px;
-            }
-
-            .about-content h3 {
-                font-size: 20px;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-section {
-                padding: 60px 0;
-                min-height: 400px;
-            }
-
-            .cta-section h2 {
-                font-size: 28px;
-            }
-
-            .cta-section p {
-                font-size: 16px;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .cta-buttons .btn {
-                width: 100%;
-            }
         }
     </style>
 </head>
-<body>
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <img src="logo_takumarukobo.png" alt="たく丸工房 Takumaru Kobo">
+<body class="antialiased relative overflow-x-hidden">
+
+    <nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl border-b border-gray-200/50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg overflow-hidden shadow-sm">
+                    <img src="logo.png" alt="たく丸工房 Logo" class="w-full h-full object-cover">
                 </div>
-                <nav class="nav">
-                    <a href="#tools">Tools</a>
-                    <a href="#about">About</a>
-                </nav>
+                <span class="font-semibold tracking-tight text-gray-900">たく丸工房 Tools</span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-medium text-gray-500">
+                <a href="index.html" class="text-gray-900 transition-colors">Tools</a>
+                <a href="about.html" class="hover:text-gray-900 transition-colors">About</a>
+                <a href="https://takumarukobo.com/" target="_blank" class="hover:text-gray-900 transition-colors">Home</a>
+                <a href="https://www.powerplatform.work/" target="_blank" class="hover:text-gray-900 transition-colors">Knowledge</a>
+                <a href="https://www.youtube.com/channel/UClAwgSz5vwnyJZNFA4g6p3w" target="_blank" class="flex items-center gap-1 hover:text-red-600 transition-colors">
+                    YouTube <span class="material-symbols-rounded text-[16px]">open_in_new</span>
+                </a>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <main>
-        <section class="hero">
-            <video class="hero-video" autoplay loop muted playsinline>
-                <source src="assets/appbuilder.mp4" type="video/mp4">
-            </video>
-            <div class="hero-overlay"></div>
-            <div class="container">
-                <div class="hero-content">
-                    <h1>業務効率化ツール集</h1>
-                    <p class="hero-subtitle">
-                        Power Platform をはじめとする業務ツールと組み合わせて使える<br>
-                        便利なツールを提供しています
+    <div class="blob bg-blue-200 w-[600px] h-[600px] rounded-full -top-20 -left-20 mix-blend-multiply animate-pulse"></div>
+    <div class="blob bg-indigo-200 w-[500px] h-[500px] rounded-full top-40 -right-20 mix-blend-multiply animate-pulse" style="animation-delay: 2s;"></div>
+
+    <section class="pt-40 pb-20 px-6 text-center max-w-5xl mx-auto">
+        <span class="inline-flex items-center gap-1 py-1 px-3 rounded-full bg-white border border-gray-200 text-xs font-semibold text-indigo-600 mb-8 shadow-sm">
+            <span class="material-symbols-rounded text-[16px]">check_circle</span> Updated for 2025
+        </span>
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-tight mb-6 text-gray-900">
+            Crafted for <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-500">Power Platform.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-500 font-normal leading-relaxed max-w-3xl mx-auto">
+            Power Apps や Power Automate の開発をもっと自由に、もっと美しく。<br>
+            たく丸工房が提供する、開発者のためのクリエイティブ・ユーティリティ。
+        </p>
+    </section>
+
+    <section class="px-6 pb-32 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[200px]">
+            
+            <a href="https://tools.takumarukobo.com/power-automate-table-style-generator/index.html" class="bento-card col-span-1 md:col-span-2 lg:col-span-2 row-span-2 bg-white rounded-[32px] p-8 border border-gray-100 shadow-sm flex flex-col justify-between relative overflow-hidden group">
+                <div class="z-10 relative">
+                    <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-5 text-blue-600">
+                        <span class="material-symbols-rounded text-[32px]">table_chart</span>
+                    </div>
+                    <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Table Style Generator</h3>
+                    <p class="text-gray-500 leading-relaxed">
+                        Power AutomateのHTMLテーブル作成をGUIで直感的に。<br>
+                        CSSを知らなくても、美しいメール通知をデザインできます。
                     </p>
-                    <div class="hero-cta">
-                        <a href="#tools" class="btn btn-primary">ツールを見る</a>
-                        <a href="#about" class="btn btn-secondary">詳しく知る</a>
+                </div>
+                
+                <div class="absolute right-0 bottom-0 w-1/2 h-1/2 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+                    <div class="grid grid-cols-3 gap-2 transform rotate-[-10deg] translate-x-10 translate-y-10">
+                        <div class="h-8 bg-blue-600 rounded-md col-span-3"></div>
+                        <div class="h-24 bg-blue-400 rounded-md"></div>
+                        <div class="h-24 bg-blue-400 rounded-md"></div>
+                        <div class="h-24 bg-blue-400 rounded-md"></div>
                     </div>
                 </div>
+
+                <div class="z-10 mt-4 flex items-center text-blue-600 font-medium text-sm group-hover:gap-2 transition-all">
+                    ツールを開く <span class="material-symbols-rounded text-[18px]">arrow_forward</span>
+                </div>
+            </a>
+
+            <a href="https://tools.takumarukobo.com/power-apps-svg-icon-embedder/index.html" class="bento-card col-span-1 md:col-span-2 bg-gradient-to-br from-[#2d3436] to-[#000000] rounded-[32px] p-8 shadow-lg flex flex-col justify-center relative overflow-hidden group text-white">
+                <div class="relative z-10 flex justify-between items-start h-full flex-col">
+                    <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-2">
+                        <span class="material-symbols-rounded text-[28px] text-white">integration_instructions</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-1">SVG Icon Embedder</h3>
+                        <p class="text-gray-300 text-sm">Power Apps用 SVG埋め込みコード生成ツール。<br>アイコンを自由にカスタマイズしてアプリに実装。</p>
+                    </div>
+                </div>
+                <div class="absolute -right-4 -bottom-4 opacity-10 font-mono text-6xl font-bold text-white rotate-[-15deg] select-none">
+                    &lt;svg&gt;
+                </div>
+            </a>
+
+            <a href="https://www.youtube.com/channel/UClAwgSz5vwnyJZNFA4g6p3w" target="_blank" class="bento-card col-span-1 bg-white rounded-[32px] p-6 border border-gray-100 shadow-sm flex flex-col justify-between group relative overflow-hidden">
+                <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center text-red-600 z-10">
+                    <span class="material-symbols-rounded text-[24px]">smart_display</span>
+                </div>
+                <div class="z-10">
+                    <h3 class="text-lg font-bold text-gray-900">YouTube</h3>
+                    <p class="text-xs text-gray-400 mt-1">解説動画・チュートリアル</p>
+                </div>
+                <div class="absolute -right-2 -bottom-2 w-20 h-20 bg-red-100 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity"></div>
+            </a>
+
+            <a href="https://www.powerplatform.work/" target="_blank" class="bento-card col-span-1 md:col-span-2 bg-white rounded-[32px] p-6 border border-gray-100 shadow-sm flex items-center justify-between group">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                         <span class="px-2 py-0.5 rounded bg-green-100 text-green-700 text-[10px] font-bold tracking-wide">INFO</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900">Power Platform Work</h3>
+                    <p class="text-gray-500 text-sm mt-1">技術ブログ・ナレッジベースサイト</p>
+                </div>
+                <div class="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center text-green-600 ml-4 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-rounded text-[28px]">menu_book</span>
+                </div>
+            </a>
+
+            <a href="https://takumarukobo.com/" target="_blank" class="bento-card col-span-1 bg-white rounded-[32px] p-6 border border-gray-100 shadow-sm flex flex-col justify-between group">
+                <div class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600">
+                    <span class="material-symbols-rounded text-[24px]">home</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900">Main Site</h3>
+                    <p class="text-xs text-gray-400 mt-1">たく丸工房 ホーム</p>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <footer class="border-t border-gray-200 bg-white py-12 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded overflow-hidden">
+                    <img src="logo.png" alt="たく丸工房 Logo" class="w-full h-full object-cover">
+                </div>
+                <p class="text-gray-500 text-sm">© 2025 Takumaru Kobo. All rights reserved.</p>
             </div>
-        </section>
-
-        <section id="tools" class="tools-section">
-            <div class="container">
-                <h2 class="section-title">Tools</h2>
-                <p class="section-subtitle">業務効率化に役立つツールを提供しています</p>
-                <div class="tools-grid">
-                <a href="power-automate-table-style-generator/index.html" class="tool-card">
-                    <div class="tool-thumbnail">
-                        <div class="tool-thumbnail-text">Table Style Generator</div>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Power Automate Table Style Generator</h3>
-                        <p class="tool-description">
-                            Power Automateのメール送信アクションで使えるHTMLテーブルのスタイルを簡単に生成できるツールです。40種類以上のテンプレートから選択でき、プレビューを見ながらカスタマイズできます。
-                        </p>
-                        <div class="tool-tags">
-                            <span class="tool-tag">Power Automate</span>
-                            <span class="tool-tag">HTML</span>
-                            <span class="tool-tag">CSS</span>
-                            <span class="tool-tag">テーブル</span>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="power-apps-svg-icon-embedder/index.html" class="tool-card">
-                    <div class="tool-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                        <div class="tool-thumbnail-text">SVG Icon Embedder</div>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Power Apps SVG Icon Embedder</h3>
-                        <p class="tool-description">
-                            Google Material IconsをPower Appsで簡単に使えるツール。アイコンを選択するだけでPower Apps用のSVG式を自動生成してコピーできます。100種類以上のアイコンから選択可能です。
-                        </p>
-                        <div class="tool-tags">
-                            <span class="tool-tag">Power Apps</span>
-                            <span class="tool-tag">SVG</span>
-                            <span class="tool-tag">Material Icons</span>
-                            <span class="tool-tag">アイコン</span>
-                        </div>
-                    </div>
-                </a>
-
-                    <!-- 今後のツールをここに追加 -->
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="about-section">
-            <div class="container">
-                <div class="about-content">
-                    <h2>About</h2>
-
-                    <p>
-                        たく丸工房は、日々の業務を効率化し、より創造的な仕事に時間を使えるよう支援することを目的としています。
-                        Power Automateをはじめとする様々なツールや技術を活用し、誰でも簡単に使える実用的なツールを開発・公開しています。
-                    </p>
-
-                    <h3>提供しているツール</h3>
-                    <p>
-                        このサイトでは、主に業務効率化に役立つWebツールを公開しています。
-                    </p>
-                    <ul class="feature-list">
-                        <li>Power Automate Table Style Generator - HTMLテーブルスタイルの簡単生成</li>
-                        <li>Power Apps SVG Icon Embedder - Material IconsのSVG埋め込み</li>
-                        <li>ブラウザ上で動作し、インストール不要</li>
-                        <li>今後も便利なツールを追加予定</li>
-                    </ul>
-
-                    <h3>コンテンツとコミュニティ</h3>
-                    <p>
-                        ツールの使い方やノウハウ、技術情報などをYouTubeチャンネルや公式サイトで発信しています。
-                    </p>
-
-                    <div class="social-links">
-                        <a href="https://www.youtube.com/channel/UClAwgSz5vwnyJZNFA4g6p3w/" class="social-link-item" target="_blank" rel="noopener noreferrer">
-                            <div class="link-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                                </svg>
-                            </div>
-                            <div class="link-text">
-                                <div class="link-title">YouTube チャンネル</div>
-                                <div class="link-description">ツールの使い方やTipsを動画で紹介</div>
-                            </div>
-                        </a>
-
-                        <a href="https://takumarukobo.com/" class="social-link-item" target="_blank" rel="noopener noreferrer">
-                            <div class="link-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                                </svg>
-                            </div>
-                            <div class="link-text">
-                                <div class="link-title">公式サイト</div>
-                                <div class="link-description">詳しい情報やその他のコンテンツ</div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <h3>お問い合わせ</h3>
-                    <p>
-                        ツールに関するご質問やご要望がございましたら、YouTubeチャンネルまたは公式サイトからお気軽にお問い合わせください。
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="cta-section">
-            <video class="cta-video" autoplay loop muted playsinline>
-                <source src="assets/bg02.mp4" type="video/mp4">
-            </video>
-            <div class="cta-overlay"></div>
-            <div class="container">
-                <div class="cta-content">
-                    <h2>さらなる効率化を実現</h2>
-                    <p>
-                        たく丸工房のツールで、あなたの業務をもっとスムーズに
-                    </p>
-                    <div class="cta-buttons">
-                        <a href="#tools" class="btn btn-primary">ツール一覧を見る</a>
-                        <a href="https://www.youtube.com/channel/UClAwgSz5vwnyJZNFA4g6p3w/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">YouTubeで学ぶ</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>たく丸工房</h3>
-                    <p style="color: #6d6d6d; font-size: 14px; line-height: 1.6;">
-                        業務効率化のための<br>
-                        便利なツールを提供しています
-                    </p>
-                    <div class="social-icons">
-                        <a href="https://www.youtube.com/channel/UClAwgSz5vwnyJZNFA4g6p3w/" class="social-icon" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                            </svg>
-                        </a>
-                        <a href="https://takumarukobo.com/" class="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Website">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h3>Tools</h3>
-                    <div class="footer-links">
-                        <a href="power-automate-table-style-generator/index.html">Table Style Generator</a>
-                        <a href="power-apps-svg-icon-embedder/index.html">SVG Icon Embedder</a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h3>Links</h3>
-                    <div class="footer-links">
-                        <a href="#about">About</a>
-                        <a href="https://www.youtube.com/channel/UClAwgSz5vwnyJZNFA4g6p3w/" target="_blank" rel="noopener noreferrer">YouTube</a>
-                        <a href="https://takumarukobo.com/" target="_blank" rel="noopener noreferrer">公式サイト</a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Takumaru Kobo Tools. All rights reserved.</p>
+            <div class="flex space-x-6">
+                <a href="about.html" class="text-gray-400 hover:text-gray-900 text-sm transition-colors">About</a>
+                <a href="https://takumarukobo.com/page-152/" class="text-gray-400 hover:text-gray-900 text-sm transition-colors">お問い合わせ</a>
+                <a href="https://x.com/taku_ma_ru" class="text-gray-400 hover:text-gray-900 text-sm transition-colors">X (Twitter)</a>
             </div>
         </div>
     </footer>
+
 </body>
 </html>
