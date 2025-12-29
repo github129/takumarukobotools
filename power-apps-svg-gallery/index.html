@@ -583,8 +583,14 @@
             document.getElementById('modalCode').textContent = currentSample.svgCode;
 
             // Power Apps用コード生成
-            const encodedSvg = currentSample.svgCode.replace(/"/g, "'");
-            const powerAppsCode = `"data:image/svg+xml," & EncodeUrl("${encodedSvg}")`;
+            // 改行と余分な空白を削除し、ダブルクォートをシングルクォートに変換
+            const cleanedSvg = currentSample.svgCode
+                .replace(/\n/g, '')
+                .replace(/\s+/g, ' ')
+                .replace(/>\s+</g, '><')
+                .replace(/"/g, "'")
+                .trim();
+            const powerAppsCode = `"data:image/svg+xml," & EncodeUrl("${cleanedSvg}")`;
             document.getElementById('modalPowerAppsCode').textContent = powerAppsCode;
 
             document.getElementById('modal').classList.add('show');
