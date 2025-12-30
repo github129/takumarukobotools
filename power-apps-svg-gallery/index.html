@@ -853,19 +853,232 @@
             document.getElementById('modalPreview').innerHTML = currentSample.svgCode;
             document.getElementById('modalCode').textContent = currentSample.svgCode;
 
-            // Power Apps用コード生成
-            // 改行と余分な空白を削除し、ダブルクォートをシングルクォートに変換
-            const cleanedSvg = currentSample.svgCode
-                .replace(/\n/g, '')
-                .replace(/\s+/g, ' ')
-                .replace(/>\s+</g, '><')
-                .replace(/"/g, "'")
-                .trim();
-            const powerAppsCode = `"data:image/svg+xml," & EncodeUrl("${cleanedSvg}")`;
+            // Power Apps用コード生成（With関数で変数化）
+            let powerAppsCode = generatePowerAppsCode(id, currentSample.svgCode);
             document.getElementById('modalPowerAppsCode').textContent = powerAppsCode;
 
             document.getElementById('modal').classList.add('show');
             document.body.style.overflow = 'hidden';
+        }
+
+        // Power Apps用コード生成関数（With関数で変数化）
+        function generatePowerAppsCode(id, svgCode) {
+            const cleanSvg = (code) => code.replace(/\n/g, '').replace(/\s+/g, ' ').replace(/>\s+</g, '><').replace(/"/g, "'").trim();
+
+            // サンプルIDに応じてWith関数付きコードを生成
+            switch(id) {
+                case 1: // シンプル棒グラフ
+                    return `With(
+    {
+        value1: 100,
+        value2: 140,
+        value3: 80,
+        color1: "#667eea",
+        color2: "#764ba2",
+        color3: "#f093fb",
+        label1: "1月",
+        label2: "2月",
+        label3: "3月"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'><rect x='50' y='" & (180 - value1) & "' width='40' height='" & value1 & "' fill='" & color1 & "' rx='4'/><rect x='130' y='" & (180 - value2) & "' width='40' height='" & value2 & "' fill='" & color2 & "' rx='4'/><rect x='210' y='" & (180 - value3) & "' width='40' height='" & value3 & "' fill='" & color3 & "' rx='4'/><text x='70' y='195' text-anchor='middle' font-size='12' fill='#666'>" & label1 & "</text><text x='150' y='195' text-anchor='middle' font-size='12' fill='#666'>" & label2 & "</text><text x='230' y='195' text-anchor='middle' font-size='12' fill='#666'>" & label3 & "</text></svg>")
+)`;
+
+                case 2: // 円グラフ
+                    return `With(
+    {
+        percentage: 75,
+        color: "#667eea"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='200' height='200'><circle cx='100' cy='100' r='80' fill='#f0f0f0'/><circle cx='100' cy='100' r='80' fill='none' stroke='" & color & "' stroke-width='40' stroke-dasharray='377 377' stroke-dashoffset='" & (377 * (100 - percentage) / 100) & "' transform='rotate(-90 100 100)'/><text x='100' y='105' text-anchor='middle' font-size='32' font-weight='bold' fill='" & color & "'>" & percentage & "%</text></svg>")
+)`;
+
+                case 3: // 折れ線グラフ
+                    return `With(
+    {
+        point1: 100, point2: 80, point3: 60, point4: 70, point5: 30,
+        color: "#667eea"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'><defs><linearGradient id='lineGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.3' /><stop offset='100%' style='stop-color:" & color & ";stop-opacity:0' /></linearGradient></defs><polyline points='20," & point1 & " 80," & point2 & " 140," & point3 & " 200," & point4 & " 260," & point5 & "' fill='none' stroke='" & color & "' stroke-width='3'/><polygon points='20," & point1 & " 80," & point2 & " 140," & point3 & " 200," & point4 & " 260," & point5 & " 260,130 20,130' fill='url(#lineGrad)'/><circle cx='20' cy='" & point1 & "' r='4' fill='" & color & "'/><circle cx='80' cy='" & point2 & "' r='4' fill='" & color & "'/><circle cx='140' cy='" & point3 & "' r='4' fill='" & color & "'/><circle cx='200' cy='" & point4 & "' r='4' fill='" & color & "'/><circle cx='260' cy='" & point5 & "' r='4' fill='" & color & "'/></svg>")
+)`;
+
+                case 4: // KPIカード
+                    return `With(
+    {
+        title: "今月の売上",
+        value: "¥1.2M",
+        change: "+15%",
+        changeLabel: "vs 先月"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'><rect width='300' height='150' fill='#ffffff' rx='12'/><rect width='300' height='150' fill='url(#cardGrad)' rx='12' opacity='0.1'/><defs><linearGradient id='cardGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:#667eea' /><stop offset='100%' style='stop-color:#764ba2' /></linearGradient></defs><text x='20' y='40' font-size='14' fill='#666' font-weight='500'>" & title & "</text><text x='20' y='85' font-size='36' fill='#1a1a1a' font-weight='bold'>" & value & "</text><text x='20' y='115' font-size='12' fill='#10b981'>↑ " & change & " " & changeLabel & "</text></svg>")
+)`;
+
+                case 7: // 積み上げ棒グラフ
+                    return `With(
+    {
+        q1_value1: 60, q1_value2: 40,
+        q2_value1: 80, q2_value2: 40,
+        q3_value1: 70, q3_value2: 40,
+        color1: "#667eea",
+        color2: "#764ba2"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'><rect x='50' y='" & (160 - q1_value1) & "' width='40' height='" & q1_value1 & "' fill='" & color1 & "' rx='4'/><rect x='50' y='" & (160 - q1_value1 - q1_value2) & "' width='40' height='" & q1_value2 & "' fill='" & color2 & "' rx='4'/><rect x='130' y='" & (160 - q2_value1) & "' width='40' height='" & q2_value1 & "' fill='" & color1 & "' rx='4'/><rect x='130' y='" & (160 - q2_value1 - q2_value2) & "' width='40' height='" & q2_value2 & "' fill='" & color2 & "' rx='4'/><rect x='210' y='" & (160 - q3_value1) & "' width='40' height='" & q3_value1 & "' fill='" & color1 & "' rx='4'/><rect x='210' y='" & (160 - q3_value1 - q3_value2) & "' width='40' height='" & q3_value2 & "' fill='" & color2 & "' rx='4'/><text x='70' y='185' text-anchor='middle' font-size='11' fill='#666'>Q1</text><text x='150' y='185' text-anchor='middle' font-size='11' fill='#666'>Q2</text><text x='230' y='185' text-anchor='middle' font-size='11' fill='#666'>Q3</text></svg>")
+)`;
+
+                case 9: // 半円ゲージ
+                    return `With(
+    {
+        percentage: 78
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 120' width='200' height='120'><defs><linearGradient id='gaugeGrad' x1='0%' y1='0%' x2='100%' y2='0%'><stop offset='0%' style='stop-color:#ef4444' /><stop offset='50%' style='stop-color:#fbbf24' /><stop offset='100%' style='stop-color:#10b981' /></linearGradient></defs><path d='M 30 100 A 70 70 0 0 1 170 100' fill='none' stroke='#e5e7eb' stroke-width='20' stroke-linecap='round'/><path d='M 30 100 A 70 70 0 " & If(percentage > 50, "1", "0") & " 1 " & (100 + 70 * Cos((percentage * 180 / 100) * Pi() / 180)) & " " & (100 - 70 * Sin((percentage * 180 / 100) * Pi() / 180)) & "' fill='none' stroke='url(#gaugeGrad)' stroke-width='20' stroke-linecap='round'/><text x='100' y='95' text-anchor='middle' font-size='24' font-weight='bold' fill='#1a1a1a'>" & percentage & "%</text></svg>")
+)`;
+
+                case 11: // トレンドインジケーター（上昇）
+                    return `With(
+    {
+        percentage: 15.3
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60' width='100' height='60'><rect width='100' height='60' fill='#d1fae5' rx='8'/><polygon points='50,15 65,35 55,35 55,45 45,45 45,35 35,35' fill='#10b981'/><text x='50' y='58' text-anchor='middle' font-size='10' fill='#059669' font-weight='600'>+" & percentage & "%</text></svg>")
+)`;
+
+                case 12: // トレンドインジケーター（下降）
+                    return `With(
+    {
+        percentage: 8.7
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60' width='100' height='60'><rect width='100' height='60' fill='#fee2e2' rx='8'/><polygon points='50,45 35,25 45,25 45,15 55,15 55,25 65,25' fill='#ef4444'/><text x='50' y='58' text-anchor='middle' font-size='10' fill='#dc2626' font-weight='600'>-" & percentage & "%</text></svg>")
+)`;
+
+                case 13: // ドーナツグラフ
+                    return `With(
+    {
+        percentage: 85,
+        color1: "#667eea",
+        color2: "#764ba2",
+        label: "達成率"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='200' height='200'><circle cx='100' cy='100' r='70' fill='none' stroke='#f0f0f0' stroke-width='30'/><circle cx='100' cy='100' r='70' fill='none' stroke='" & color1 & "' stroke-width='30' stroke-dasharray='" & (440 * percentage * 0.6 / 100) & " 440' stroke-dashoffset='0' transform='rotate(-90 100 100)'/><circle cx='100' cy='100' r='70' fill='none' stroke='" & color2 & "' stroke-width='30' stroke-dasharray='" & (440 * (100 - percentage) * 0.6 / 100) & " 440' stroke-dashoffset='-" & (440 * percentage * 0.6 / 100) & "' transform='rotate(-90 100 100)'/><text x='100' y='95' text-anchor='middle' font-size='28' font-weight='bold' fill='#1a1a1a'>" & percentage & "%</text><text x='100' y='115' text-anchor='middle' font-size='12' fill='#666'>" & label & "</text></svg>")
+)`;
+
+                case 14: // 円形プログレスリング
+                    return `With(
+    {
+        percentage: 70,
+        color: "#667eea"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' width='120' height='120'><circle cx='60' cy='60' r='50' fill='none' stroke='#f0f0f0' stroke-width='12'/><circle cx='60' cy='60' r='50' fill='none' stroke='" & color & "' stroke-width='12' stroke-dasharray='" & (314 * percentage / 100) & " 314' stroke-dashoffset='0' transform='rotate(-90 60 60)' stroke-linecap='round'/><text x='60' y='65' text-anchor='middle' font-size='24' font-weight='bold' fill='#1a1a1a'>" & percentage & "%</text></svg>")
+)`;
+
+                case 16: // 横棒グラフ
+                    return `With(
+    {
+        dept1: "営業部", value1: 90,
+        dept2: "開発部", value2: 70,
+        dept3: "総務部", value3: 50,
+        color1: "#667eea",
+        color2: "#764ba2",
+        color3: "#f093fb"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'><rect x='80' y='20' width='" & (value1 * 2) & "' height='20' fill='" & color1 & "' rx='4'/><rect x='80' y='60' width='" & (value2 * 2) & "' height='20' fill='" & color2 & "' rx='4'/><rect x='80' y='100' width='" & (value3 * 2) & "' height='20' fill='" & color3 & "' rx='4'/><text x='75' y='35' text-anchor='end' font-size='12' fill='#666'>" & dept1 & "</text><text x='75' y='75' text-anchor='end' font-size='12' fill='#666'>" & dept2 & "</text><text x='75' y='115' text-anchor='end' font-size='12' fill='#666'>" & dept3 & "</text><text x='" & (80 + value1 * 2 - 5) & "' y='35' font-size='12' fill='#fff' font-weight='600'>" & value1 & "%</text><text x='" & (80 + value2 * 2 - 5) & "' y='75' font-size='12' fill='#fff' font-weight='600'>" & value2 & "%</text><text x='" & (80 + value3 * 2 - 5) & "' y='115' font-size='12' fill='#fff' font-weight='600'>" & value3 & "%</text></svg>")
+)`;
+
+                case 17: // ミニKPIカード
+                    return `With(
+    {
+        title: "売上高",
+        value: "¥842K",
+        change: "+12%",
+        changeLabel: "前月比"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 100' width='180' height='100'><rect width='180' height='100' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><circle cx='30' cy='30' r='18' fill='#eff6ff'/><text x='30' y='37' text-anchor='middle' font-size='20' fill='#3b82f6'>$</text><text x='65' y='30' font-size='11' fill='#666'>" & title & "</text><text x='20' y='70' font-size='28' fill='#1a1a1a' font-weight='bold'>" & value & "</text><text x='20' y='88' font-size='11' fill='#10b981'>↑ " & change & " " & changeLabel & "</text></svg>")
+)`;
+
+                case 18: // 複数円グラフ比較
+                    return `With(
+    {
+        year1: "2024年", percentage1: 75, color1: "#667eea",
+        year2: "2025年", percentage2: 85, color2: "#10b981"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 280 140' width='280' height='140'><circle cx='70' cy='70' r='50' fill='#f0f0f0'/><circle cx='70' cy='70' r='50' fill='none' stroke='" & color1 & "' stroke-width='25' stroke-dasharray='" & (314 * percentage1 / 100) & " 314' stroke-dashoffset='0' transform='rotate(-90 70 70)'/><text x='70' y='75' text-anchor='middle' font-size='18' font-weight='bold' fill='#1a1a1a'>" & percentage1 & "%</text><text x='70' y='135' text-anchor='middle' font-size='11' fill='#666'>" & year1 & "</text><circle cx='210' cy='70' r='50' fill='#f0f0f0'/><circle cx='210' cy='70' r='50' fill='none' stroke='" & color2 & "' stroke-width='25' stroke-dasharray='" & (314 * percentage2 / 100) & " 314' stroke-dashoffset='0' transform='rotate(-90 210 70)'/><text x='210' y='75' text-anchor='middle' font-size='18' font-weight='bold' fill='#1a1a1a'>" & percentage2 & "%</text><text x='210' y='135' text-anchor='middle' font-size='11' fill='#666'>" & year2 & "</text></svg>")
+)`;
+
+                case 19: // バッテリーインジケーター
+                    return `With(
+    {
+        percentage: 68,
+        color: "#10b981"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 80' width='150' height='80'><rect x='20' y='25' width='100' height='30' fill='none' stroke='#e5e7eb' stroke-width='3' rx='4'/><rect x='120' y='32' width='8' height='16' fill='#e5e7eb' rx='2'/><rect x='24' y='29' width='" & (percentage * 0.92) & "' height='22' fill='" & color & "' rx='2'/><text x='75' y='68' text-anchor='middle' font-size='14' fill='#666' font-weight='600'>" & percentage & "%</text></svg>")
+)`;
+
+                case 21: // ダッシュボードヘッダー
+                    return `With(
+    {
+        kpi1_label: "総売上", kpi1_value: "¥2.4M",
+        kpi2_label: "新規顧客", kpi2_value: "342",
+        kpi3_label: "契約率", kpi3_value: "67%",
+        kpi4_label: "満足度", kpi4_value: "4.8"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80' width='400' height='80'><rect width='400' height='80' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><text x='20' y='30' font-size='11' fill='#666'>" & kpi1_label & "</text><text x='20' y='55' font-size='20' fill='#1a1a1a' font-weight='bold'>" & kpi1_value & "</text><line x1='100' y1='15' x2='100' y2='65' stroke='#e5e7eb' stroke-width='1'/><text x='120' y='30' font-size='11' fill='#666'>" & kpi2_label & "</text><text x='120' y='55' font-size='20' fill='#1a1a1a' font-weight='bold'>" & kpi2_value & "</text><line x1='200' y1='15' x2='200' y2='65' stroke='#e5e7eb' stroke-width='1'/><text x='220' y='30' font-size='11' fill='#666'>" & kpi3_label & "</text><text x='220' y='55' font-size='20' fill='#1a1a1a' font-weight='bold'>" & kpi3_value & "</text><line x1='300' y1='15' x2='300' y2='65' stroke='#e5e7eb' stroke-width='1'/><text x='320' y='30' font-size='11' fill='#666'>" & kpi4_label & "</text><text x='320' y='55' font-size='20' fill='#1a1a1a' font-weight='bold'>" & kpi4_value & "</text></svg>")
+)`;
+
+                case 23: // 比較カード（vs 前年）
+                    return `With(
+    {
+        title: "売上比較",
+        year1: "2024年", value1: "¥1.8M",
+        year2: "2025年", value2: "¥2.1M",
+        growth: "+16.7% 成長"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 280 140' width='280' height='140'><rect width='280' height='140' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><text x='20' y='30' font-size='13' fill='#666' font-weight='500'>" & title & "</text><rect x='20' y='50' width='110' height='70' fill='#f9fafb' rx='8'/><text x='75' y='70' text-anchor='middle' font-size='11' fill='#999'>" & year1 & "</text><text x='75' y='95' text-anchor='middle' font-size='24' fill='#666' font-weight='bold'>" & value1 & "</text><rect x='150' y='50' width='110' height='70' fill='#eff6ff' rx='8'/><text x='205' y='70' text-anchor='middle' font-size='11' fill='#999'>" & year2 & "</text><text x='205' y='95' text-anchor='middle' font-size='24' fill='#3b82f6' font-weight='bold'>" & value2 & "</text><rect x='95' y='125' width='90' height='10' fill='#d1fae5' rx='5'/><text x='140' y='133' text-anchor='middle' font-size='9' fill='#059669' font-weight='600'>" & growth & "</text></svg>")
+)`;
+
+                case 24: // タスク進捗カード
+                    return `With(
+    {
+        title: "プロジェクト進捗",
+        completed: 14,
+        total: 20,
+        inProgress: 6
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 120' width='300' height='120'><rect width='300' height='120' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><text x='20' y='25' font-size='13' fill='#666' font-weight='600'>" & title & "</text><text x='20' y='55' font-size='11' fill='#999'>完了タスク</text><rect x='20' y='62' width='260' height='12' fill='#f0f0f0' rx='6'/><rect x='20' y='62' width='" & (260 * completed / total) & "' height='12' fill='#10b981' rx='6'/><text x='280' y='72' text-anchor='end' font-size='11' fill='#1a1a1a' font-weight='600'>" & completed & "/" & total & "</text><circle cx='25' cy='95' r='4' fill='#10b981'/><text x='35' y='99' font-size='11' fill='#666'>完了: " & completed & "件</text><circle cx='125' cy='95' r='4' fill='#667eea'/><text x='135' y='99' font-size='11' fill='#666'>進行中: " & inProgress & "件</text></svg>")
+)`;
+
+                case 28: // 統計サマリーカード
+                    return `With(
+    {
+        title: "総アクセス数",
+        value: "12.5K",
+        change: "+8.3%",
+        changeCount: "962",
+        changeLabel: "前日比"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 110' width='220' height='110'><rect width='220' height='110' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><rect x='15' y='15' width='40' height='40' fill='#f0fdf4' rx='8'/><text x='35' y='42' text-anchor='middle' font-size='24' fill='#10b981'>↑</text><text x='65' y='28' font-size='12' fill='#999'>" & title & "</text><text x='65' y='55' font-size='26' fill='#1a1a1a' font-weight='bold'>" & value & "</text><rect x='15' y='70' width='190' height='25' fill='#f9fafb' rx='6'/><text x='22' y='86' font-size='11' fill='#666'>" & changeLabel & "</text><text x='198' y='86' text-anchor='end' font-size='11' fill='#10b981' font-weight='600'>" & change & " (" & changeCount & ")</text></svg>")
+)`;
+
+                case 29: // 目標達成メーター
+                    return `With(
+    {
+        percentage: 80,
+        achieved: "¥800K",
+        target: "¥1,000K",
+        title: "月次目標"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 140' width='200' height='140'><text x='100' y='20' text-anchor='middle' font-size='13' fill='#666' font-weight='600'>" & title & "</text><rect x='30' y='40' width='140' height='30' fill='#f0f0f0' rx='15'/><rect x='30' y='40' width='" & (140 * percentage / 100) & "' height='30' fill='#10b981' rx='15'/><text x='100' y='61' text-anchor='middle' font-size='14' fill='#fff' font-weight='bold'>" & percentage & "%</text><text x='100' y='100' text-anchor='middle' font-size='12' fill='#999'>達成額</text><text x='100' y='120' text-anchor='middle' font-size='20' fill='#1a1a1a' font-weight='bold'>" & achieved & "</text><text x='100' y='135' text-anchor='middle' font-size='10' fill='#999'>/ " & target & "</text></svg>")
+)`;
+
+                case 30: // リアルタイムカウンター
+                    return `With(
+    {
+        title: "オンラインユーザー",
+        count: "1,847"
+    },
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 120' width='250' height='120'><rect width='250' height='120' fill='#1a1a1a' rx='12'/><text x='20' y='35' font-size='13' fill='#999' font-weight='500'>" & title & "</text><text x='20' y='75' font-size='48' fill='#10b981' font-weight='bold' font-family='monospace'>" & count & "</text><circle cx='215' cy='30' r='8' fill='#10b981'/><text x='230' y='35' font-size='11' fill='#10b981' font-weight='600'>LIVE</text><text x='20' y='100' font-size='11' fill='#666'>最終更新: たった今</text></svg>")
+)`;
+
+                // 数値を扱わないサンプルはシンプルなコードを返す
+                default:
+                    return `"data:image/svg+xml," & EncodeUrl("${cleanSvg(svgCode)}")`;
+            }
         }
 
         // モーダルを閉じる
