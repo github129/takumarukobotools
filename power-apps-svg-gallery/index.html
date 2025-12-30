@@ -882,12 +882,12 @@
             ForAll(
                 Sequence(CountRows(data)),
                 With(
-                    {
-                        item: Index(data, Value),
-                        x: 30 + (Value - 1) * (240 / CountRows(data))
-                    },
-                    "<rect x='" & x & "' y='" & (180 - item.value) & "' width='" & (200 / CountRows(data)) & "' height='" & item.value & "' fill='" & item.color & "' rx='4'/>" &
-                    "<text x='" & (x + 100 / CountRows(data)) & "' y='195' text-anchor='middle' font-size='12' fill='#666'>" & item.label & "</text>"
+                    {item: Index(data, Value)},
+                    With(
+                        {x: 30 + (Value - 1) * (240 / CountRows(data))},
+                        "<rect x='" & x & "' y='" & (180 - item.value) & "' width='" & (200 / CountRows(data)) & "' height='" & item.value & "' fill='" & item.color & "' rx='4'/>" &
+                        "<text x='" & (x + 100 / CountRows(data)) & "' y='195' text-anchor='middle' font-size='12' fill='#666'>" & item.label & "</text>"
+                    )
                 )
             ),
             ""
@@ -920,22 +920,41 @@
         Concat(
             ForAll(
                 Sequence(CountRows(data)),
-                With({item: Index(data, Value), x: 20 + (Value - 1) * (260 / (CountRows(data) - 1))},
-                    x & "," & item.y
+                With(
+                    {item: Index(data, Value)},
+                    With(
+                        {x: 20 + (Value - 1) * (260 / (CountRows(data) - 1))},
+                        x & "," & item.y
+                    )
                 )
             ),
             " "
         ) &
         "' fill='none' stroke='" & color & "' stroke-width='3'/>" &
         "<polygon points='" &
-        Concat(ForAll(Sequence(CountRows(data)), With({item: Index(data, Value), x: 20 + (Value - 1) * (260 / (CountRows(data) - 1))}, x & "," & item.y)), " ") &
+        Concat(
+            ForAll(
+                Sequence(CountRows(data)),
+                With(
+                    {item: Index(data, Value)},
+                    With(
+                        {x: 20 + (Value - 1) * (260 / (CountRows(data) - 1))},
+                        x & "," & item.y
+                    )
+                )
+            ),
+            " "
+        ) &
         " 280,130 20,130' fill='url(#lineGrad)'/>" &
         Concat(
             ForAll(
                 Sequence(CountRows(data)),
                 With(
-                    {item: Index(data, Value), x: 20 + (Value - 1) * (260 / (CountRows(data) - 1))},
-                    "<circle cx='" & x & "' cy='" & item.y & "' r='4' fill='" & color & "'/>"
+                    {item: Index(data, Value)},
+                    With(
+                        {x: 20 + (Value - 1) * (260 / (CountRows(data) - 1))},
+                        "<circle cx='" & x & "' cy='" & item.y & "' r='4' fill='" & color & "'/>"
+                    )
                 )
             ),
             ""
@@ -959,43 +978,56 @@
                     return `With(
     {
         data: Table(
-            {label: "Q1", values: [60, 40]},
-            {label: "Q2", values: [80, 40]},
-            {label: "Q3", values: [70, 40]}
+            {bar: 1, segment: 1, value: 60, label: "Q1"},
+            {bar: 1, segment: 2, value: 40, label: "Q1"},
+            {bar: 2, segment: 1, value: 80, label: "Q2"},
+            {bar: 2, segment: 2, value: 40, label: "Q2"},
+            {bar: 3, segment: 1, value: 70, label: "Q3"},
+            {bar: 3, segment: 2, value: 40, label: "Q3"}
         ),
-        colors: ["#667eea", "#764ba2"]
+        colors: Table(
+            {segment: 1, color: "#667eea"},
+            {segment: 2, color: "#764ba2"}
+        )
     },
-    "data:image/svg+xml," & EncodeUrl(
-        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
-        Concat(
-            ForAll(
-                Sequence(CountRows(data)),
-                With(
-                    {
-                        item: Index(data, Value),
-                        x: 30 + (Value - 1) * (240 / CountRows(data)),
-                        totalHeight: Sum(item.values)
-                    },
-                    Concat(
-                        ForAll(
-                            Sequence(CountRows(item.values)),
-                            With(
-                                {
-                                    val: Index(item.values, Value),
-                                    stackY: Sum(FirstN(item.values, Value)),
-                                    color: Index(colors, Value)
-                                },
-                                "<rect x='" & x & "' y='" & (160 - stackY) & "' width='" & (200 / CountRows(data)) & "' height='" & val & "' fill='" & color & "' rx='4'/>"
-                            )
-                        ),
-                        ""
-                    ) &
-                    "<text x='" & (x + 100 / CountRows(data)) & "' y='185' text-anchor='middle' font-size='11' fill='#666'>" & item.label & "</text>"
-                )
-            ),
-            ""
-        ) &
-        "</svg>"
+    With(
+        {barCount: Max(data, bar)},
+        "data:image/svg+xml," & EncodeUrl(
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+            Concat(
+                ForAll(
+                    Sequence(barCount),
+                    With(
+                        {
+                            barNum: Value,
+                            barData: Filter(data, bar = barNum)
+                        },
+                        With(
+                            {x: 30 + (barNum - 1) * (240 / barCount)},
+                            Concat(
+                                ForAll(
+                                    barData,
+                                    With(
+                                        {
+                                            segData: ThisRecord,
+                                            colorItem: LookUp(colors, segment = segData.segment)
+                                        },
+                                        With(
+                                            {stackY: Sum(Filter(barData, segment <= segData.segment), value)},
+                                            "<rect x='" & x & "' y='" & (160 - stackY) & "' width='" & (200 / barCount) & "' height='" & segData.value & "' fill='" & colorItem.color & "' rx='4'/>"
+                                        )
+                                    )
+                                ),
+                                ""
+                            ) &
+                            "<text x='" & (x + 100 / barCount) & "' y='185' text-anchor='middle' font-size='11' fill='#666'>" & First(barData).label & "</text>"
+                        )
+                    )
+                ),
+                ""
+            ) &
+            "</svg>"
+        )
     )
 )`;
 
@@ -1058,13 +1090,13 @@
             ForAll(
                 Sequence(CountRows(data)),
                 With(
-                    {
-                        item: Index(data, Value),
-                        y: 10 + (Value - 1) * (130 / CountRows(data))
-                    },
-                    "<rect x='80' y='" & y & "' width='" & (item.value * 2) & "' height='" & (100 / CountRows(data)) & "' fill='" & item.color & "' rx='4'/>" &
-                    "<text x='75' y='" & (y + 50 / CountRows(data) + 5) & "' text-anchor='end' font-size='12' fill='#666'>" & item.dept & "</text>" &
-                    "<text x='" & (80 + item.value * 2 - 5) & "' y='" & (y + 50 / CountRows(data) + 5) & "' font-size='12' fill='#fff' font-weight='600'>" & item.value & "%</text>"
+                    {item: Index(data, Value)},
+                    With(
+                        {y: 10 + (Value - 1) * (130 / CountRows(data))},
+                        "<rect x='80' y='" & y & "' width='" & (item.value * 2) & "' height='" & (100 / CountRows(data)) & "' fill='" & item.color & "' rx='4'/>" &
+                        "<text x='75' y='" & (y + 50 / CountRows(data) + 5) & "' text-anchor='end' font-size='12' fill='#666'>" & item.dept & "</text>" &
+                        "<text x='" & (80 + item.value * 2 - 5) & "' y='" & (y + 50 / CountRows(data) + 5) & "' font-size='12' fill='#fff' font-weight='600'>" & item.value & "%</text>"
+                    )
                 )
             ),
             ""
@@ -1092,31 +1124,25 @@
             {year: "2025年", percentage: 85, color: "#10b981"}
         )
     },
-    With(
-        {
-            count: CountRows(data),
-            width: 140 * count
-        },
-        "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & width & " 140' width='" & width & "' height='140'>" &
-            Concat(
-                ForAll(
-                    Sequence(count),
+    "data:image/svg+xml," & EncodeUrl(
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & (140 * CountRows(data)) & " 140' width='" & (140 * CountRows(data)) & "' height='140'>" &
+        Concat(
+            ForAll(
+                Sequence(CountRows(data)),
+                With(
+                    {item: Index(data, Value)},
                     With(
-                        {
-                            item: Index(data, Value),
-                            cx: 70 + (Value - 1) * 140
-                        },
+                        {cx: 70 + (Value - 1) * 140},
                         "<circle cx='" & cx & "' cy='70' r='50' fill='#f0f0f0'/>" &
                         "<circle cx='" & cx & "' cy='70' r='50' fill='none' stroke='" & item.color & "' stroke-width='25' stroke-dasharray='" & (314 * item.percentage / 100) & " 314' stroke-dashoffset='0' transform='rotate(-90 " & cx & " 70)'/>" &
                         "<text x='" & cx & "' y='75' text-anchor='middle' font-size='18' font-weight='bold' fill='#1a1a1a'>" & item.percentage & "%</text>" &
                         "<text x='" & cx & "' y='135' text-anchor='middle' font-size='11' fill='#666'>" & item.year & "</text>"
                     )
-                ),
-                ""
-            ) &
-            "</svg>"
-        )
+                )
+            ),
+            ""
+        ) &
+        "</svg>"
     )
 )`;
 
@@ -1146,14 +1172,16 @@
             ForAll(
                 Sequence(CountRows(kpis)),
                 With(
-                    {
-                        item: Index(kpis, Value),
-                        x: 20 + (Value - 1) * (380 / CountRows(kpis)),
-                        divX: (Value - 1) * (400 / CountRows(kpis))
-                    },
-                    If(Value > 1, "<line x1='" & divX & "' y1='15' x2='" & divX & "' y2='65' stroke='#e5e7eb' stroke-width='1'/>", "") &
-                    "<text x='" & x & "' y='30' font-size='11' fill='#666'>" & item.label & "</text>" &
-                    "<text x='" & x & "' y='55' font-size='20' fill='#1a1a1a' font-weight='bold'>" & item.value & "</text>"
+                    {item: Index(kpis, Value)},
+                    With(
+                        {
+                            x: 20 + (Value - 1) * (380 / CountRows(kpis)),
+                            divX: (Value - 1) * (400 / CountRows(kpis))
+                        },
+                        If(Value > 1, "<line x1='" & divX & "' y1='15' x2='" & divX & "' y2='65' stroke='#e5e7eb' stroke-width='1'/>", "") &
+                        "<text x='" & x & "' y='30' font-size='11' fill='#666'>" & item.label & "</text>" &
+                        "<text x='" & x & "' y='55' font-size='20' fill='#1a1a1a' font-weight='bold'>" & item.value & "</text>"
+                    )
                 )
             ),
             ""
@@ -1170,31 +1198,30 @@
             {year: "2024年", value: "¥1.8M", bgColor: "#f9fafb", textColor: "#666"},
             {year: "2025年", value: "¥2.1M", bgColor: "#eff6ff", textColor: "#3b82f6"}
         ),
-        growth: "+16.7% 成長"
+        growth: "+16.7% 成長",
+        boxWidth: 110,
+        boxSpacing: 20
     },
     With(
-        {
-            count: CountRows(data),
-            boxWidth: 110,
-            boxSpacing: 20,
-            totalWidth: count * 110 + (count + 1) * 20
-        },
+        {totalWidth: CountRows(data) * 110 + (CountRows(data) + 1) * 20},
         "data:image/svg+xml," & EncodeUrl(
             "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & totalWidth & " 140' width='" & totalWidth & "' height='140'>" &
             "<rect width='" & totalWidth & "' height='140' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/>" &
             "<text x='20' y='30' font-size='13' fill='#666' font-weight='500'>" & title & "</text>" &
             Concat(
                 ForAll(
-                    Sequence(count),
+                    Sequence(CountRows(data)),
                     With(
-                        {
-                            item: Index(data, Value),
-                            xPos: 20 + (Value - 1) * (boxWidth + boxSpacing),
-                            centerX: 20 + (Value - 1) * (boxWidth + boxSpacing) + boxWidth / 2
-                        },
-                        "<rect x='" & xPos & "' y='50' width='" & boxWidth & "' height='70' fill='" & item.bgColor & "' rx='8'/>" &
-                        "<text x='" & centerX & "' y='70' text-anchor='middle' font-size='11' fill='#999'>" & item.year & "</text>" &
-                        "<text x='" & centerX & "' y='95' text-anchor='middle' font-size='24' fill='" & item.textColor & "' font-weight='bold'>" & item.value & "</text>"
+                        {item: Index(data, Value)},
+                        With(
+                            {
+                                xPos: 20 + (Value - 1) * (boxWidth + boxSpacing),
+                                centerX: 20 + (Value - 1) * (boxWidth + boxSpacing) + boxWidth / 2
+                            },
+                            "<rect x='" & xPos & "' y='50' width='" & boxWidth & "' height='70' fill='" & item.bgColor & "' rx='8'/>" &
+                            "<text x='" & centerX & "' y='70' text-anchor='middle' font-size='11' fill='#999'>" & item.year & "</text>" &
+                            "<text x='" & centerX & "' y='95' text-anchor='middle' font-size='24' fill='" & item.textColor & "' font-weight='bold'>" & item.value & "</text>"
+                        )
                     )
                 ),
                 ""
@@ -1244,44 +1271,69 @@
                     return `With(
     {
         // 活動データ: 0-4の5段階（0=活動なし、4=最高活動量）
-        activityData: [
-            [0, 2, 3, 0, 4, 2, 0],
-            [3, 0, 2, 3, 2, 0, 4]
-        ],
-        colors: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"]
+        activityData: Table(
+            {row: 1, col: 1, activity: 0}, {row: 1, col: 2, activity: 2}, {row: 1, col: 3, activity: 3}, {row: 1, col: 4, activity: 0}, {row: 1, col: 5, activity: 4}, {row: 1, col: 6, activity: 2}, {row: 1, col: 7, activity: 0},
+            {row: 2, col: 1, activity: 3}, {row: 2, col: 2, activity: 0}, {row: 2, col: 3, activity: 2}, {row: 2, col: 4, activity: 3}, {row: 2, col: 5, activity: 2}, {row: 2, col: 6, activity: 0}, {row: 2, col: 7, activity: 4}
+        ),
+        colors: Table(
+            {level: 0, color: "#ebedf0"},
+            {level: 1, color: "#9be9a8"},
+            {level: 2, color: "#40c463"},
+            {level: 3, color: "#30a14e"},
+            {level: 4, color: "#216e39"}
+        )
     },
-    "data:image/svg+xml," & EncodeUrl(
-        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 280 80' width='280' height='80'>" &
-        "<text x='5' y='15' font-size='11' fill='#666'>活動記録</text>" &
-        Concat(
-            ForAll(
-                Sequence(CountRows(activityData)),
-                With(
-                    {rowIndex: Value, row: Index(activityData, Value)},
-                    Concat(
-                        ForAll(
-                            Sequence(CountRows(row)),
-                            With(
-                                {
-                                    colIndex: Value,
-                                    activity: Index(row, Value),
-                                    x: 10 + (colIndex - 1) * 16,
-                                    y: 25 + (rowIndex - 1) * 16
-                                },
-                                "<rect x='" & x & "' y='" & y & "' width='12' height='12' fill='" & Index(colors, activity + 1) & "' rx='2'/>"
-                            )
-                        ),
-                        ""
+    With(
+        {
+            maxRow: Max(activityData, row),
+            maxCol: Max(activityData, col)
+        },
+        "data:image/svg+xml," & EncodeUrl(
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 280 80' width='280' height='80'>" &
+            "<text x='5' y='15' font-size='11' fill='#666'>活動記録</text>" &
+            Concat(
+                ForAll(
+                    Sequence(maxRow),
+                    With(
+                        {rowNum: Value},
+                        Concat(
+                            ForAll(
+                                Filter(activityData, row = rowNum),
+                                With(
+                                    {
+                                        cell: ThisRecord,
+                                        colorItem: LookUp(colors, level = cell.activity)
+                                    },
+                                    With(
+                                        {
+                                            x: 10 + (cell.col - 1) * 16,
+                                            y: 25 + (rowNum - 1) * 16
+                                        },
+                                        "<rect x='" & x & "' y='" & y & "' width='12' height='12' fill='" & colorItem.color & "' rx='2'/>"
+                                    )
+                                )
+                            ),
+                            ""
+                        )
                     )
-                )
-            ),
-            ""
-        ) &
-        "<rect x='135' y='30' width='8' height='8' fill='" & Index(colors, 1) & "' rx='2'/>" &
-        "<text x='148' y='37' font-size='9' fill='#999'>少</text>" &
-        Concat(ForAll(Sequence(4), "<rect x='" & (170 + (Value - 1) * 13) & "' y='30' width='8' height='8' fill='" & Index(colors, Value + 1) & "' rx='2'/>"), "") &
-        "<text x='222' y='37' font-size='9' fill='#999'>多</text>" &
-        "</svg>"
+                ),
+                ""
+            ) &
+            "<rect x='135' y='30' width='8' height='8' fill='" & LookUp(colors, level = 0).color & "' rx='2'/>" &
+            "<text x='148' y='37' font-size='9' fill='#999'>少</text>" &
+            Concat(
+                ForAll(
+                    Sequence(4),
+                    With(
+                        {colorItem: LookUp(colors, level = Value)},
+                        "<rect x='" & (170 + (Value - 1) * 13) & "' y='30' width='8' height='8' fill='" & colorItem.color & "' rx='2'/>"
+                    )
+                ),
+                ""
+            ) &
+            "<text x='222' y='37' font-size='9' fill='#999'>多</text>" &
+            "</svg>"
+        )
     )
 )`;
 
