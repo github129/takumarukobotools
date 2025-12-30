@@ -1079,8 +1079,8 @@
             {barNum: 3, label: "Q3"}
         ),
         colors: Table(
-            {segment: 1, color: "#667eea"},
-            {segment: 2, color: "#764ba2"}
+            {segmentNum: 1, color: "#667eea"},
+            {segmentNum: 2, color: "#764ba2"}
         )
     },
     "data:image/svg+xml," & EncodeUrl(
@@ -1090,17 +1090,21 @@
             With(
                 {barData: Filter(data, bar = barNum)},
                 With(
-                    {x: 30 + (barNum - 1) * (240 / CountRows(bars))},
+                    {
+                        x: 30 + (barNum - 1) * (240 / CountRows(bars)),
+                        maxSegment: Max(barData, segment)
+                    },
                     Concat(
                         barData,
                         With(
                             {
                                 currentSegment: segment,
-                                colorItem: LookUp(colors, segment = segment)
+                                colorItem: LookUp(colors, segmentNum = currentSegment),
+                                isTopSegment: currentSegment = maxSegment
                             },
                             With(
                                 {stackY: Sum(Filter(barData, segment <= currentSegment), value)},
-                                "<rect x='" & x & "' y='" & (160 - stackY) & "' width='" & (200 / CountRows(bars)) & "' height='" & value & "' fill='" & colorItem.color & "' rx='4'/>"
+                                "<rect x='" & x & "' y='" & (160 - stackY) & "' width='" & (200 / CountRows(bars)) & "' height='" & value & "' fill='" & colorItem.color & "'" & If(isTopSegment, " rx='4'", "") & "/>"
                             )
                         )
                     ) &
