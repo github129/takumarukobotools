@@ -988,9 +988,10 @@
                     return `With(
     {
         data: Table(
-            {idx: 1, y: 100}, {idx: 2, y: 80}, {idx: 3, y: 60}, {idx: 4, y: 70}, {idx: 5, y: 30}
+            {idx: 1, value: 100}, {idx: 2, value: 80}, {idx: 3, value: 60}, {idx: 4, value: 70}, {idx: 5, value: 30}
         ),
-        color: "#667eea"
+        color: "#667eea",
+        maxHeight: 130
     },
     "data:image/svg+xml," & EncodeUrl(
         "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
@@ -999,7 +1000,10 @@
         Concat(
             data,
             With(
-                {x: 20 + (idx - 1) * (260 / (CountRows(data) - 1))},
+                {
+                    x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
+                    y: maxHeight - value
+                },
                 x & "," & y
             ),
             " "
@@ -1009,7 +1013,10 @@
         Concat(
             data,
             With(
-                {x: 20 + (idx - 1) * (260 / (CountRows(data) - 1))},
+                {
+                    x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
+                    y: maxHeight - value
+                },
                 x & "," & y
             ),
             " "
@@ -1018,7 +1025,10 @@
         Concat(
             data,
             With(
-                {x: 20 + (idx - 1) * (260 / (CountRows(data) - 1))},
+                {
+                    x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
+                    y: maxHeight - value
+                },
                 "<circle cx='" & x & "' cy='" & y & "' r='4' fill='" & color & "'/>"
             )
         ) &
@@ -1091,10 +1101,11 @@
                     return `With(
     {
         data: Table(
-            {idx: 1, y: 120}, {idx: 2, y: 100}, {idx: 3, y: 80}, {idx: 4, y: 90},
-            {idx: 5, y: 60}, {idx: 6, y: 70}, {idx: 7, y: 50}
+            {idx: 1, value: 120}, {idx: 2, value: 100}, {idx: 3, value: 80}, {idx: 4, value: 90},
+            {idx: 5, value: 60}, {idx: 6, value: 70}, {idx: 7, value: 50}
         ),
-        color: "#10b981"
+        color: "#10b981",
+        maxHeight: 135
     },
     "data:image/svg+xml," & EncodeUrl(
         "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
@@ -1103,7 +1114,10 @@
         Concat(
             data,
             With(
-                {x: 20 + (idx - 1) * (260 / (CountRows(data) - 1))},
+                {
+                    x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
+                    y: maxHeight - value
+                },
                 x & "," & y
             ),
             " "
@@ -1113,7 +1127,10 @@
         Concat(
             data,
             With(
-                {x: 20 + (idx - 1) * (260 / (CountRows(data) - 1))},
+                {
+                    x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
+                    y: maxHeight - value
+                },
                 x & "," & y
             ),
             " "
@@ -1122,7 +1139,10 @@
         Concat(
             data,
             With(
-                {x: 20 + (idx - 1) * (260 / (CountRows(data) - 1))},
+                {
+                    x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
+                    y: maxHeight - value
+                },
                 "<circle cx='" & x & "' cy='" & y & "' r='3' fill='" & color & "'/>"
             )
         ) &
@@ -1142,10 +1162,11 @@
                     return `With(
     {
         data: Table(
-            {idx: 1, y: 30}, {idx: 2, y: 25}, {idx: 3, y: 28}, {idx: 4, y: 18},
-            {idx: 5, y: 22}, {idx: 6, y: 15}, {idx: 7, y: 20}, {idx: 8, y: 12}
+            {idx: 1, value: 30}, {idx: 2, value: 25}, {idx: 3, value: 28}, {idx: 4, value: 18},
+            {idx: 5, value: 22}, {idx: 6, value: 15}, {idx: 7, value: 20}, {idx: 8, value: 12}
         ),
-        color: "#667eea"
+        color: "#667eea",
+        maxHeight: 35
     },
     "data:image/svg+xml," & EncodeUrl(
         "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40' width='120' height='40'>" &
@@ -1153,7 +1174,10 @@
         Concat(
             data,
             With(
-                {x: 5 + (idx - 1) * (110 / (CountRows(data) - 1))},
+                {
+                    x: 5 + (idx - 1) * (110 / (CountRows(data) - 1)),
+                    y: maxHeight - value
+                },
                 x & "," & y
             ),
             " "
@@ -1162,9 +1186,10 @@
         With(
             {
                 lastPoint: Last(data),
-                lastX: 5 + (CountRows(data) - 1) * (110 / (CountRows(data) - 1))
+                lastX: 5 + (CountRows(data) - 1) * (110 / (CountRows(data) - 1)),
+                lastY: maxHeight - lastPoint.value
             },
-            "<circle cx='" & lastX & "' cy='" & lastPoint.y & "' r='3' fill='" & color & "'/>"
+            "<circle cx='" & lastX & "' cy='" & lastY & "' r='3' fill='" & color & "'/>"
         ) &
         "</svg>"
     )
