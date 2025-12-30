@@ -1084,13 +1084,40 @@
     "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 100' width='180' height='100'><rect width='180' height='100' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><circle cx='30' cy='30' r='18' fill='#eff6ff'/><text x='30' y='37' text-anchor='middle' font-size='20' fill='#3b82f6'>$</text><text x='65' y='30' font-size='11' fill='#666'>" & title & "</text><text x='20' y='70' font-size='28' fill='#1a1a1a' font-weight='bold'>" & value & "</text><text x='20' y='88' font-size='11' fill='#10b981'>↑ " & change & " " & changeLabel & "</text></svg>")
 )`;
 
-                case 18: // 複数円グラフ比較
+                case 18: // 複数円グラフ比較（ForAllで可変個数対応）
                     return `With(
     {
-        year1: "2024年", percentage1: 75, color1: "#667eea",
-        year2: "2025年", percentage2: 85, color2: "#10b981"
+        data: Table(
+            {year: "2024年", percentage: 75, color: "#667eea"},
+            {year: "2025年", percentage: 85, color: "#10b981"}
+        )
     },
-    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 280 140' width='280' height='140'><circle cx='70' cy='70' r='50' fill='#f0f0f0'/><circle cx='70' cy='70' r='50' fill='none' stroke='" & color1 & "' stroke-width='25' stroke-dasharray='" & (314 * percentage1 / 100) & " 314' stroke-dashoffset='0' transform='rotate(-90 70 70)'/><text x='70' y='75' text-anchor='middle' font-size='18' font-weight='bold' fill='#1a1a1a'>" & percentage1 & "%</text><text x='70' y='135' text-anchor='middle' font-size='11' fill='#666'>" & year1 & "</text><circle cx='210' cy='70' r='50' fill='#f0f0f0'/><circle cx='210' cy='70' r='50' fill='none' stroke='" & color2 & "' stroke-width='25' stroke-dasharray='" & (314 * percentage2 / 100) & " 314' stroke-dashoffset='0' transform='rotate(-90 210 70)'/><text x='210' y='75' text-anchor='middle' font-size='18' font-weight='bold' fill='#1a1a1a'>" & percentage2 & "%</text><text x='210' y='135' text-anchor='middle' font-size='11' fill='#666'>" & year2 & "</text></svg>")
+    With(
+        {
+            count: CountRows(data),
+            width: 140 * count
+        },
+        "data:image/svg+xml," & EncodeUrl(
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & width & " 140' width='" & width & "' height='140'>" &
+            Concat(
+                ForAll(
+                    Sequence(count),
+                    With(
+                        {
+                            item: Index(data, Value),
+                            cx: 70 + (Value - 1) * 140
+                        },
+                        "<circle cx='" & cx & "' cy='70' r='50' fill='#f0f0f0'/>" &
+                        "<circle cx='" & cx & "' cy='70' r='50' fill='none' stroke='" & item.color & "' stroke-width='25' stroke-dasharray='" & (314 * item.percentage / 100) & " 314' stroke-dashoffset='0' transform='rotate(-90 " & cx & " 70)'/>" &
+                        "<text x='" & cx & "' y='75' text-anchor='middle' font-size='18' font-weight='bold' fill='#1a1a1a'>" & item.percentage & "%</text>" &
+                        "<text x='" & cx & "' y='135' text-anchor='middle' font-size='11' fill='#666'>" & item.year & "</text>"
+                    )
+                ),
+                ""
+            ) &
+            "</svg>"
+        )
+    )
 )`;
 
                 case 19: // バッテリーインジケーター
@@ -1135,15 +1162,48 @@
     )
 )`;
 
-                case 23: // 比較カード（vs 前年）
+                case 23: // 比較カード（ForAllで可変個数対応）
                     return `With(
     {
         title: "売上比較",
-        year1: "2024年", value1: "¥1.8M",
-        year2: "2025年", value2: "¥2.1M",
+        data: Table(
+            {year: "2024年", value: "¥1.8M", bgColor: "#f9fafb", textColor: "#666"},
+            {year: "2025年", value: "¥2.1M", bgColor: "#eff6ff", textColor: "#3b82f6"}
+        ),
         growth: "+16.7% 成長"
     },
-    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 280 140' width='280' height='140'><rect width='280' height='140' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><text x='20' y='30' font-size='13' fill='#666' font-weight='500'>" & title & "</text><rect x='20' y='50' width='110' height='70' fill='#f9fafb' rx='8'/><text x='75' y='70' text-anchor='middle' font-size='11' fill='#999'>" & year1 & "</text><text x='75' y='95' text-anchor='middle' font-size='24' fill='#666' font-weight='bold'>" & value1 & "</text><rect x='150' y='50' width='110' height='70' fill='#eff6ff' rx='8'/><text x='205' y='70' text-anchor='middle' font-size='11' fill='#999'>" & year2 & "</text><text x='205' y='95' text-anchor='middle' font-size='24' fill='#3b82f6' font-weight='bold'>" & value2 & "</text><rect x='95' y='125' width='90' height='10' fill='#d1fae5' rx='5'/><text x='140' y='133' text-anchor='middle' font-size='9' fill='#059669' font-weight='600'>" & growth & "</text></svg>")
+    With(
+        {
+            count: CountRows(data),
+            boxWidth: 110,
+            boxSpacing: 20,
+            totalWidth: count * 110 + (count + 1) * 20
+        },
+        "data:image/svg+xml," & EncodeUrl(
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & totalWidth & " 140' width='" & totalWidth & "' height='140'>" &
+            "<rect width='" & totalWidth & "' height='140' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/>" &
+            "<text x='20' y='30' font-size='13' fill='#666' font-weight='500'>" & title & "</text>" &
+            Concat(
+                ForAll(
+                    Sequence(count),
+                    With(
+                        {
+                            item: Index(data, Value),
+                            xPos: 20 + (Value - 1) * (boxWidth + boxSpacing),
+                            centerX: 20 + (Value - 1) * (boxWidth + boxSpacing) + boxWidth / 2
+                        },
+                        "<rect x='" & xPos & "' y='50' width='" & boxWidth & "' height='70' fill='" & item.bgColor & "' rx='8'/>" &
+                        "<text x='" & centerX & "' y='70' text-anchor='middle' font-size='11' fill='#999'>" & item.year & "</text>" &
+                        "<text x='" & centerX & "' y='95' text-anchor='middle' font-size='24' fill='" & item.textColor & "' font-weight='bold'>" & item.value & "</text>"
+                    )
+                ),
+                ""
+            ) &
+            "<rect x='" & (totalWidth / 2 - 45) & "' y='125' width='90' height='10' fill='#d1fae5' rx='5'/>" &
+            "<text x='" & (totalWidth / 2) & "' y='133' text-anchor='middle' font-size='9' fill='#059669' font-weight='600'>" & growth & "</text>" &
+            "</svg>"
+        )
+    )
 )`;
 
                 case 24: // タスク進捗カード
