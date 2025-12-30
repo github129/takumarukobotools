@@ -956,18 +956,23 @@
                     return `With(
     {
         data: Table(
-            {idx: 1, value: 100, color: "#667eea", label: "1月"},
-            {idx: 2, value: 140, color: "#764ba2", label: "2月"},
-            {idx: 3, value: 80, color: "#f093fb", label: "3月"}
-        )
+            {idx: 1, value: 55, color: "#667eea", label: "1月"},
+            {idx: 2, value: 78, color: "#764ba2", label: "2月"},
+            {idx: 3, value: 44, color: "#f093fb", label: "3月"}
+        ),
+        maxHeight: 180
     },
     "data:image/svg+xml," & EncodeUrl(
         "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
         Concat(
             data,
             With(
-                {x: 30 + (idx - 1) * (240 / CountRows(data))},
-                "<rect x='" & x & "' y='" & (180 - value) & "' width='" & (200 / CountRows(data)) & "' height='" & value & "' fill='" & color & "' rx='4'/>" &
+                {
+                    x: 30 + (idx - 1) * (240 / CountRows(data)),
+                    barHeight: value * maxHeight / 100,
+                    y: maxHeight - (value * maxHeight / 100)
+                },
+                "<rect x='" & x & "' y='" & y & "' width='" & (200 / CountRows(data)) & "' height='" & barHeight & "' fill='" & color & "' rx='4'/>" &
                 "<text x='" & (x + 100 / CountRows(data)) & "' y='195' text-anchor='middle' font-size='12' fill='#666'>" & label & "</text>"
             )
         ) &
@@ -988,7 +993,7 @@
                     return `With(
     {
         data: Table(
-            {idx: 1, value: 100}, {idx: 2, value: 80}, {idx: 3, value: 60}, {idx: 4, value: 70}, {idx: 5, value: 30}
+            {idx: 1, value: 77}, {idx: 2, value: 62}, {idx: 3, value: 46}, {idx: 4, value: 54}, {idx: 5, value: 23}
         ),
         color: "#667eea",
         maxHeight: 130
@@ -1002,7 +1007,7 @@
             With(
                 {
                     x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                    y: maxHeight - value
+                    y: maxHeight - (value * maxHeight / 100)
                 },
                 x & "," & y
             ),
@@ -1015,7 +1020,7 @@
             With(
                 {
                     x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                    y: maxHeight - value
+                    y: maxHeight - (value * maxHeight / 100)
                 },
                 x & "," & y
             ),
@@ -1027,7 +1032,7 @@
             With(
                 {
                     x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                    y: maxHeight - value
+                    y: maxHeight - (value * maxHeight / 100)
                 },
                 "<circle cx='" & x & "' cy='" & y & "' r='4' fill='" & color & "'/>"
             )
@@ -1101,8 +1106,8 @@
                     return `With(
     {
         data: Table(
-            {idx: 1, value: 120}, {idx: 2, value: 100}, {idx: 3, value: 80}, {idx: 4, value: 90},
-            {idx: 5, value: 60}, {idx: 6, value: 70}, {idx: 7, value: 50}
+            {idx: 1, value: 89}, {idx: 2, value: 74}, {idx: 3, value: 59}, {idx: 4, value: 67},
+            {idx: 5, value: 44}, {idx: 6, value: 52}, {idx: 7, value: 37}
         ),
         color: "#10b981",
         maxHeight: 135
@@ -1116,7 +1121,7 @@
             With(
                 {
                     x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                    y: maxHeight - value
+                    y: maxHeight - (value * maxHeight / 100)
                 },
                 x & "," & y
             ),
@@ -1129,7 +1134,7 @@
             With(
                 {
                     x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                    y: maxHeight - value
+                    y: maxHeight - (value * maxHeight / 100)
                 },
                 x & "," & y
             ),
@@ -1141,7 +1146,7 @@
             With(
                 {
                     x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                    y: maxHeight - value
+                    y: maxHeight - (value * maxHeight / 100)
                 },
                 "<circle cx='" & x & "' cy='" & y & "' r='3' fill='" & color & "'/>"
             )
@@ -1162,8 +1167,8 @@
                     return `With(
     {
         data: Table(
-            {idx: 1, value: 30}, {idx: 2, value: 25}, {idx: 3, value: 28}, {idx: 4, value: 18},
-            {idx: 5, value: 22}, {idx: 6, value: 15}, {idx: 7, value: 20}, {idx: 8, value: 12}
+            {idx: 1, value: 86}, {idx: 2, value: 71}, {idx: 3, value: 80}, {idx: 4, value: 51},
+            {idx: 5, value: 63}, {idx: 6, value: 43}, {idx: 7, value: 57}, {idx: 8, value: 34}
         ),
         color: "#667eea",
         maxHeight: 35
@@ -1176,7 +1181,7 @@
             With(
                 {
                     x: 5 + (idx - 1) * (110 / (CountRows(data) - 1)),
-                    y: maxHeight - value
+                    y: maxHeight - (value * maxHeight / 100)
                 },
                 x & "," & y
             ),
@@ -1187,7 +1192,7 @@
             {
                 lastPoint: Last(data),
                 lastX: 5 + (CountRows(data) - 1) * (110 / (CountRows(data) - 1)),
-                lastY: maxHeight - lastPoint.value
+                lastY: maxHeight - (lastPoint.value * maxHeight / 100)
             },
             "<circle cx='" & lastX & "' cy='" & lastY & "' r='3' fill='" & color & "'/>"
         ) &
@@ -1238,17 +1243,21 @@
             {idx: 1, dept: "営業部", value: 90, color: "#667eea"},
             {idx: 2, dept: "開発部", value: 70, color: "#764ba2"},
             {idx: 3, dept: "総務部", value: 50, color: "#f093fb"}
-        )
+        ),
+        maxWidth: 200
     },
     "data:image/svg+xml," & EncodeUrl(
         "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
         Concat(
             data,
             With(
-                {y: 10 + (idx - 1) * (130 / CountRows(data))},
-                "<rect x='80' y='" & y & "' width='" & (value * 2) & "' height='" & (100 / CountRows(data)) & "' fill='" & color & "' rx='4'/>" &
+                {
+                    y: 10 + (idx - 1) * (130 / CountRows(data)),
+                    barWidth: value * maxWidth / 100
+                },
+                "<rect x='80' y='" & y & "' width='" & barWidth & "' height='" & (100 / CountRows(data)) & "' fill='" & color & "' rx='4'/>" &
                 "<text x='75' y='" & (y + 50 / CountRows(data) + 5) & "' text-anchor='end' font-size='12' fill='#666'>" & dept & "</text>" &
-                "<text x='" & (80 + value * 2 - 5) & "' y='" & (y + 50 / CountRows(data) + 5) & "' font-size='12' fill='#fff' font-weight='600'>" & value & "%</text>"
+                "<text x='" & (80 + barWidth - 5) & "' y='" & (y + 50 / CountRows(data) + 5) & "' font-size='12' fill='#fff' font-weight='600'>" & value & "%</text>"
             )
         ) &
         "</svg>"
