@@ -1087,12 +1087,87 @@
     )
 )`;
 
+                case 8: // 面グラフ（エリアチャート）
+                    return `With(
+    {
+        data: Table(
+            {idx: 1, y: 120}, {idx: 2, y: 100}, {idx: 3, y: 80}, {idx: 4, y: 90},
+            {idx: 5, y: 60}, {idx: 6, y: 70}, {idx: 7, y: 50}
+        ),
+        color: "#10b981"
+    },
+    "data:image/svg+xml," & EncodeUrl(
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
+        "<defs><linearGradient id='areaGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.5' /><stop offset='100%' style='stop-color:" & color & ";stop-opacity:0.05' /></linearGradient></defs>" &
+        "<polygon points='" &
+        Concat(
+            data,
+            With(
+                {x: 20 + (idx - 1) * (260 / (CountRows(data) - 1))},
+                x & "," & y
+            ),
+            " "
+        ) &
+        " 280,135 20,135' fill='url(#areaGrad)'/>" &
+        "<polyline points='" &
+        Concat(
+            data,
+            With(
+                {x: 20 + (idx - 1) * (260 / (CountRows(data) - 1))},
+                x & "," & y
+            ),
+            " "
+        ) &
+        "' fill='none' stroke='" & color & "' stroke-width='2.5'/>" &
+        Concat(
+            data,
+            With(
+                {x: 20 + (idx - 1) * (260 / (CountRows(data) - 1))},
+                "<circle cx='" & x & "' cy='" & y & "' r='3' fill='" & color & "'/>"
+            )
+        ) &
+        "</svg>"
+    )
+)`;
+
                 case 9: // 半円ゲージ
                     return `With(
     {
         percentage: 78
     },
     "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 120' width='200' height='120'><defs><linearGradient id='gaugeGrad' x1='0%' y1='0%' x2='100%' y2='0%'><stop offset='0%' style='stop-color:#ef4444' /><stop offset='50%' style='stop-color:#fbbf24' /><stop offset='100%' style='stop-color:#10b981' /></linearGradient></defs><path d='M 30 100 A 70 70 0 0 1 170 100' fill='none' stroke='#e5e7eb' stroke-width='20' stroke-linecap='round'/><path d='M 30 100 A 70 70 0 " & If(percentage > 50, "1", "0") & " 1 " & (100 + 70 * Cos((percentage * 180 / 100) * Pi() / 180)) & " " & (100 - 70 * Sin((percentage * 180 / 100) * Pi() / 180)) & "' fill='none' stroke='url(#gaugeGrad)' stroke-width='20' stroke-linecap='round'/><text x='100' y='95' text-anchor='middle' font-size='24' font-weight='bold' fill='#1a1a1a'>" & percentage & "%</text></svg>")
+)`;
+
+                case 10: // スパークライン
+                    return `With(
+    {
+        data: Table(
+            {idx: 1, y: 30}, {idx: 2, y: 25}, {idx: 3, y: 28}, {idx: 4, y: 18},
+            {idx: 5, y: 22}, {idx: 6, y: 15}, {idx: 7, y: 20}, {idx: 8, y: 12}
+        ),
+        color: "#667eea"
+    },
+    "data:image/svg+xml," & EncodeUrl(
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40' width='120' height='40'>" &
+        "<polyline points='" &
+        Concat(
+            data,
+            With(
+                {x: 5 + (idx - 1) * (110 / (CountRows(data) - 1))},
+                x & "," & y
+            ),
+            " "
+        ) &
+        "' fill='none' stroke='" & color & "' stroke-width='2'/>" &
+        With(
+            {
+                lastPoint: Last(data),
+                lastX: 5 + (CountRows(data) - 1) * (110 / (CountRows(data) - 1))
+            },
+            "<circle cx='" & lastX & "' cy='" & lastPoint.y & "' r='3' fill='" & color & "'/>"
+        ) &
+        "</svg>"
+    )
 )`;
 
                 case 11: // トレンドインジケーター（上昇）
