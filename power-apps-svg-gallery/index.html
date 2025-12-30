@@ -1080,50 +1080,54 @@
         ),
         colors: Table(
             {segmentNum: 1, color: "#667eea"},
-            {segmentNum: 2, color: "#764ba2"}
+            {segmentNum: 2, color: "#764ba2"},
+            {segmentNum: 3, color: "#f093fb"},
+            {segmentNum: 4, color: "#4facfe"},
+            {segmentNum: 5, color: "#00f2fe"}
         )
     },
     With(
-        {maxValue: Max(data, value)},
-        With(
-            {
-                maxHeight: 160,
-                allBars: AddColumns(
+        {
+            maxHeight: 160,
+            allBars: AddColumns(
+                bars,
+                totalValue,
+                Sum(Filter(data, bar = barNum), value)
+            ),
+            maxTotal: Max(
+                AddColumns(
                     bars,
-                    "totalValue",
+                    totalValue,
                     Sum(Filter(data, bar = barNum), value)
                 ),
-                maxTotal: Max(
-                    AddColumns(
-                        bars,
-                        "totalValue",
-                        Sum(Filter(data, bar = barNum), value)
-                    ),
-                    totalValue
-                )
-            },
-            "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
-                Concat(
-                    bars,
+                totalValue
+            )
+        },
+        "data:image/svg+xml," & EncodeUrl(
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+            Concat(
+                bars,
+                With(
+                    {barData: Filter(data, bar = barNum)},
                     With(
-                        {barData: Filter(data, bar = barNum)},
-                        With(
-                            {
-                                x: 30 + (barNum - 1) * (240 / CountRows(bars)),
-                                barWidth: 200 / CountRows(bars),
-                                maxSegment: Max(barData, segment)
-                            },
-                            Concat(
-                                barData,
+                        {
+                            x: 30 + (barNum - 1) * (240 / CountRows(bars)),
+                            barWidth: 200 / CountRows(bars),
+                            maxSegment: Max(barData, segment)
+                        },
+                        Concat(
+                            barData,
+                            With(
+                                {
+                                    currentSegment: segment,
+                                    colorItem: LookUp(colors, segmentNum = currentSegment),
+                                    isTopSegment: currentSegment = maxSegment
+                                },
                                 With(
                                     {
-                                        currentSegment: segment,
-                                        colorItem: LookUp(colors, segmentNum = currentSegment),
-                                        isTopSegment: currentSegment = maxSegment,
                                         segmentHeight: value / maxTotal * maxHeight,
                                         stackY: Sum(Filter(barData, segment <= currentSegment), value) / maxTotal * maxHeight,
-                                        yPos: maxHeight - stackY
+                                        yPos: maxHeight - (Sum(Filter(barData, segment <= currentSegment), value) / maxTotal * maxHeight)
                                     },
                                     If(
                                         isTopSegment,
@@ -1137,13 +1141,13 @@
                                         "<rect x='" & x & "' y='" & yPos & "' width='" & barWidth & "' height='" & segmentHeight & "' fill='" & colorItem.color & "'/>"
                                     )
                                 )
-                            ) &
-                            "<text x='" & (x + barWidth / 2) & "' y='185' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
-                        )
+                            )
+                        ) &
+                        "<text x='" & (x + barWidth / 2) & "' y='185' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
                     )
-                ) &
-                "</svg>"
-            )
+                )
+            ) &
+            "</svg>"
         )
     )
 )`;
