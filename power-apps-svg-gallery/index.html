@@ -881,9 +881,9 @@
         Concat(
             data,
             With(
-                {x: 30 + (ThisRecord.idx - 1) * (240 / CountRows(data))},
-                "<rect x='" & x & "' y='" & (180 - ThisRecord.value) & "' width='" & (200 / CountRows(data)) & "' height='" & ThisRecord.value & "' fill='" & ThisRecord.color & "' rx='4'/>" &
-                "<text x='" & (x + 100 / CountRows(data)) & "' y='195' text-anchor='middle' font-size='12' fill='#666'>" & ThisRecord.label & "</text>"
+                {x: 30 + (idx - 1) * (240 / CountRows(data))},
+                "<rect x='" & x & "' y='" & (180 - value) & "' width='" & (200 / CountRows(data)) & "' height='" & value & "' fill='" & color & "' rx='4'/>" &
+                "<text x='" & (x + 100 / CountRows(data)) & "' y='195' text-anchor='middle' font-size='12' fill='#666'>" & label & "</text>"
             )
         ) &
         "</svg>"
@@ -914,8 +914,8 @@
         Concat(
             data,
             With(
-                {x: 20 + (ThisRecord.idx - 1) * (260 / (CountRows(data) - 1))},
-                x & "," & ThisRecord.y
+                {x: 20 + (idx - 1) * (260 / (CountRows(data) - 1))},
+                x & "," & y
             ),
             " "
         ) &
@@ -924,8 +924,8 @@
         Concat(
             data,
             With(
-                {x: 20 + (ThisRecord.idx - 1) * (260 / (CountRows(data) - 1))},
-                x & "," & ThisRecord.y
+                {x: 20 + (idx - 1) * (260 / (CountRows(data) - 1))},
+                x & "," & y
             ),
             " "
         ) &
@@ -933,8 +933,8 @@
         Concat(
             data,
             With(
-                {x: 20 + (ThisRecord.idx - 1) * (260 / (CountRows(data) - 1))},
-                "<circle cx='" & x & "' cy='" & ThisRecord.y & "' r='4' fill='" & color & "'/>"
+                {x: 20 + (idx - 1) * (260 / (CountRows(data) - 1))},
+                "<circle cx='" & x & "' cy='" & y & "' r='4' fill='" & color & "'/>"
             )
         ) &
         "</svg>"
@@ -978,23 +978,20 @@
         Concat(
             bars,
             With(
-                {barData: Filter(data, bar = ThisRecord.barNum)},
+                {barData: Filter(data, bar = barNum)},
                 With(
-                    {x: 30 + (ThisRecord.barNum - 1) * (240 / CountRows(bars))},
+                    {x: 30 + (barNum - 1) * (240 / CountRows(bars))},
                     Concat(
                         barData,
                         With(
-                            {
-                                segData: ThisRecord,
-                                colorItem: LookUp(colors, segment = segData.segment)
-                            },
+                            {colorItem: LookUp(colors, segment = segment)},
                             With(
-                                {stackY: Sum(Filter(barData, segment <= segData.segment), value)},
-                                "<rect x='" & x & "' y='" & (160 - stackY) & "' width='" & (200 / CountRows(bars)) & "' height='" & segData.value & "' fill='" & colorItem.color & "' rx='4'/>"
+                                {stackY: Sum(Filter(barData, segment <= segment), value)},
+                                "<rect x='" & x & "' y='" & (160 - stackY) & "' width='" & (200 / CountRows(bars)) & "' height='" & value & "' fill='" & colorItem.color & "' rx='4'/>"
                             )
                         )
                     ) &
-                    "<text x='" & (x + 100 / CountRows(bars)) & "' y='185' text-anchor='middle' font-size='11' fill='#666'>" & ThisRecord.label & "</text>"
+                    "<text x='" & (x + 100 / CountRows(bars)) & "' y='185' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
                 )
             )
         ) &
@@ -1060,10 +1057,10 @@
         Concat(
             data,
             With(
-                {y: 10 + (ThisRecord.idx - 1) * (130 / CountRows(data))},
-                "<rect x='80' y='" & y & "' width='" & (ThisRecord.value * 2) & "' height='" & (100 / CountRows(data)) & "' fill='" & ThisRecord.color & "' rx='4'/>" &
-                "<text x='75' y='" & (y + 50 / CountRows(data) + 5) & "' text-anchor='end' font-size='12' fill='#666'>" & ThisRecord.dept & "</text>" &
-                "<text x='" & (80 + ThisRecord.value * 2 - 5) & "' y='" & (y + 50 / CountRows(data) + 5) & "' font-size='12' fill='#fff' font-weight='600'>" & ThisRecord.value & "%</text>"
+                {y: 10 + (idx - 1) * (130 / CountRows(data))},
+                "<rect x='80' y='" & y & "' width='" & (value * 2) & "' height='" & (100 / CountRows(data)) & "' fill='" & color & "' rx='4'/>" &
+                "<text x='75' y='" & (y + 50 / CountRows(data) + 5) & "' text-anchor='end' font-size='12' fill='#666'>" & dept & "</text>" &
+                "<text x='" & (80 + value * 2 - 5) & "' y='" & (y + 50 / CountRows(data) + 5) & "' font-size='12' fill='#fff' font-weight='600'>" & value & "%</text>"
             )
         ) &
         "</svg>"
@@ -1094,11 +1091,11 @@
         Concat(
             data,
             With(
-                {cx: 70 + (ThisRecord.idx - 1) * 140},
+                {cx: 70 + (idx - 1) * 140},
                 "<circle cx='" & cx & "' cy='70' r='50' fill='#f0f0f0'/>" &
-                "<circle cx='" & cx & "' cy='70' r='50' fill='none' stroke='" & ThisRecord.color & "' stroke-width='25' stroke-dasharray='" & (314 * ThisRecord.percentage / 100) & " 314' stroke-dashoffset='0' transform='rotate(-90 " & cx & " 70)'/>" &
-                "<text x='" & cx & "' y='75' text-anchor='middle' font-size='18' font-weight='bold' fill='#1a1a1a'>" & ThisRecord.percentage & "%</text>" &
-                "<text x='" & cx & "' y='135' text-anchor='middle' font-size='11' fill='#666'>" & ThisRecord.year & "</text>"
+                "<circle cx='" & cx & "' cy='70' r='50' fill='none' stroke='" & color & "' stroke-width='25' stroke-dasharray='" & (314 * percentage / 100) & " 314' stroke-dashoffset='0' transform='rotate(-90 " & cx & " 70)'/>" &
+                "<text x='" & cx & "' y='75' text-anchor='middle' font-size='18' font-weight='bold' fill='#1a1a1a'>" & percentage & "%</text>" &
+                "<text x='" & cx & "' y='135' text-anchor='middle' font-size='11' fill='#666'>" & year & "</text>"
             )
         ) &
         "</svg>"
@@ -1131,12 +1128,12 @@
             kpis,
             With(
                 {
-                    x: 20 + (ThisRecord.idx - 1) * (380 / CountRows(kpis)),
-                    divX: (ThisRecord.idx - 1) * (400 / CountRows(kpis))
+                    x: 20 + (idx - 1) * (380 / CountRows(kpis)),
+                    divX: (idx - 1) * (400 / CountRows(kpis))
                 },
-                If(ThisRecord.idx > 1, "<line x1='" & divX & "' y1='15' x2='" & divX & "' y2='65' stroke='#e5e7eb' stroke-width='1'/>", "") &
-                "<text x='" & x & "' y='30' font-size='11' fill='#666'>" & ThisRecord.label & "</text>" &
-                "<text x='" & x & "' y='55' font-size='20' fill='#1a1a1a' font-weight='bold'>" & ThisRecord.value & "</text>"
+                If(idx > 1, "<line x1='" & divX & "' y1='15' x2='" & divX & "' y2='65' stroke='#e5e7eb' stroke-width='1'/>", "") &
+                "<text x='" & x & "' y='30' font-size='11' fill='#666'>" & label & "</text>" &
+                "<text x='" & x & "' y='55' font-size='20' fill='#1a1a1a' font-weight='bold'>" & value & "</text>"
             )
         ) &
         "</svg>"
@@ -1165,12 +1162,12 @@
                 data,
                 With(
                     {
-                        xPos: 20 + (ThisRecord.idx - 1) * (boxWidth + boxSpacing),
-                        centerX: 20 + (ThisRecord.idx - 1) * (boxWidth + boxSpacing) + boxWidth / 2
+                        xPos: 20 + (idx - 1) * (boxWidth + boxSpacing),
+                        centerX: 20 + (idx - 1) * (boxWidth + boxSpacing) + boxWidth / 2
                     },
-                    "<rect x='" & xPos & "' y='50' width='" & boxWidth & "' height='70' fill='" & ThisRecord.bgColor & "' rx='8'/>" &
-                    "<text x='" & centerX & "' y='70' text-anchor='middle' font-size='11' fill='#999'>" & ThisRecord.year & "</text>" &
-                    "<text x='" & centerX & "' y='95' text-anchor='middle' font-size='24' fill='" & ThisRecord.textColor & "' font-weight='bold'>" & ThisRecord.value & "</text>"
+                    "<rect x='" & xPos & "' y='50' width='" & boxWidth & "' height='70' fill='" & bgColor & "' rx='8'/>" &
+                    "<text x='" & centerX & "' y='70' text-anchor='middle' font-size='11' fill='#999'>" & year & "</text>" &
+                    "<text x='" & centerX & "' y='95' text-anchor='middle' font-size='24' fill='" & textColor & "' font-weight='bold'>" & value & "</text>"
                 )
             ) &
             "<rect x='" & (totalWidth / 2 - 45) & "' y='125' width='90' height='10' fill='#d1fae5' rx='5'/>" &
@@ -1238,16 +1235,13 @@
         Concat(
             rows,
             Concat(
-                Filter(activityData, row = ThisRecord.rowNum),
+                Filter(activityData, row = rowNum),
                 With(
-                    {
-                        cell: ThisRecord,
-                        colorItem: LookUp(colors, level = cell.activity)
-                    },
+                    {colorItem: LookUp(colors, level = activity)},
                     With(
                         {
-                            x: 10 + (cell.col - 1) * 16,
-                            y: 25 + (cell.row - 1) * 16
+                            x: 10 + (col - 1) * 16,
+                            y: 25 + (row - 1) * 16
                         },
                         "<rect x='" & x & "' y='" & y & "' width='12' height='12' fill='" & colorItem.color & "' rx='2'/>"
                     )
@@ -1259,8 +1253,8 @@
         Concat(
             legendLevels,
             With(
-                {colorItem: LookUp(colors, level = ThisRecord.level)},
-                "<rect x='" & (170 + (ThisRecord.level - 1) * 13) & "' y='30' width='8' height='8' fill='" & colorItem.color & "' rx='2'/>"
+                {colorItem: LookUp(colors, level = level)},
+                "<rect x='" & (170 + (level - 1) * 13) & "' y='30' width='8' height='8' fill='" & colorItem.color & "' rx='2'/>"
             )
         ) &
         "<text x='222' y='37' font-size='9' fill='#999'>多</text>" &
