@@ -984,9 +984,12 @@
                     Concat(
                         barData,
                         With(
-                            {colorItem: LookUp(colors, segment = segment)},
+                            {
+                                currentSegment: segment,
+                                colorItem: LookUp(colors, segment = segment)
+                            },
                             With(
-                                {stackY: Sum(Filter(barData, segment <= segment), value)},
+                                {stackY: Sum(Filter(barData, segment <= currentSegment), value)},
                                 "<rect x='" & x & "' y='" & (160 - stackY) & "' width='" & (200 / CountRows(bars)) & "' height='" & value & "' fill='" & colorItem.color & "' rx='4'/>"
                             )
                         )
