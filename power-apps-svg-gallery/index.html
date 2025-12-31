@@ -1675,9 +1675,6 @@
         ),
         periods: Table({num: 1, name: "Q1"}, {num: 2, name: "Q2"}, {num: 3, name: "Q3"}),
         colors: Table({seriesNum: 1, color: "#667eea"}, {seriesNum: 2, color: "#764ba2"}),
-        barWidth: 25,
-        barGap: 5,
-        groupGap: 20,
         gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
     },
     With(
@@ -1685,46 +1682,60 @@
             maxValue: Max(data, value),
             maxHeight: 160,
             seriesCount: Max(data, series),
-            groupWidth: Max(data, series) * barWidth + (Max(data, series) - 1) * barGap
+            periodCount: CountRows(periods),
+            availableWidth: 250,
+            minGroupGap: 15,
+            barGapRatio: 0.2
         },
         With(
             {
-                periodSpacing: groupWidth + groupGap
+                totalGroupGaps: (periodCount - 1) * minGroupGap,
+                widthForGroups: availableWidth - totalGroupGaps,
+                widthPerGroup: (availableWidth - totalGroupGaps) / periodCount,
+                barGap: Round(widthPerGroup / (seriesCount * 5), 1),
+                totalBarGaps: (seriesCount - 1) * Round(widthPerGroup / (seriesCount * 5), 1),
+                barWidth: (widthPerGroup - (seriesCount - 1) * Round(widthPerGroup / (seriesCount * 5), 1)) / seriesCount,
+                groupWidth: widthPerGroup - Round(widthPerGroup / (seriesCount * 5), 1)
             },
-            "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
-                Concat(
-                    gridLines,
-                    With(
-                        {
-                            gridY: 180 - (level / 100 * maxHeight),
-                            gridValue: Round(maxValue * level / 100, 0)
-                        },
-                        "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                        "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
-                    )
-                ) &
-                Concat(
-                    data,
-                    With(
-                        {
-                            periodData: LookUp(periods, name = period),
-                            colorData: LookUp(colors, seriesNum = series)
-                        },
+            With(
+                {
+                    periodSpacing: widthPerGroup + minGroupGap
+                },
+                "data:image/svg+xml," & EncodeUrl(
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                    Concat(
+                        gridLines,
                         With(
                             {
-                                barHeight: value / maxValue * maxHeight,
-                                x: 30 + (periodData.num - 1) * periodSpacing + (series - 1) * (barWidth + barGap)
+                                gridY: 180 - (level / 100 * maxHeight),
+                                gridValue: Round(maxValue * level / 100, 0)
                             },
-                            "<rect x='" & x & "' y='" & (maxHeight - barHeight + 20) & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & colorData.color & "' rx='3'/>"
+                            "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                            "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                         )
-                    )
-                ) &
-                Concat(
-                    periods,
-                    "<text x='" & (30 + (num - 1) * periodSpacing + groupWidth / 2) & "' y='195' text-anchor='middle' font-size='11' fill='#666'>" & name & "</text>"
-                ) &
-                "</svg>"
+                    ) &
+                    Concat(
+                        data,
+                        With(
+                            {
+                                periodData: LookUp(periods, name = period),
+                                colorData: LookUp(colors, seriesNum = series)
+                            },
+                            With(
+                                {
+                                    barHeight: value / maxValue * maxHeight,
+                                    x: 30 + (periodData.num - 1) * periodSpacing + (series - 1) * (barWidth + barGap)
+                                },
+                                "<rect x='" & x & "' y='" & (maxHeight - barHeight + 20) & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & colorData.color & "' rx='3'/>"
+                            )
+                        )
+                    ) &
+                    Concat(
+                        periods,
+                        "<text x='" & (30 + (num - 1) * periodSpacing + widthPerGroup / 2) & "' y='195' text-anchor='middle' font-size='11' fill='#666'>" & name & "</text>"
+                    ) &
+                    "</svg>"
+                )
             )
         )
     )
