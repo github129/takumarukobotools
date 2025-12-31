@@ -1543,6 +1543,10 @@
         value: 70,
         maxValue: 100,
         label: "HIGH",
+        trackColor: "#f0f0f0",
+        fillColor: "#ef4444",
+        scaleColor: "#999",
+        labelColor: "#666",
         scaleMarks: Table(
             {level: 0, label: "0"},
             {level: 50, label: "50"},
@@ -1558,19 +1562,19 @@
         },
         "data:image/svg+xml," & EncodeUrl(
             "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 200' width='120' height='200'>" &
-            "<rect x='40' y='20' width='20' height='130' fill='#f0f0f0' rx='10'/>" &
-            "<rect x='40' y='" & fillY & "' width='20' height='" & fillHeight & "' fill='#ef4444' rx='10'/>" &
-            "<circle cx='50' cy='165' r='20' fill='#ef4444'/>" &
-            "<text x='75' y='170' font-size='16' fill='#666' font-weight='600'>" & label & "</text>" &
-            "<text x='75' y='185' font-size='14' fill='#ef4444' font-weight='bold'>" & value & "%</text>" &
+            "<rect x='40' y='20' width='20' height='130' fill='" & trackColor & "' rx='10'/>" &
+            "<rect x='40' y='" & fillY & "' width='20' height='" & fillHeight & "' fill='" & fillColor & "' rx='10'/>" &
+            "<circle cx='50' cy='165' r='20' fill='" & fillColor & "'/>" &
+            "<text x='75' y='170' font-size='16' fill='" & labelColor & "' font-weight='600'>" & label & "</text>" &
+            "<text x='75' y='185' font-size='14' fill='" & fillColor & "' font-weight='bold'>" & value & "%</text>" &
             Concat(
                 scaleMarks,
                 With(
                     {
                         yPos: 20 + (130 - (level / 100 * 130))
                     },
-                    "<line x1='60' y1='" & yPos & "' x2='67' y2='" & yPos & "' stroke='#999' stroke-width='2'/>" &
-                    "<text x='70' y='" & (yPos + 4) & "' font-size='10' fill='#999'>" & label & "</text>"
+                    "<line x1='60' y1='" & yPos & "' x2='67' y2='" & yPos & "' stroke='" & scaleColor & "' stroke-width='2'/>" &
+                    "<text x='70' y='" & (yPos + 4) & "' font-size='10' fill='" & scaleColor & "'>" & label & "</text>"
                 )
             ) &
             "</svg>"
@@ -1599,87 +1603,82 @@
         {
             centerX: 100,
             centerY: 100,
-            maxRadius: 70,
-            angleStep: 360 / CountRows(data),
-            points: Concat(
-                data,
-                With(
-                    {
-                        angle: (idx - 1) * (360 / CountRows(data)) - 90,
-                        radius: value / maxValue * maxRadius,
-                        x: centerX + radius * Cos(angle * Pi() / 180),
-                        y: centerY + radius * Sin(angle * Pi() / 180)
-                    },
-                    x & "," & y
-                ),
-                " "
-            ),
-            outerPoints: Concat(
-                data,
-                With(
-                    {
-                        angle: (idx - 1) * (360 / CountRows(data)) - 90,
-                        x: centerX + maxRadius * Cos(angle * Pi() / 180),
-                        y: centerY + maxRadius * Sin(angle * Pi() / 180)
-                    },
-                    x & "," & y
-                ),
-                " "
-            )
+            maxRadius: 70
         },
-        "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='200' height='200'>" &
-            Concat(
-                scaleRings,
-                With(
-                    {
-                        radius: level / 100 * maxRadius,
-                        ringPoints: Concat(
-                            data,
-                            With(
-                                {
-                                    angle: (idx - 1) * (360 / CountRows(data)) - 90,
-                                    x: centerX + radius * Cos(angle * Pi() / 180),
-                                    y: centerY + radius * Sin(angle * Pi() / 180)
-                                },
-                                x & "," & y
-                            ),
-                            " "
+        With(
+            {
+                points: Concat(
+                    data,
+                    With(
+                        {
+                            angle: (idx - 1) * (360 / CountRows(data)) - 90,
+                            radius: value / maxValue * maxRadius,
+                            x: centerX + radius * Cos(angle * Pi() / 180),
+                            y: centerY + radius * Sin(angle * Pi() / 180)
+                        },
+                        x & "," & y
+                    ),
+                    " "
+                )
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='200' height='200'>" &
+                Concat(
+                    scaleRings,
+                    With(
+                        {
+                            radius: level / 100 * maxRadius
+                        },
+                        With(
+                            {
+                                ringPoints: Concat(
+                                    data,
+                                    With(
+                                        {
+                                            angle: (idx - 1) * (360 / CountRows(data)) - 90,
+                                            x: centerX + radius * Cos(angle * Pi() / 180),
+                                            y: centerY + radius * Sin(angle * Pi() / 180)
+                                        },
+                                        x & "," & y
+                                    ),
+                                    " "
+                                )
+                            },
+                            "<polygon points='" & ringPoints & "' fill='none' stroke='#e5e7eb' stroke-width='1'/>"
                         )
-                    },
-                    "<polygon points='" & ringPoints & "' fill='none' stroke='#e5e7eb' stroke-width='1'/>"
-                )
-            ) &
-            Concat(
-                data,
-                With(
-                    {
-                        angle: (idx - 1) * (360 / CountRows(data)) - 90,
-                        outerX: centerX + maxRadius * Cos(angle * Pi() / 180),
-                        outerY: centerY + maxRadius * Sin(angle * Pi() / 180)
-                    },
-                    "<line x1='" & centerX & "' y1='" & centerY & "' x2='" & outerX & "' y2='" & outerY & "' stroke='#e5e7eb' stroke-width='1'/>"
-                )
-            ) &
-            "<polygon points='" & points & "' fill='#667eea' fill-opacity='0.3' stroke='#667eea' stroke-width='2'/>" &
-            Concat(
-                data,
-                With(
-                    {
-                        angle: (idx - 1) * (360 / CountRows(data)) - 90,
-                        radius: value / maxValue * maxRadius,
-                        x: centerX + radius * Cos(angle * Pi() / 180),
-                        y: centerY + radius * Sin(angle * Pi() / 180),
-                        labelRadius: maxRadius + 15,
-                        labelX: centerX + labelRadius * Cos(angle * Pi() / 180),
-                        labelY: centerY + labelRadius * Sin(angle * Pi() / 180)
-                    },
-                    "<circle cx='" & x & "' cy='" & y & "' r='4' fill='#667eea'/>" &
-                    "<text x='" & labelX & "' y='" & (labelY + 4) & "' text-anchor='middle' font-size='10' fill='#666'>" & category & "</text>" &
-                    "<text x='" & labelX & "' y='" & (labelY + 16) & "' text-anchor='middle' font-size='9' fill='#667eea' font-weight='600'>" & value & "</text>"
-                )
-            ) &
-            "</svg>"
+                    )
+                ) &
+                Concat(
+                    data,
+                    With(
+                        {
+                            angle: (idx - 1) * (360 / CountRows(data)) - 90,
+                            outerX: centerX + maxRadius * Cos(angle * Pi() / 180),
+                            outerY: centerY + maxRadius * Sin(angle * Pi() / 180)
+                        },
+                        "<line x1='" & centerX & "' y1='" & centerY & "' x2='" & outerX & "' y2='" & outerY & "' stroke='#e5e7eb' stroke-width='1'/>"
+                    )
+                ) &
+                "<polygon points='" & points & "' fill='#667eea' fill-opacity='0.3' stroke='#667eea' stroke-width='2'/>" &
+                Concat(
+                    data,
+                    With(
+                        {
+                            angle: (idx - 1) * (360 / CountRows(data)) - 90,
+                            radius: value / maxValue * maxRadius,
+                            x: centerX + radius * Cos(angle * Pi() / 180),
+                            y: centerY + radius * Sin(angle * Pi() / 180),
+                            labelRadius: maxRadius + 15,
+                            labelX: centerX + labelRadius * Cos(angle * Pi() / 180),
+                            labelY: centerY + labelRadius * Sin(angle * Pi() / 180)
+                        },
+                        "<circle cx='" & x & "' cy='" & y & "' r='4' fill='#667eea'/>" &
+                        "<text x='" & labelX & "' y='" & (labelY + 4) & "' text-anchor='middle' font-size='10' fill='#666'>" & category & "</text>" &
+                        "<text x='" & labelX & "' y='" & (labelY + 16) & "' text-anchor='middle' font-size='9' fill='#667eea' font-weight='600'>" & value & "</text>"
+                    )
+                ) &
+                "</svg>"
+            )
         )
     )
 )`;
