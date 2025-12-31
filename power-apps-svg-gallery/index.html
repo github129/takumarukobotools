@@ -1052,35 +1052,41 @@
     },
     With(
         {
-            maxValue: Max(data, value),
+            dataMaxValue: Max(data, value),
             maxHeight: 180
         },
-        "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
-            Concat(
-                gridLines,
-                With(
-                    {
-                        gridY: maxHeight - (level / 100 * maxHeight),
-                        gridValue: Round(maxValue * level / 100, 0)
-                    },
-                    "<line x1='30' y1='" & gridY & "' x2='270' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                    "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
-                )
-            ) &
-            Concat(
-                data,
-                With(
-                    {
-                        x: 30 + (idx - 1) * (240 / CountRows(data)),
-                        barHeight: value / maxValue * maxHeight,
-                        y: maxHeight - (value / maxValue * maxHeight)
-                    },
-                    "<rect x='" & x & "' y='" & y & "' width='" & (200 / CountRows(data)) & "' height='" & barHeight & "' fill='" & color & "' rx='4'/>" &
-                    "<text x='" & (x + 100 / CountRows(data)) & "' y='195' text-anchor='middle' font-size='12' fill='#666'>" & label & "</text>"
-                )
-            ) &
-            "</svg>"
+        With(
+            {
+                stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50))),
+                maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                Concat(
+                    gridLines,
+                    With(
+                        {
+                            gridY: maxHeight - (level / 100 * maxHeight),
+                            gridValue: Round(maxValue * level / 100, 0)
+                        },
+                        "<line x1='30' y1='" & gridY & "' x2='270' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                        "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                    )
+                ) &
+                Concat(
+                    data,
+                    With(
+                        {
+                            x: 30 + (idx - 1) * (240 / CountRows(data)),
+                            barHeight: value / maxValue * maxHeight,
+                            y: maxHeight - (value / maxValue * maxHeight)
+                        },
+                        "<rect x='" & x & "' y='" & y & "' width='" & (200 / CountRows(data)) & "' height='" & barHeight & "' fill='" & color & "' rx='4'/>" &
+                        "<text x='" & (x + 100 / CountRows(data)) & "' y='195' text-anchor='middle' font-size='12' fill='#666'>" & label & "</text>"
+                    )
+                ) &
+                "</svg>"
+            )
         )
     )
 )`;
@@ -1105,60 +1111,66 @@
     },
     With(
         {
-            maxValue: Max(data, value),
+            dataMaxValue: Max(data, value),
             maxHeight: 130
         },
-        "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
-            "<defs><linearGradient id='lineGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.3' /><stop offset='100%' style='stop-color:" & color & ";stop-opacity:0' /></linearGradient></defs>" &
-            Concat(
-                gridLines,
-                With(
-                    {
-                        gridY: maxHeight - (level / 100 * maxHeight),
-                        gridValue: Round(maxValue * level / 100, 0)
-                    },
-                    "<line x1='20' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                    "<text x='15' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
-                )
-            ) &
-            "<polyline points='" &
-            Concat(
-                data,
-                With(
-                    {
-                        x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                        y: maxHeight - (value / maxValue * maxHeight)
-                    },
-                    x & "," & y
-                ),
-                " "
-            ) &
-            "' fill='none' stroke='" & color & "' stroke-width='3'/>" &
-            "<polygon points='" &
-            Concat(
-                data,
-                With(
-                    {
-                        x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                        y: maxHeight - (value / maxValue * maxHeight)
-                    },
-                    x & "," & y
-                ),
-                " "
-            ) &
-            " 280,130 20,130' fill='url(#lineGrad)'/>" &
-            Concat(
-                data,
-                With(
-                    {
-                        x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                        y: maxHeight - (value / maxValue * maxHeight)
-                    },
-                    "<circle cx='" & x & "' cy='" & y & "' r='4' fill='" & color & "'/>"
-                )
-            ) &
-            "</svg>"
+        With(
+            {
+                stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50))),
+                maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
+                "<defs><linearGradient id='lineGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.3' /><stop offset='100%' style='stop-color:" & color & ";stop-opacity:0' /></linearGradient></defs>" &
+                Concat(
+                    gridLines,
+                    With(
+                        {
+                            gridY: maxHeight - (level / 100 * maxHeight),
+                            gridValue: Round(maxValue * level / 100, 0)
+                        },
+                        "<line x1='20' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                        "<text x='15' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                    )
+                ) &
+                "<polyline points='" &
+                Concat(
+                    data,
+                    With(
+                        {
+                            x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
+                            y: maxHeight - (value / maxValue * maxHeight)
+                        },
+                        x & "," & y
+                    ),
+                    " "
+                ) &
+                "' fill='none' stroke='" & color & "' stroke-width='3'/>" &
+                "<polygon points='" &
+                Concat(
+                    data,
+                    With(
+                        {
+                            x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
+                            y: maxHeight - (value / maxValue * maxHeight)
+                        },
+                        x & "," & y
+                    ),
+                    " "
+                ) &
+                " 280,130 20,130' fill='url(#lineGrad)'/>" &
+                Concat(
+                    data,
+                    With(
+                        {
+                            x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
+                            y: maxHeight - (value / maxValue * maxHeight)
+                        },
+                        "<circle cx='" & x & "' cy='" & y & "' r='4' fill='" & color & "'/>"
+                    )
+                ) &
+                "</svg>"
+            )
         )
     )
 )`;
@@ -1207,7 +1219,7 @@
                 totalValue,
                 Sum(Filter(data, bar = barNum), value)
             ),
-            maxTotal: Max(
+            dataMaxTotal: Max(
                 AddColumns(
                     bars,
                     totalValue,
@@ -1216,62 +1228,68 @@
                 totalValue
             )
         },
-        "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
-            Concat(
-                gridLines,
-                With(
-                    {
-                        gridY: maxHeight - (level / 100 * maxHeight) + 20,
-                        gridValue: Round(maxTotal * level / 100, 0)
-                    },
-                    "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                    "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
-                )
-            ) &
-            Concat(
-                bars,
-                With(
-                    {barData: Filter(data, bar = barNum)},
+        With(
+            {
+                stepSize: If(dataMaxTotal <= 10, 5, If(dataMaxTotal <= 50, 10, If(dataMaxTotal <= 100, 25, 50))),
+                maxTotal: Round(dataMaxTotal + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                Concat(
+                    gridLines,
                     With(
                         {
-                            x: 30 + (barNum - 1) * (240 / CountRows(bars)),
-                            barWidth: 200 / CountRows(bars),
-                            maxSegment: Max(barData, segment)
+                            gridY: maxHeight - (level / 100 * maxHeight) + 20,
+                            gridValue: Round(maxTotal * level / 100, 0)
                         },
-                        Concat(
-                            barData,
-                            With(
-                                {
-                                    currentSegment: segment,
-                                    colorItem: LookUp(colors, segmentNum = segment),
-                                    isTopSegment: segment = maxSegment
-                                },
+                        "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                        "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                    )
+                ) &
+                Concat(
+                    bars,
+                    With(
+                        {barData: Filter(data, bar = barNum)},
+                        With(
+                            {
+                                x: 30 + (barNum - 1) * (240 / CountRows(bars)),
+                                barWidth: 200 / CountRows(bars),
+                                maxSegment: Max(barData, segment)
+                            },
+                            Concat(
+                                barData,
                                 With(
                                     {
-                                        segmentHeight: value / maxTotal * maxHeight,
-                                        stackY: Sum(Filter(barData, segment <= currentSegment), value) / maxTotal * maxHeight,
-                                        yPos: maxHeight - (Sum(Filter(barData, segment <= currentSegment), value) / maxTotal * maxHeight)
+                                        currentSegment: segment,
+                                        colorItem: LookUp(colors, segmentNum = segment),
+                                        isTopSegment: segment = maxSegment
                                     },
-                                    If(
-                                        isTopSegment,
-                                        "<path d='M " & x & "," & (yPos + segmentHeight) &
-                                        " L " & x & "," & (yPos + 4) &
-                                        " Q " & x & "," & yPos & " " & (x + 4) & "," & yPos &
-                                        " L " & (x + barWidth - 4) & "," & yPos &
-                                        " Q " & (x + barWidth) & "," & yPos & " " & (x + barWidth) & "," & (yPos + 4) &
-                                        " L " & (x + barWidth) & "," & (yPos + segmentHeight) &
-                                        " Z' fill='" & colorItem.color & "'/>",
-                                        "<rect x='" & x & "' y='" & yPos & "' width='" & barWidth & "' height='" & segmentHeight & "' fill='" & colorItem.color & "'/>"
+                                    With(
+                                        {
+                                            segmentHeight: value / maxTotal * maxHeight,
+                                            stackY: Sum(Filter(barData, segment <= currentSegment), value) / maxTotal * maxHeight,
+                                            yPos: maxHeight - (Sum(Filter(barData, segment <= currentSegment), value) / maxTotal * maxHeight)
+                                        },
+                                        If(
+                                            isTopSegment,
+                                            "<path d='M " & x & "," & (yPos + segmentHeight) &
+                                            " L " & x & "," & (yPos + 4) &
+                                            " Q " & x & "," & yPos & " " & (x + 4) & "," & yPos &
+                                            " L " & (x + barWidth - 4) & "," & yPos &
+                                            " Q " & (x + barWidth) & "," & yPos & " " & (x + barWidth) & "," & (yPos + 4) &
+                                            " L " & (x + barWidth) & "," & (yPos + segmentHeight) &
+                                            " Z' fill='" & colorItem.color & "'/>",
+                                            "<rect x='" & x & "' y='" & yPos & "' width='" & barWidth & "' height='" & segmentHeight & "' fill='" & colorItem.color & "'/>"
+                                        )
                                     )
                                 )
-                            )
-                        ) &
-                        "<text x='" & (x + barWidth / 2) & "' y='185' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
+                            ) &
+                            "<text x='" & (x + barWidth / 2) & "' y='185' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
+                        )
                     )
-                )
-            ) &
-            "</svg>"
+                ) &
+                "</svg>"
+            )
         )
     )
 )`;
@@ -1288,60 +1306,66 @@
     },
     With(
         {
-            maxValue: Max(data, value),
+            dataMaxValue: Max(data, value),
             maxHeight: 135
         },
-        "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
-            "<defs><linearGradient id='areaGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.5' /><stop offset='100%' style='stop-color:" & color & ";stop-opacity:0.05' /></linearGradient></defs>" &
-            Concat(
-                gridLines,
-                With(
-                    {
-                        gridY: maxHeight - (level / 100 * maxHeight),
-                        gridValue: Round(maxValue * level / 100, 0)
-                    },
-                    "<line x1='20' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                    "<text x='15' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
-                )
-            ) &
-            "<polygon points='" &
-            Concat(
-                data,
-                With(
-                    {
-                        x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                        y: maxHeight - (value / maxValue * maxHeight)
-                    },
-                    x & "," & y
-                ),
-                " "
-            ) &
-            " 280,135 20,135' fill='url(#areaGrad)'/>" &
-            "<polyline points='" &
-            Concat(
-                data,
-                With(
-                    {
-                        x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                        y: maxHeight - (value / maxValue * maxHeight)
-                    },
-                    x & "," & y
-                ),
-                " "
-            ) &
-            "' fill='none' stroke='" & color & "' stroke-width='2.5'/>" &
-            Concat(
-                data,
-                With(
-                    {
-                        x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                        y: maxHeight - (value / maxValue * maxHeight)
-                    },
-                    "<circle cx='" & x & "' cy='" & y & "' r='3' fill='" & color & "'/>"
-                )
-            ) &
-            "</svg>"
+        With(
+            {
+                stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50))),
+                maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
+                "<defs><linearGradient id='areaGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.5' /><stop offset='100%' style='stop-color:" & color & ";stop-opacity:0.05' /></linearGradient></defs>" &
+                Concat(
+                    gridLines,
+                    With(
+                        {
+                            gridY: maxHeight - (level / 100 * maxHeight),
+                            gridValue: Round(maxValue * level / 100, 0)
+                        },
+                        "<line x1='20' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                        "<text x='15' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                    )
+                ) &
+                "<polygon points='" &
+                Concat(
+                    data,
+                    With(
+                        {
+                            x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
+                            y: maxHeight - (value / maxValue * maxHeight)
+                        },
+                        x & "," & y
+                    ),
+                    " "
+                ) &
+                " 280,135 20,135' fill='url(#areaGrad)'/>" &
+                "<polyline points='" &
+                Concat(
+                    data,
+                    With(
+                        {
+                            x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
+                            y: maxHeight - (value / maxValue * maxHeight)
+                        },
+                        x & "," & y
+                    ),
+                    " "
+                ) &
+                "' fill='none' stroke='" & color & "' stroke-width='2.5'/>" &
+                Concat(
+                    data,
+                    With(
+                        {
+                            x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
+                            y: maxHeight - (value / maxValue * maxHeight)
+                        },
+                        "<circle cx='" & x & "' cy='" & y & "' r='3' fill='" & color & "'/>"
+                    )
+                ) &
+                "</svg>"
+            )
         )
     )
 )`;
@@ -1368,24 +1392,30 @@
     },
     With(
         {
-            maxValue: Max(data, value),
+            dataMaxValue: Max(data, value),
             maxWidth: 200
         },
-        "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
-            Concat(
-                data,
-                With(
-                    {
-                        y: 10 + (idx - 1) * (130 / CountRows(data)),
-                        barWidth: value / maxValue * maxWidth
-                    },
-                    "<rect x='80' y='" & y & "' width='" & barWidth & "' height='" & (100 / CountRows(data)) & "' fill='" & color & "' rx='4'/>" &
-                    "<text x='75' y='" & (y + 50 / CountRows(data) + 5) & "' text-anchor='end' font-size='12' fill='#666'>" & dept & "</text>" &
-                    "<text x='" & (80 + barWidth - 5) & "' y='" & (y + 50 / CountRows(data) + 5) & "' font-size='12' fill='#fff' font-weight='600'>" & value & "</text>"
-                )
-            ) &
-            "</svg>"
+        With(
+            {
+                stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50))),
+                maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
+                Concat(
+                    data,
+                    With(
+                        {
+                            y: 10 + (idx - 1) * (130 / CountRows(data)),
+                            barWidth: value / maxValue * maxWidth
+                        },
+                        "<rect x='80' y='" & y & "' width='" & barWidth & "' height='" & (100 / CountRows(data)) & "' fill='" & color & "' rx='4'/>" &
+                        "<text x='75' y='" & (y + 50 / CountRows(data) + 5) & "' text-anchor='end' font-size='12' fill='#666'>" & dept & "</text>" &
+                        "<text x='" & (80 + barWidth - 5) & "' y='" & (y + 50 / CountRows(data) + 5) & "' font-size='12' fill='#fff' font-weight='600'>" & value & "</text>"
+                    )
+                ) &
+                "</svg>"
+            )
         )
     )
 )`;
@@ -1679,7 +1709,7 @@
     },
     With(
         {
-            maxValue: Max(data, value),
+            dataMaxValue: Max(data, value),
             maxHeight: 160,
             seriesCount: Max(data, series),
             periodCount: CountRows(periods),
@@ -1689,6 +1719,8 @@
         },
         With(
             {
+                stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50))),
+                maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0))),
                 totalGroupGaps: (periodCount - 1) * minGroupGap,
                 widthForGroups: availableWidth - totalGroupGaps,
                 widthPerGroup: (availableWidth - totalGroupGaps) / periodCount,
@@ -1834,35 +1866,41 @@
     With(
         {
             maxX: Max(data, x),
-            maxY: Max(data, y)
+            dataMaxY: Max(data, y)
         },
-        "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
-            "<line x1='30' y1='180' x2='280' y2='180' stroke='#e5e7eb' stroke-width='2'/>" &
-            "<line x1='30' y1='180' x2='30' y2='20' stroke='#e5e7eb' stroke-width='2'/>" &
-            Concat(
-                gridLines,
-                With(
-                    {
-                        gridY: 180 - (level / 100 * chartHeight),
-                        gridValue: Round(maxY * level / 100, 0)
-                    },
-                    "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#f0f0f0' stroke-width='1'/>" &
-                    "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
-                )
-            ) &
-            Concat(
-                data,
-                With(
-                    {
-                        colorData: LookUp(colors, series = series),
-                        plotX: 30 + (x / maxX) * chartWidth,
-                        plotY: 180 - (y / maxY) * chartHeight
-                    },
-                    "<circle cx='" & plotX & "' cy='" & plotY & "' r='5' fill='" & colorData.color & "'/>"
-                )
-            ) &
-            "</svg>"
+        With(
+            {
+                stepSize: If(dataMaxY <= 10, 5, If(dataMaxY <= 50, 10, If(dataMaxY <= 100, 25, 50))),
+                maxY: Round(dataMaxY + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                "<line x1='30' y1='180' x2='280' y2='180' stroke='#e5e7eb' stroke-width='2'/>" &
+                "<line x1='30' y1='180' x2='30' y2='20' stroke='#e5e7eb' stroke-width='2'/>" &
+                Concat(
+                    gridLines,
+                    With(
+                        {
+                            gridY: 180 - (level / 100 * chartHeight),
+                            gridValue: Round(maxY * level / 100, 0)
+                        },
+                        "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#f0f0f0' stroke-width='1'/>" &
+                        "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                    )
+                ) &
+                Concat(
+                    data,
+                    With(
+                        {
+                            colorData: LookUp(colors, series = series),
+                            plotX: 30 + (x / maxX) * chartWidth,
+                            plotY: 180 - (y / maxY) * chartHeight
+                        },
+                        "<circle cx='" & plotX & "' cy='" & plotY & "' r='5' fill='" & colorData.color & "'/>"
+                    )
+                ) &
+                "</svg>"
+            )
         )
     )
 )`;
@@ -1871,13 +1909,13 @@
                     return `With(
     {
         data: Table(
-            {x: 40, y: 70, size: 15, series: 1},
-            {x: 90, y: 55, size: 25, series: 2},
-            {x: 140, y: 40, size: 20, series: 3},
-            {x: 190, y: 25, size: 30, series: 4},
-            {x: 70, y: 63, size: 12, series: 1},
-            {x: 120, y: 48, size: 18, series: 2},
-            {x: 170, y: 33, size: 22, series: 3}
+            {x: 40, y: 70, radius: 15, series: 1},
+            {x: 90, y: 55, radius: 25, series: 2},
+            {x: 140, y: 40, radius: 20, series: 3},
+            {x: 190, y: 25, radius: 30, series: 4},
+            {x: 70, y: 63, radius: 12, series: 1},
+            {x: 120, y: 48, radius: 18, series: 2},
+            {x: 170, y: 33, radius: 22, series: 3}
         ),
         colors: Table(
             {series: 1, color: "#667eea"},
@@ -1890,9 +1928,9 @@
     With(
         {
             maxX: Max(data, x),
-            maxY: Max(data, y),
-            minY: Min(data, y),
-            maxSize: Max(data, size),
+            dataMaxY: Max(data, y),
+            dataMinY: Min(data, y),
+            maxRadius: Max(data, radius),
             leftMargin: 50,
             rightMargin: 40,
             topMargin: 40,
@@ -1900,41 +1938,49 @@
         },
         With(
             {
+                dataRangeY: dataMaxY - dataMinY,
+                stepSize: If(dataRangeY <= 10, 5, If(dataRangeY <= 50, 10, If(dataRangeY <= 100, 25, 50))),
+                minY: If(dataMinY < stepSize, 0, Round(dataMinY - stepSize, -1)),
+                maxY: Round(dataMaxY + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0))),
                 chartWidth: 300 - leftMargin - rightMargin,
                 chartHeight: 200 - topMargin - bottomMargin,
                 axisBottom: 200 - bottomMargin,
-                rangeY: maxY - minY,
                 safeMaxRadius: Min(topMargin - 8, bottomMargin - 8, leftMargin / 3, rightMargin / 3),
-                bubbleScaleFactor: Min(1, (Min(topMargin - 8, bottomMargin - 8, leftMargin / 3, rightMargin / 3)) / maxSize)
+                bubbleScaleFactor: Min(1, (Min(topMargin - 8, bottomMargin - 8, leftMargin / 3, rightMargin / 3)) / maxRadius)
             },
-            "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
-                "<line x1='" & leftMargin & "' y1='" & axisBottom & "' x2='" & (300 - rightMargin) & "' y2='" & axisBottom & "' stroke='#e5e7eb' stroke-width='2'/>" &
-                "<line x1='" & leftMargin & "' y1='" & axisBottom & "' x2='" & leftMargin & "' y2='" & topMargin & "' stroke='#e5e7eb' stroke-width='2'/>" &
-                Concat(
-                    gridLines,
-                    With(
-                        {
-                            gridY: axisBottom - (level / 100 * chartHeight),
-                            gridValue: Round(minY + (rangeY * level / 100), 0)
-                        },
-                        "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (300 - rightMargin) & "' y2='" & gridY & "' stroke='#f0f0f0' stroke-width='1'/>" &
-                        "<text x='" & (leftMargin - 5) & "' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
-                    )
-                ) &
-                Concat(
-                    data,
-                    With(
-                        {
-                            colorData: LookUp(colors, series = series),
-                            plotX: leftMargin + (x / maxX) * chartWidth,
-                            plotY: axisBottom - ((y - minY) / rangeY) * chartHeight,
-                            scaledRadius: size * bubbleScaleFactor
-                        },
-                        "<circle cx='" & plotX & "' cy='" & plotY & "' r='" & scaledRadius & "' fill='" & colorData.color & "' fill-opacity='0.6' stroke='" & colorData.color & "' stroke-width='2'/>"
-                    )
-                ) &
-                "</svg>"
+            With(
+                {
+                    rangeY: maxY - minY
+                },
+                "data:image/svg+xml," & EncodeUrl(
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                    "<line x1='" & leftMargin & "' y1='" & axisBottom & "' x2='" & (300 - rightMargin) & "' y2='" & axisBottom & "' stroke='#e5e7eb' stroke-width='2'/>" &
+                    "<line x1='" & leftMargin & "' y1='" & axisBottom & "' x2='" & leftMargin & "' y2='" & topMargin & "' stroke='#e5e7eb' stroke-width='2'/>" &
+                    Concat(
+                        gridLines,
+                        With(
+                            {
+                                gridY: axisBottom - (level / 100 * chartHeight),
+                                gridValue: Round(minY + (rangeY * level / 100), 0)
+                            },
+                            "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (300 - rightMargin) & "' y2='" & gridY & "' stroke='#f0f0f0' stroke-width='1'/>" &
+                            "<text x='" & (leftMargin - 5) & "' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                        )
+                    ) &
+                    Concat(
+                        data,
+                        With(
+                            {
+                                colorData: LookUp(colors, series = series),
+                                plotX: leftMargin + (x / maxX) * chartWidth,
+                                plotY: axisBottom - ((y - minY) / rangeY) * chartHeight,
+                                scaledRadius: radius * bubbleScaleFactor
+                            },
+                            "<circle cx='" & plotX & "' cy='" & plotY & "' r='" & scaledRadius & "' fill='" & colorData.color & "' fill-opacity='0.6' stroke='" & colorData.color & "' stroke-width='2'/>"
+                        )
+                    ) &
+                    "</svg>"
+                )
             )
         )
     )
@@ -1964,63 +2010,69 @@
     },
     With(
         {
-            maxValue: Max(Max(barData, value), Max(lineData, value)),
+            dataMaxValue: Max(Max(barData, value), Max(lineData, value)),
             maxHeight: 160
         },
-        "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
-            Concat(
-                gridLines,
-                With(
-                    {
-                        gridY: 180 - (level / 100 * maxHeight),
-                        gridValue: Round(maxValue * level / 100, 0)
-                    },
-                    "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                    "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
-                )
-            ) &
-            Concat(
-                barData,
-                With(
-                    {
-                        barHeight: value / maxValue * maxHeight,
-                        x: 30 + (idx - 1) * 50
-                    },
-                    "<rect x='" & x & "' y='" & (180 - barHeight) & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & barColor & "' rx='4'/>"
-                )
-            ) &
-            "<polyline points='" &
-            Concat(
-                lineData,
-                With(
-                    {
-                        x: 30 + (idx - 1) * 50 + barWidth / 2,
-                        y: 180 - (value / maxValue * maxHeight)
-                    },
-                    x & "," & y
-                ),
-                " "
-            ) &
-            "' fill='none' stroke='" & lineColor & "' stroke-width='3'/>" &
-            Concat(
-                lineData,
-                With(
-                    {
-                        x: 30 + (idx - 1) * 50 + barWidth / 2,
-                        y: 180 - (value / maxValue * maxHeight)
-                    },
-                    "<circle cx='" & x & "' cy='" & y & "' r='5' fill='" & lineColor & "' stroke='#fff' stroke-width='2'/>"
-                )
-            ) &
-            Concat(
-                barData,
-                With(
-                    {x: 30 + (idx - 1) * 50 + barWidth / 2},
-                    "<text x='" & x & "' y='195' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
-                )
-            ) &
-            "</svg>"
+        With(
+            {
+                stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50))),
+                maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                Concat(
+                    gridLines,
+                    With(
+                        {
+                            gridY: 180 - (level / 100 * maxHeight),
+                            gridValue: Round(maxValue * level / 100, 0)
+                        },
+                        "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                        "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                    )
+                ) &
+                Concat(
+                    barData,
+                    With(
+                        {
+                            barHeight: value / maxValue * maxHeight,
+                            x: 30 + (idx - 1) * 50
+                        },
+                        "<rect x='" & x & "' y='" & (180 - barHeight) & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & barColor & "' rx='4'/>"
+                    )
+                ) &
+                "<polyline points='" &
+                Concat(
+                    lineData,
+                    With(
+                        {
+                            x: 30 + (idx - 1) * 50 + barWidth / 2,
+                            y: 180 - (value / maxValue * maxHeight)
+                        },
+                        x & "," & y
+                    ),
+                    " "
+                ) &
+                "' fill='none' stroke='" & lineColor & "' stroke-width='3'/>" &
+                Concat(
+                    lineData,
+                    With(
+                        {
+                            x: 30 + (idx - 1) * 50 + barWidth / 2,
+                            y: 180 - (value / maxValue * maxHeight)
+                        },
+                        "<circle cx='" & x & "' cy='" & y & "' r='5' fill='" & lineColor & "' stroke='#fff' stroke-width='2'/>"
+                    )
+                ) &
+                Concat(
+                    barData,
+                    With(
+                        {x: 30 + (idx - 1) * 50 + barWidth / 2},
+                        "<text x='" & x & "' y='195' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
+                    )
+                ) &
+                "</svg>"
+            )
         )
     )
 )`;
