@@ -1612,11 +1612,15 @@
                     With(
                         {
                             angle: (idx - 1) * (360 / CountRows(data)) - 90,
-                            radius: value / maxValue * maxRadius,
-                            x: centerX + radius * Cos(angle * Pi() / 180),
-                            y: centerY + radius * Sin(angle * Pi() / 180)
+                            radius: value / maxValue * maxRadius
                         },
-                        x & "," & y
+                        With(
+                            {
+                                x: centerX + radius * Cos(angle * Pi() / 180),
+                                y: centerY + radius * Sin(angle * Pi() / 180)
+                            },
+                            x & "," & y
+                        )
                     ),
                     " "
                 )
@@ -1635,11 +1639,15 @@
                                     data,
                                     With(
                                         {
-                                            angle: (idx - 1) * (360 / CountRows(data)) - 90,
-                                            x: centerX + radius * Cos(angle * Pi() / 180),
-                                            y: centerY + radius * Sin(angle * Pi() / 180)
+                                            angle: (idx - 1) * (360 / CountRows(data)) - 90
                                         },
-                                        x & "," & y
+                                        With(
+                                            {
+                                                x: centerX + radius * Cos(angle * Pi() / 180),
+                                                y: centerY + radius * Sin(angle * Pi() / 180)
+                                            },
+                                            x & "," & y
+                                        )
                                     ),
                                     " "
                                 )
@@ -1652,11 +1660,15 @@
                     data,
                     With(
                         {
-                            angle: (idx - 1) * (360 / CountRows(data)) - 90,
-                            outerX: centerX + maxRadius * Cos(angle * Pi() / 180),
-                            outerY: centerY + maxRadius * Sin(angle * Pi() / 180)
+                            angle: (idx - 1) * (360 / CountRows(data)) - 90
                         },
-                        "<line x1='" & centerX & "' y1='" & centerY & "' x2='" & outerX & "' y2='" & outerY & "' stroke='#e5e7eb' stroke-width='1'/>"
+                        With(
+                            {
+                                outerX: centerX + maxRadius * Cos(angle * Pi() / 180),
+                                outerY: centerY + maxRadius * Sin(angle * Pi() / 180)
+                            },
+                            "<line x1='" & centerX & "' y1='" & centerY & "' x2='" & outerX & "' y2='" & outerY & "' stroke='#e5e7eb' stroke-width='1'/>"
+                        )
                     )
                 ) &
                 "<polygon points='" & points & "' fill='#667eea' fill-opacity='0.3' stroke='#667eea' stroke-width='2'/>" &
@@ -1666,15 +1678,19 @@
                         {
                             angle: (idx - 1) * (360 / CountRows(data)) - 90,
                             radius: value / maxValue * maxRadius,
-                            x: centerX + radius * Cos(angle * Pi() / 180),
-                            y: centerY + radius * Sin(angle * Pi() / 180),
-                            labelRadius: maxRadius + 15,
-                            labelX: centerX + labelRadius * Cos(angle * Pi() / 180),
-                            labelY: centerY + labelRadius * Sin(angle * Pi() / 180)
+                            labelRadius: maxRadius + 15
                         },
-                        "<circle cx='" & x & "' cy='" & y & "' r='4' fill='#667eea'/>" &
-                        "<text x='" & labelX & "' y='" & (labelY + 4) & "' text-anchor='middle' font-size='10' fill='#666'>" & category & "</text>" &
-                        "<text x='" & labelX & "' y='" & (labelY + 16) & "' text-anchor='middle' font-size='9' fill='#667eea' font-weight='600'>" & value & "</text>"
+                        With(
+                            {
+                                x: centerX + radius * Cos(angle * Pi() / 180),
+                                y: centerY + radius * Sin(angle * Pi() / 180),
+                                labelX: centerX + labelRadius * Cos(angle * Pi() / 180),
+                                labelY: centerY + labelRadius * Sin(angle * Pi() / 180)
+                            },
+                            "<circle cx='" & x & "' cy='" & y & "' r='4' fill='#667eea'/>" &
+                            "<text x='" & labelX & "' y='" & (labelY + 4) & "' text-anchor='middle' font-size='10' fill='#666'>" & category & "</text>" &
+                            "<text x='" & labelX & "' y='" & (labelY + 16) & "' text-anchor='middle' font-size='9' fill='#667eea' font-weight='600'>" & value & "</text>"
+                        )
                     )
                 ) &
                 "</svg>"
