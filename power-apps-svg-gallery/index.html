@@ -1498,7 +1498,7 @@
             {period: "Q3", series: 2, value: 50, label: "商品B"}
         ),
         periods: Table({num: 1, name: "Q1"}, {num: 2, name: "Q2"}, {num: 3, name: "Q3"}),
-        colors: Table({series: 1, color: "#667eea"}, {series: 2, color: "#764ba2"}),
+        colors: Table({seriesNum: 1, color: "#667eea"}, {seriesNum: 2, color: "#764ba2"}),
         barWidth: 25,
         barGap: 5
     },
@@ -1514,7 +1514,7 @@
                 With(
                     {
                         periodData: LookUp(periods, name = period),
-                        colorData: LookUp(colors, series = series)
+                        colorData: LookUp(colors, seriesNum = series)
                     },
                     With(
                         {
