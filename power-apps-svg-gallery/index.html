@@ -1885,42 +1885,54 @@
             {series: 3, color: "#f093fb"},
             {series: 4, color: "#4facfe"}
         ),
-        chartWidth: 250,
-        chartHeight: 160,
         gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
     },
     With(
         {
             maxX: Max(data, x),
-            maxY: Max(data, y)
+            maxY: Max(data, y),
+            minY: Min(data, y),
+            maxSize: Max(data, size),
+            leftMargin: 50,
+            rightMargin: 40,
+            topMargin: 40,
+            bottomMargin: 30
         },
-        "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
-            "<line x1='30' y1='180' x2='280' y2='180' stroke='#e5e7eb' stroke-width='2'/>" &
-            "<line x1='30' y1='180' x2='30' y2='20' stroke='#e5e7eb' stroke-width='2'/>" &
-            Concat(
-                gridLines,
-                With(
-                    {
-                        gridY: 20 + (level / 100 * chartHeight),
-                        gridValue: Round(maxY * (100 - level) / 100, 0)
-                    },
-                    "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#f0f0f0' stroke-width='1'/>" &
-                    "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
-                )
-            ) &
-            Concat(
-                data,
-                With(
-                    {
-                        colorData: LookUp(colors, series = series),
-                        plotX: 30 + (x / maxX) * chartWidth,
-                        plotY: 20 + (y / maxY) * chartHeight
-                    },
-                    "<circle cx='" & plotX & "' cy='" & plotY & "' r='" & size & "' fill='" & colorData.color & "' fill-opacity='0.6' stroke='" & colorData.color & "' stroke-width='2'/>"
-                )
-            ) &
-            "</svg>"
+        With(
+            {
+                chartWidth: 300 - leftMargin - rightMargin,
+                chartHeight: 200 - topMargin - bottomMargin,
+                axisBottom: 200 - bottomMargin,
+                rangeY: maxY - minY
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                "<line x1='" & leftMargin & "' y1='" & axisBottom & "' x2='" & (300 - rightMargin) & "' y2='" & axisBottom & "' stroke='#e5e7eb' stroke-width='2'/>" &
+                "<line x1='" & leftMargin & "' y1='" & axisBottom & "' x2='" & leftMargin & "' y2='" & topMargin & "' stroke='#e5e7eb' stroke-width='2'/>" &
+                Concat(
+                    gridLines,
+                    With(
+                        {
+                            gridY: axisBottom - (level / 100 * chartHeight),
+                            gridValue: Round(minY + (rangeY * level / 100), 0)
+                        },
+                        "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (300 - rightMargin) & "' y2='" & gridY & "' stroke='#f0f0f0' stroke-width='1'/>" &
+                        "<text x='" & (leftMargin - 5) & "' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                    )
+                ) &
+                Concat(
+                    data,
+                    With(
+                        {
+                            colorData: LookUp(colors, series = series),
+                            plotX: leftMargin + (x / maxX) * chartWidth,
+                            plotY: axisBottom - ((y - minY) / rangeY) * chartHeight
+                        },
+                        "<circle cx='" & plotX & "' cy='" & plotY & "' r='" & size & "' fill='" & colorData.color & "' fill-opacity='0.6' stroke='" & colorData.color & "' stroke-width='2'/>"
+                    )
+                ) &
+                "</svg>"
+            )
         )
     )
 )`;
