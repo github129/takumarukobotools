@@ -1065,7 +1065,7 @@
                         gridValue: Round(maxValue * level / 100, 0)
                     },
                     "<line x1='30' y1='" & gridY & "' x2='270' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                    "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                    "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                 )
             ) &
             Concat(
@@ -1119,7 +1119,7 @@
                         gridValue: Round(maxValue * level / 100, 0)
                     },
                     "<line x1='20' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                    "<text x='15' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                    "<text x='15' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                 )
             ) &
             "<polyline points='" &
@@ -1226,7 +1226,7 @@
                         gridValue: Round(maxTotal * level / 100, 0)
                     },
                     "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                    "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                    "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                 )
             ) &
             Concat(
@@ -1302,7 +1302,7 @@
                         gridValue: Round(maxValue * level / 100, 0)
                     },
                     "<line x1='20' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                    "<text x='15' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                    "<text x='15' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                 )
             ) &
             "<polygon points='" &
@@ -1711,7 +1711,7 @@
                                 gridValue: Round(maxValue * level / 100, 0)
                             },
                             "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                            "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                            "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                         )
                     ) &
                     Concat(
@@ -1772,7 +1772,7 @@
             With(
                 {gridY: 20 + (level / 100 * chartHeight)},
                 "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & level & "%</text>"
+                "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & level & "%</text>"
             )
         ) &
         Concat(
@@ -1848,7 +1848,7 @@
                         gridValue: Round(maxY * level / 100, 0)
                     },
                     "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#f0f0f0' stroke-width='1'/>" &
-                    "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                    "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                 )
             ) &
             Concat(
@@ -1917,7 +1917,7 @@
                             gridValue: Round(minY + (rangeY * level / 100), 0)
                         },
                         "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (300 - rightMargin) & "' y2='" & gridY & "' stroke='#f0f0f0' stroke-width='1'/>" &
-                        "<text x='" & (leftMargin - 5) & "' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                        "<text x='" & (leftMargin - 5) & "' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                     )
                 ) &
                 Concat(
@@ -1974,7 +1974,7 @@
                         gridValue: Round(maxValue * level / 100, 0)
                     },
                     "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                    "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                    "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                 )
             ) &
             Concat(
