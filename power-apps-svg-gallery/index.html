@@ -1047,7 +1047,8 @@
             {idx: 1, value: 55, color: "#667eea", label: "1月"},
             {idx: 2, value: 78, color: "#764ba2", label: "2月"},
             {idx: 3, value: 44, color: "#f093fb", label: "3月"}
-        )
+        ),
+        gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
     },
     With(
         {
@@ -1056,6 +1057,17 @@
         },
         "data:image/svg+xml," & EncodeUrl(
             "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+            Concat(
+                gridLines,
+                With(
+                    {
+                        gridY: maxHeight - (level / 100 * maxHeight),
+                        gridValue: Round(maxValue * level / 100, 0)
+                    },
+                    "<line x1='30' y1='" & gridY & "' x2='270' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                    "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                )
+            ) &
             Concat(
                 data,
                 With(
@@ -1088,7 +1100,8 @@
         data: Table(
             {idx: 1, value: 77}, {idx: 2, value: 62}, {idx: 3, value: 46}, {idx: 4, value: 54}, {idx: 5, value: 23}
         ),
-        color: "#667eea"
+        color: "#667eea",
+        gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
     },
     With(
         {
@@ -1098,6 +1111,17 @@
         "data:image/svg+xml," & EncodeUrl(
             "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
             "<defs><linearGradient id='lineGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.3' /><stop offset='100%' style='stop-color:" & color & ";stop-opacity:0' /></linearGradient></defs>" &
+            Concat(
+                gridLines,
+                With(
+                    {
+                        gridY: maxHeight - (level / 100 * maxHeight),
+                        gridValue: Round(maxValue * level / 100, 0)
+                    },
+                    "<line x1='20' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                    "<text x='15' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                )
+            ) &
             "<polyline points='" &
             Concat(
                 data,
@@ -1172,7 +1196,8 @@
             {segmentNum: 3, color: "#f093fb"},
             {segmentNum: 4, color: "#4facfe"},
             {segmentNum: 5, color: "#00f2fe"}
-        )
+        ),
+        gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
     },
     With(
         {
@@ -1193,6 +1218,17 @@
         },
         "data:image/svg+xml," & EncodeUrl(
             "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+            Concat(
+                gridLines,
+                With(
+                    {
+                        gridY: maxHeight - (level / 100 * maxHeight) + 20,
+                        gridValue: Round(maxTotal * level / 100, 0)
+                    },
+                    "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                    "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                )
+            ) &
             Concat(
                 bars,
                 With(
@@ -1247,7 +1283,8 @@
             {idx: 1, value: 89}, {idx: 2, value: 74}, {idx: 3, value: 59}, {idx: 4, value: 67},
             {idx: 5, value: 44}, {idx: 6, value: 52}, {idx: 7, value: 37}
         ),
-        color: "#10b981"
+        color: "#10b981",
+        gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
     },
     With(
         {
@@ -1257,6 +1294,17 @@
         "data:image/svg+xml," & EncodeUrl(
             "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
             "<defs><linearGradient id='areaGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.5' /><stop offset='100%' style='stop-color:" & color & ";stop-opacity:0.05' /></linearGradient></defs>" &
+            Concat(
+                gridLines,
+                With(
+                    {
+                        gridY: maxHeight - (level / 100 * maxHeight),
+                        gridValue: Round(maxValue * level / 100, 0)
+                    },
+                    "<line x1='20' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                    "<text x='15' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                )
+            ) &
             "<polygon points='" &
             Concat(
                 data,
@@ -1629,7 +1677,8 @@
         colors: Table({seriesNum: 1, color: "#667eea"}, {seriesNum: 2, color: "#764ba2"}),
         barWidth: 25,
         barGap: 5,
-        groupGap: 20
+        groupGap: 20,
+        gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
     },
     With(
         {
@@ -1644,6 +1693,17 @@
             },
             "data:image/svg+xml," & EncodeUrl(
                 "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                Concat(
+                    gridLines,
+                    With(
+                        {
+                            gridY: 180 - (level / 100 * maxHeight),
+                            gridValue: Round(maxValue * level / 100, 0)
+                        },
+                        "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                        "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                    )
+                ) &
                 Concat(
                     data,
                     With(
@@ -1691,10 +1751,19 @@
             {segmentNum: 3, color: "#f093fb"}
         ),
         chartHeight: 160,
-        barWidth: 50
+        barWidth: 50,
+        gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
     },
     "data:image/svg+xml," & EncodeUrl(
         "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+        Concat(
+            gridLines,
+            With(
+                {gridY: 20 + (level / 100 * chartHeight)},
+                "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & level & "%</text>"
+            )
+        ) &
         Concat(
             periods,
             With(
@@ -1748,7 +1817,8 @@
         ),
         colors: Table({series: 1, color: "#667eea"}, {series: 2, color: "#764ba2"}),
         chartWidth: 250,
-        chartHeight: 160
+        chartHeight: 160,
+        gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
     },
     With(
         {
@@ -1759,6 +1829,17 @@
             "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
             "<line x1='30' y1='180' x2='280' y2='180' stroke='#e5e7eb' stroke-width='2'/>" &
             "<line x1='30' y1='180' x2='30' y2='20' stroke='#e5e7eb' stroke-width='2'/>" &
+            Concat(
+                gridLines,
+                With(
+                    {
+                        gridY: 180 - (level / 100 * chartHeight),
+                        gridValue: Round(maxY * level / 100, 0)
+                    },
+                    "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#f0f0f0' stroke-width='1'/>" &
+                    "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                )
+            ) &
             Concat(
                 data,
                 With(
@@ -1794,7 +1875,8 @@
             {series: 4, color: "#4facfe"}
         ),
         chartWidth: 250,
-        chartHeight: 160
+        chartHeight: 160,
+        gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
     },
     With(
         {
@@ -1805,6 +1887,17 @@
             "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
             "<line x1='30' y1='180' x2='280' y2='180' stroke='#e5e7eb' stroke-width='2'/>" &
             "<line x1='30' y1='180' x2='30' y2='20' stroke='#e5e7eb' stroke-width='2'/>" &
+            Concat(
+                gridLines,
+                With(
+                    {
+                        gridY: 20 + (level / 100 * chartHeight),
+                        gridValue: Round(maxY * (100 - level) / 100, 0)
+                    },
+                    "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#f0f0f0' stroke-width='1'/>" &
+                    "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                )
+            ) &
             Concat(
                 data,
                 With(
@@ -1840,7 +1933,8 @@
         ),
         barColor: "#667eea",
         lineColor: "#f093fb",
-        barWidth: 35
+        barWidth: 35,
+        gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
     },
     With(
         {
@@ -1849,6 +1943,17 @@
         },
         "data:image/svg+xml," & EncodeUrl(
             "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+            Concat(
+                gridLines,
+                With(
+                    {
+                        gridY: 180 - (level / 100 * maxHeight),
+                        gridValue: Round(maxValue * level / 100, 0)
+                    },
+                    "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                    "<text x='25' y='" & (gridY + 4) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                )
+            ) &
             Concat(
                 barData,
                 With(
