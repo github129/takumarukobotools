@@ -1903,7 +1903,9 @@
                 chartWidth: 300 - leftMargin - rightMargin,
                 chartHeight: 200 - topMargin - bottomMargin,
                 axisBottom: 200 - bottomMargin,
-                rangeY: maxY - minY
+                rangeY: maxY - minY,
+                safeMaxRadius: Min(topMargin - 8, bottomMargin - 8, leftMargin / 3, rightMargin / 3),
+                bubbleScaleFactor: Min(1, (Min(topMargin - 8, bottomMargin - 8, leftMargin / 3, rightMargin / 3)) / maxSize)
             },
             "data:image/svg+xml," & EncodeUrl(
                 "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
@@ -1926,9 +1928,10 @@
                         {
                             colorData: LookUp(colors, series = series),
                             plotX: leftMargin + (x / maxX) * chartWidth,
-                            plotY: axisBottom - ((y - minY) / rangeY) * chartHeight
+                            plotY: axisBottom - ((y - minY) / rangeY) * chartHeight,
+                            scaledRadius: size * bubbleScaleFactor
                         },
-                        "<circle cx='" & plotX & "' cy='" & plotY & "' r='" & size & "' fill='" & colorData.color & "' fill-opacity='0.6' stroke='" & colorData.color & "' stroke-width='2'/>"
+                        "<circle cx='" & plotX & "' cy='" & plotY & "' r='" & scaledRadius & "' fill='" & colorData.color & "' fill-opacity='0.6' stroke='" & colorData.color & "' stroke-width='2'/>"
                     )
                 ) &
                 "</svg>"
