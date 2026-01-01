@@ -1957,20 +1957,24 @@
                                             segmentHeight: value / totalValue * chartHeight,
                                             yOffset: Sum(Filter(periodData, segment < currentSegment), value) / totalValue * chartHeight,
                                             isTop: currentSegment = 1,
-                                            y: 20 + yOffset,
                                             radius: 4
                                         },
-                                        If(
-                                            isTop,
-                                            "<path d='M " & x & " " & (y + segmentHeight) &
-                                            " V " & (y + radius) &
-                                            " Q " & x & " " & y & " " & (x + radius) & " " & y &
-                                            " H " & (x + barWidth - radius) &
-                                            " Q " & (x + barWidth) & " " & y & " " & (x + barWidth) & " " & (y + radius) &
-                                            " V " & (y + segmentHeight) &
-                                            " H " & x &
-                                            " Z' fill='" & colorData.color & "'/>",
-                                            "<rect x='" & x & "' y='" & y & "' width='" & barWidth & "' height='" & segmentHeight & "' fill='" & colorData.color & "'/>"
+                                        With(
+                                            {
+                                                y: 20 + yOffset
+                                            },
+                                            If(
+                                                isTop,
+                                                "<path d='M " & x & " " & (y + segmentHeight) &
+                                                " V " & (y + radius) &
+                                                " Q " & x & " " & y & " " & (x + radius) & " " & y &
+                                                " H " & (x + barWidth - radius) &
+                                                " Q " & (x + barWidth) & " " & y & " " & (x + barWidth) & " " & (y + radius) &
+                                                " V " & (y + segmentHeight) &
+                                                " H " & x &
+                                                " Z' fill='" & colorData.color & "'/>",
+                                                "<rect x='" & x & "' y='" & y & "' width='" & barWidth & "' height='" & segmentHeight & "' fill='" & colorData.color & "'/>"
+                                            )
                                         )
                                     )
                                 )
