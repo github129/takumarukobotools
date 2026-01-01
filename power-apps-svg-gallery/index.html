@@ -1385,7 +1385,7 @@
                                     )
                                 )
                             ) &
-                            "<text x='" & (x + barWidth / 2) & "' y='185' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
+                            "<text x='" & (x + barWidth / 2) & "' y='195' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
                         )
                     )
                 ) &
@@ -2167,17 +2167,21 @@
         ),
         barColor: "#667eea",
         lineColor: "#f093fb",
-        barWidth: 35,
         gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
     },
     With(
         {
             dataMaxValue: Max(Max(barData, value), Max(lineData, value)),
-            maxHeight: 160
+            maxHeight: 160,
+            barCount: CountRows(barData),
+            availableWidth: 250,
+            leftMargin: 30
         },
         With(
             {
-                stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50)))
+                stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50))),
+                itemSpacing: availableWidth / barCount,
+                barWidth: availableWidth / barCount * 0.7
             },
             With(
                 {
@@ -2201,7 +2205,7 @@
                     With(
                         {
                             barHeight: value / maxValue * maxHeight,
-                            x: 30 + (idx - 1) * 50
+                            x: leftMargin + (idx - 1) * itemSpacing + (itemSpacing - barWidth) / 2
                         },
                         "<rect x='" & x & "' y='" & (180 - barHeight) & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & barColor & "' rx='4'/>"
                     )
@@ -2211,7 +2215,7 @@
                     lineData,
                     With(
                         {
-                            x: 30 + (idx - 1) * 50 + barWidth / 2,
+                            x: leftMargin + (idx - 1) * itemSpacing + itemSpacing / 2,
                             y: 180 - (value / maxValue * maxHeight)
                         },
                         x & "," & y
@@ -2223,7 +2227,7 @@
                     lineData,
                     With(
                         {
-                            x: 30 + (idx - 1) * 50 + barWidth / 2,
+                            x: leftMargin + (idx - 1) * itemSpacing + itemSpacing / 2,
                             y: 180 - (value / maxValue * maxHeight)
                         },
                         "<circle cx='" & x & "' cy='" & y & "' r='5' fill='" & lineColor & "' stroke='#fff' stroke-width='2'/>"
@@ -2232,7 +2236,7 @@
                 Concat(
                     barData,
                     With(
-                        {x: 30 + (idx - 1) * 50 + barWidth / 2},
+                        {x: leftMargin + (idx - 1) * itemSpacing + itemSpacing / 2},
                         "<text x='" & x & "' y='195' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
                     )
                 ) &
