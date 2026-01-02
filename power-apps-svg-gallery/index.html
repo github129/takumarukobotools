@@ -1600,77 +1600,91 @@
             {idx: 4, category: "サポート", value: 70},
             {idx: 5, category: "速度", value: 85}
         ),
-        maxValue: 100,
-        scaleRings: Table(
-            {level: 0, label: "0"},
-            {level: 50, label: "50"},
-            {level: 100, label: "100"}
-        ),
         centerX: 100,
         centerY: 100,
         maxRadius: 70
     },
-    "data:image/svg+xml," & EncodeUrl(
-        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='200' height='200'>" &
-        Concat(
-            scaleRings,
-            With(
-                {ringRadius: level / 100 * maxRadius},
-                "<polygon points='" &
-                Concat(
-                    data,
-                    With(
-                        {ringAngle: (idx - 1) * (360 / CountRows(data)) - 90},
-                        (centerX + ringRadius * Cos(ringAngle * Pi() / 180)) & "," & (centerY + ringRadius * Sin(ringAngle * Pi() / 180))
-                    ),
-                    " "
-                ) &
-                "' fill='none' stroke='#e5e7eb' stroke-width='1'/>"
-            )
-        ) &
-        Concat(
-            data,
-            With(
-                {axisAngle: (idx - 1) * (360 / CountRows(data)) - 90},
-                "<line x1='" & centerX & "' y1='" & centerY &
-                "' x2='" & (centerX + maxRadius * Cos(axisAngle * Pi() / 180)) &
-                "' y2='" & (centerY + maxRadius * Sin(axisAngle * Pi() / 180)) &
-                "' stroke='#e5e7eb' stroke-width='1'/>"
-            )
-        ) &
-        "<polygon points='" &
-        Concat(
-            data,
+    With(
+        {
+            dataMaxValue: Max(data, value)
+        },
+        With(
+            {
+                stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50)))
+            },
             With(
                 {
-                    dataAngle: (idx - 1) * (360 / CountRows(data)) - 90,
-                    dataRadius: value / maxValue * maxRadius
+                    maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0))),
+                    scaleRings: Table(
+                        {level: 0, label: "0"},
+                        {level: 50, label: Text(Round(maxValue * 0.5, 0))},
+                        {level: 100, label: Text(maxValue)}
+                    )
                 },
-                (centerX + dataRadius * Cos(dataAngle * Pi() / 180)) & "," & (centerY + dataRadius * Sin(dataAngle * Pi() / 180))
-            ),
-            " "
-        ) &
-        "' fill='#667eea' fill-opacity='0.3' stroke='#667eea' stroke-width='2'/>" &
-        Concat(
-            data,
-            With(
-                {
-                    pointAngle: (idx - 1) * (360 / CountRows(data)) - 90,
-                    pointRadius: value / maxValue * maxRadius,
-                    labelRadius: maxRadius + 15
-                },
-                "<circle cx='" & (centerX + pointRadius * Cos(pointAngle * Pi() / 180)) &
-                "' cy='" & (centerY + pointRadius * Sin(pointAngle * Pi() / 180)) &
-                "' r='4' fill='#667eea'/>" &
-                "<text x='" & (centerX + labelRadius * Cos(pointAngle * Pi() / 180)) &
-                "' y='" & (centerY + labelRadius * Sin(pointAngle * Pi() / 180) + 4) &
-                "' text-anchor='middle' font-size='10' fill='#666'>" & category & "</text>" &
-                "<text x='" & (centerX + labelRadius * Cos(pointAngle * Pi() / 180)) &
-                "' y='" & (centerY + labelRadius * Sin(pointAngle * Pi() / 180) + 16) &
-                "' text-anchor='middle' font-size='9' fill='#667eea' font-weight='600'>" & value & "</text>"
+                "data:image/svg+xml," & EncodeUrl(
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='200' height='200'>" &
+                    Concat(
+                        scaleRings,
+                        With(
+                            {ringRadius: level / 100 * maxRadius},
+                            "<polygon points='" &
+                            Concat(
+                                data,
+                                With(
+                                    {ringAngle: (idx - 1) * (360 / CountRows(data)) - 90},
+                                    (centerX + ringRadius * Cos(ringAngle * Pi() / 180)) & "," & (centerY + ringRadius * Sin(ringAngle * Pi() / 180))
+                                ),
+                                " "
+                            ) &
+                            "' fill='none' stroke='#e5e7eb' stroke-width='1'/>"
+                        )
+                    ) &
+                    Concat(
+                        data,
+                        With(
+                            {axisAngle: (idx - 1) * (360 / CountRows(data)) - 90},
+                            "<line x1='" & centerX & "' y1='" & centerY &
+                            "' x2='" & (centerX + maxRadius * Cos(axisAngle * Pi() / 180)) &
+                            "' y2='" & (centerY + maxRadius * Sin(axisAngle * Pi() / 180)) &
+                            "' stroke='#e5e7eb' stroke-width='1'/>"
+                        )
+                    ) &
+                    "<polygon points='" &
+                    Concat(
+                        data,
+                        With(
+                            {
+                                dataAngle: (idx - 1) * (360 / CountRows(data)) - 90,
+                                dataRadius: value / maxValue * maxRadius
+                            },
+                            (centerX + dataRadius * Cos(dataAngle * Pi() / 180)) & "," & (centerY + dataRadius * Sin(dataAngle * Pi() / 180))
+                        ),
+                        " "
+                    ) &
+                    "' fill='#667eea' fill-opacity='0.3' stroke='#667eea' stroke-width='2'/>" &
+                    Concat(
+                        data,
+                        With(
+                            {
+                                pointAngle: (idx - 1) * (360 / CountRows(data)) - 90,
+                                pointRadius: value / maxValue * maxRadius,
+                                labelRadius: maxRadius + 15
+                            },
+                            "<circle cx='" & (centerX + pointRadius * Cos(pointAngle * Pi() / 180)) &
+                            "' cy='" & (centerY + pointRadius * Sin(pointAngle * Pi() / 180)) &
+                            "' r='4' fill='#667eea'/>" &
+                            "<text x='" & (centerX + labelRadius * Cos(pointAngle * Pi() / 180)) &
+                            "' y='" & (centerY + labelRadius * Sin(pointAngle * Pi() / 180) + 4) &
+                            "' text-anchor='middle' font-size='10' fill='#666'>" & category & "</text>" &
+                            "<text x='" & (centerX + labelRadius * Cos(pointAngle * Pi() / 180)) &
+                            "' y='" & (centerY + labelRadius * Sin(pointAngle * Pi() / 180) + 16) &
+                            "' text-anchor='middle' font-size='9' fill='#667eea' font-weight='600'>" & value & "</text>"
+                        )
+                    ) &
+                    "</svg>"
+                )
             )
-        ) &
-        "</svg>"
+        )
     )
 )`;
 
