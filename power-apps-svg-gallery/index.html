@@ -1903,9 +1903,9 @@
                 Concat(
                     gridLines,
                     With(
-                        {gridY: 20 + (level / 100 * chartHeight)},
+                        {gridY: 20 + ((100 - level) / 100 * chartHeight)},
                         "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                        "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & level & "%</text>"
+                        "<text x='25' y='" & (If(level = 0, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & level & "%</text>"
                     )
                 ) &
                 Concat(
