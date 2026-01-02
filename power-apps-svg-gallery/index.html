@@ -312,25 +312,6 @@
 </svg>`
             },
             {
-                id: 4,
-                title: "KPIカード",
-                category: "card",
-                description: "売上や目標達成率などのKPIを表示するカード。数値とラベルを簡単に変更可能。",
-                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" width="300" height="150">
-  <rect width="300" height="150" fill="#ffffff" rx="12"/>
-  <rect width="300" height="150" fill="url(#cardGrad)" rx="12" opacity="0.1"/>
-  <defs>
-    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#667eea" />
-      <stop offset="100%" style="stop-color:#764ba2" />
-    </linearGradient>
-  </defs>
-  <text x="20" y="40" font-size="14" fill="#666" font-weight="500">今月の売上</text>
-  <text x="20" y="85" font-size="36" fill="#1a1a1a" font-weight="bold">¥1.2M</text>
-  <text x="20" y="115" font-size="12" fill="#10b981">↑ 15% vs 先月</text>
-</svg>`
-            },
-            {
                 id: 5,
                 title: "ステータスカード",
                 category: "card",
@@ -448,28 +429,6 @@
 </svg>`
             },
             {
-                id: 11,
-                title: "トレンドインジケーター（上昇）",
-                category: "indicator",
-                description: "数値の増減を矢印で表示。売上やユーザー数の変化を一目で確認。",
-                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60" width="100" height="60">
-  <rect width="100" height="60" fill="#d1fae5" rx="8"/>
-  <polygon points="50,15 65,35 55,35 55,45 45,45 45,35 35,35" fill="#10b981"/>
-  <text x="50" y="58" text-anchor="middle" font-size="10" fill="#059669" font-weight="600">+15.3%</text>
-</svg>`
-            },
-            {
-                id: 12,
-                title: "トレンドインジケーター（下降）",
-                category: "indicator",
-                description: "マイナス成長を示すインジケーター。コスト削減や在庫減少の表示に。",
-                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60" width="100" height="60">
-  <rect width="100" height="60" fill="#fee2e2" rx="8"/>
-  <polygon points="50,45 35,25 45,25 45,15 55,15 55,25 65,25" fill="#ef4444"/>
-  <text x="50" y="58" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="600">-8.7%</text>
-</svg>`
-            },
-            {
                 id: 13,
                 title: "ドーナツグラフ",
                 category: "graph",
@@ -491,23 +450,6 @@
   <circle cx="60" cy="60" r="50" fill="none" stroke="#f0f0f0" stroke-width="12"/>
   <circle cx="60" cy="60" r="50" fill="none" stroke="#667eea" stroke-width="12" stroke-dasharray="220 314" stroke-dashoffset="0" transform="rotate(-90 60 60)" stroke-linecap="round"/>
   <text x="60" y="65" text-anchor="middle" font-size="24" font-weight="bold" fill="#1a1a1a">70%</text>
-</svg>`
-            },
-            {
-                id: 15,
-                title: "メトリクスカード",
-                category: "dashboard",
-                description: "複数の指標を一度に表示。ダッシュボードのメインコンポーネントとして最適。",
-                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 180" width="300" height="180">
-  <rect width="300" height="180" fill="#ffffff" rx="12" stroke="#e5e7eb" stroke-width="1"/>
-  <text x="20" y="30" font-size="14" fill="#666" font-weight="500">パフォーマンス</text>
-  <line x1="20" y1="45" x2="280" y2="45" stroke="#e5e7eb" stroke-width="1"/>
-  <text x="20" y="75" font-size="12" fill="#666">アクティブユーザー</text>
-  <text x="280" y="75" font-size="18" fill="#667eea" font-weight="bold" text-anchor="end">1,234</text>
-  <text x="20" y="110" font-size="12" fill="#666">新規登録</text>
-  <text x="280" y="110" font-size="18" fill="#10b981" font-weight="bold" text-anchor="end">+89</text>
-  <text x="20" y="145" font-size="12" fill="#666">コンバージョン率</text>
-  <text x="280" y="145" font-size="18" fill="#764ba2" font-weight="bold" text-anchor="end">3.2%</text>
 </svg>`
             },
             {
@@ -605,52 +547,6 @@
 </svg>`
             },
             {
-                id: 22,
-                title: "週間カレンダー",
-                category: "dashboard",
-                description: "1週間のスケジュール可視化。タスク管理やシフト表示に。",
-                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 100" width="280" height="100">
-  <rect width="280" height="100" fill="#ffffff" rx="12" stroke="#e5e7eb" stroke-width="1"/>
-  <text x="140" y="22" text-anchor="middle" font-size="12" fill="#666" font-weight="600">今週の予定</text>
-  <rect x="15" y="35" width="35" height="50" fill="#eff6ff" rx="4"/>
-  <text x="32.5" y="50" text-anchor="middle" font-size="10" fill="#3b82f6">月</text>
-  <text x="32.5" y="70" text-anchor="middle" font-size="16" fill="#1a1a1a" font-weight="bold">5</text>
-  <rect x="60" y="35" width="35" height="50" fill="#fff" rx="4" stroke="#e5e7eb"/>
-  <text x="77.5" y="50" text-anchor="middle" font-size="10" fill="#666">火</text>
-  <text x="77.5" y="70" text-anchor="middle" font-size="16" fill="#1a1a1a">6</text>
-  <rect x="105" y="35" width="35" height="50" fill="#fff" rx="4" stroke="#e5e7eb"/>
-  <text x="122.5" y="50" text-anchor="middle" font-size="10" fill="#666">水</text>
-  <text x="122.5" y="70" text-anchor="middle" font-size="16" fill="#1a1a1a">7</text>
-  <rect x="150" y="35" width="35" height="50" fill="#fff" rx="4" stroke="#e5e7eb"/>
-  <text x="167.5" y="50" text-anchor="middle" font-size="10" fill="#666">木</text>
-  <text x="167.5" y="70" text-anchor="middle" font-size="16" fill="#1a1a1a">8</text>
-  <rect x="195" y="35" width="35" height="50" fill="#fff" rx="4" stroke="#e5e7eb"/>
-  <text x="212.5" y="50" text-anchor="middle" font-size="10" fill="#666">金</text>
-  <text x="212.5" y="70" text-anchor="middle" font-size="16" fill="#1a1a1a">9</text>
-  <rect x="240" y="35" width="25" height="50" fill="#fef3c7" rx="4"/>
-  <text x="252.5" y="50" text-anchor="middle" font-size="9" fill="#f59e0b">土</text>
-  <text x="252.5" y="70" text-anchor="middle" font-size="14" fill="#1a1a1a">10</text>
-</svg>`
-            },
-            {
-                id: 23,
-                title: "比較カード（vs 前年）",
-                category: "card",
-                description: "前年同期との比較を表示。成長率を視覚的に表現。",
-                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 140" width="280" height="140">
-  <rect width="280" height="140" fill="#ffffff" rx="12" stroke="#e5e7eb" stroke-width="1"/>
-  <text x="20" y="30" font-size="13" fill="#666" font-weight="500">売上比較</text>
-  <rect x="20" y="50" width="110" height="70" fill="#f9fafb" rx="8"/>
-  <text x="75" y="70" text-anchor="middle" font-size="11" fill="#999">2024年</text>
-  <text x="75" y="95" text-anchor="middle" font-size="24" fill="#666" font-weight="bold">¥1.8M</text>
-  <rect x="150" y="50" width="110" height="70" fill="#eff6ff" rx="8"/>
-  <text x="205" y="70" text-anchor="middle" font-size="11" fill="#999">2025年</text>
-  <text x="205" y="95" text-anchor="middle" font-size="24" fill="#3b82f6" font-weight="bold">¥2.1M</text>
-  <rect x="95" y="125" width="90" height="10" fill="#d1fae5" rx="5"/>
-  <text x="140" y="133" text-anchor="middle" font-size="9" fill="#059669" font-weight="600">+16.7% 成長</text>
-</svg>`
-            },
-            {
                 id: 24,
                 title: "タスク進捗カード",
                 category: "dashboard",
@@ -687,27 +583,6 @@
   <text x="150" y="170" font-size="10" fill="#666">デザイン</text>
   <text x="45" y="170" font-size="10" fill="#666">サポート</text>
   <text x="10" y="75" font-size="10" fill="#666">速度</text>
-</svg>`
-            },
-            {
-                id: 26,
-                title: "ステップインジケーター",
-                category: "indicator",
-                description: "プロセスの進行状況を表示。申請フローやオンボーディングに。",
-                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
-  <line x1="40" y1="30" x2="280" y2="30" stroke="#e5e7eb" stroke-width="3"/>
-  <circle cx="40" cy="30" r="14" fill="#10b981" stroke="#fff" stroke-width="3"/>
-  <path d="M 35 30 L 38 33 L 45 26" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <text x="40" y="60" text-anchor="middle" font-size="11" fill="#10b981" font-weight="600">申請</text>
-  <circle cx="120" cy="30" r="14" fill="#10b981" stroke="#fff" stroke-width="3"/>
-  <path d="M 115 30 L 118 33 L 125 26" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <text x="120" y="60" text-anchor="middle" font-size="11" fill="#10b981" font-weight="600">確認</text>
-  <circle cx="200" cy="30" r="14" fill="#667eea" stroke="#fff" stroke-width="3"/>
-  <text x="200" y="35" text-anchor="middle" font-size="12" fill="#fff" font-weight="bold">3</text>
-  <text x="200" y="60" text-anchor="middle" font-size="11" fill="#667eea" font-weight="600">承認</text>
-  <circle cx="280" cy="30" r="14" fill="#e5e7eb" stroke="#fff" stroke-width="3"/>
-  <text x="280" y="35" text-anchor="middle" font-size="12" fill="#999" font-weight="bold">4</text>
-  <text x="280" y="60" text-anchor="middle" font-size="11" fill="#999">完了</text>
 </svg>`
             },
             {
@@ -839,23 +714,6 @@
   <rect x="15" y="70" width="190" height="25" fill="#f9fafb" rx="6"/>
   <text x="22" y="86" font-size="11" fill="#666">前日比</text>
   <text x="198" y="86" text-anchor="end" font-size="11" fill="#10b981" font-weight="600">+8.3% (962)</text>
-</svg>`
-            },
-            {
-                id: 29,
-                title: "目標達成メーター",
-                category: "indicator",
-                description: "目標に対する達成度を表示。営業目標や予算管理に。",
-                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140" width="200" height="140">
-  <text x="100" y="20" text-anchor="middle" font-size="13" fill="#666" font-weight="600">月次目標</text>
-  <rect x="30" y="40" width="140" height="30" fill="#f0f0f0" rx="15"/>
-  <rect x="30" y="40" width="112" height="30" fill="#10b981" rx="15"/>
-  <text x="100" y="61" text-anchor="middle" font-size="14" fill="#fff" font-weight="bold">80%</text>
-  <line x="142" y="35" x2="142" y2="75" stroke="#10b981" stroke-width="2" stroke-dasharray="4,3"/>
-  <circle cx="142" cy="80" r="4" fill="#10b981"/>
-  <text x="100" y="100" text-anchor="middle" font-size="12" fill="#999">達成額</text>
-  <text x="100" y="120" text-anchor="middle" font-size="20" fill="#1a1a1a" font-weight="bold">¥800K</text>
-  <text x="100" y="135" text-anchor="middle" font-size="10" fill="#999">/ ¥1,000K</text>
 </svg>`
             },
             {
