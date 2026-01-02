@@ -1917,11 +1917,16 @@
                     data,
                     With(
                         {
-                            colorData: LookUp(colors, series = series),
-                            plotX: 30 + (x / maxX) * chartWidth,
-                            plotY: 180 - (y / maxY) * chartHeight
+                            currentSeries: series
                         },
-                        "<circle cx='" & plotX & "' cy='" & plotY & "' r='5' fill='" & colorData.color & "'/>"
+                        With(
+                            {
+                                colorData: LookUp(colors, series = currentSeries),
+                                plotX: 30 + (x / maxX) * chartWidth,
+                                plotY: 180 - (y / maxY) * chartHeight
+                            },
+                            "<circle cx='" & plotX & "' cy='" & plotY & "' r='5' fill='" & colorData.color & "'/>"
+                        )
                     )
                 ) &
                 "</svg>"
@@ -2003,12 +2008,17 @@
                         data,
                         With(
                             {
-                                colorData: LookUp(colors, series = series),
-                                plotX: leftMargin + (x / maxX) * chartWidth,
-                                plotY: axisBottom - ((y - minY) / rangeY) * chartHeight,
-                                scaledRadius: radius * bubbleScaleFactor
+                                currentSeries: series
                             },
-                            "<circle cx='" & plotX & "' cy='" & plotY & "' r='" & scaledRadius & "' fill='" & colorData.color & "' fill-opacity='0.6' stroke='" & colorData.color & "' stroke-width='2'/>"
+                            With(
+                                {
+                                    colorData: LookUp(colors, series = currentSeries),
+                                    plotX: leftMargin + (x / maxX) * chartWidth,
+                                    plotY: axisBottom - ((y - minY) / rangeY) * chartHeight,
+                                    scaledRadius: radius * bubbleScaleFactor
+                                },
+                                "<circle cx='" & plotX & "' cy='" & plotY & "' r='" & scaledRadius & "' fill='" & colorData.color & "' fill-opacity='0.6' stroke='" & colorData.color & "' stroke-width='2'/>"
+                            )
                         )
                     ) &
                     "</svg>"
@@ -2114,6 +2124,64 @@
                 ) &
                 "</svg>"
                 )
+            )
+        )
+    )
+)`;
+
+                case 10: // スパークライン
+                    return `With(
+    {
+        data: Table(
+            {idx: 1, value: 30},
+            {idx: 2, value: 25},
+            {idx: 3, value: 28},
+            {idx: 4, value: 18},
+            {idx: 5, value: 22},
+            {idx: 6, value: 15},
+            {idx: 7, value: 20},
+            {idx: 8, value: 12}
+        ),
+        lineColor: "#667eea",
+        dotColor: "#667eea",
+        width: 120,
+        height: 40
+    },
+    With(
+        {
+            dataMax: Max(data, value),
+            dataMin: Min(data, value),
+            pointCount: CountRows(data)
+        },
+        With(
+            {
+                range: dataMax - dataMin,
+                xStep: (width - 10) / (pointCount - 1)
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & width & " " & height & "' width='" & width & "' height='" & height & "'>" &
+                "<polyline points='" &
+                Concat(
+                    data,
+                    With(
+                        {
+                            x: 5 + (idx - 1) * xStep,
+                            y: height - 5 - ((value - dataMin) / range * (height - 10))
+                        },
+                        x & "," & y
+                    ),
+                    " "
+                ) &
+                "' fill='none' stroke='" & lineColor & "' stroke-width='2'/>" &
+                With(
+                    {
+                        lastPoint: Last(data),
+                        lastX: 5 + (lastPoint.idx - 1) * xStep,
+                        lastY: height - 5 - ((lastPoint.value - dataMin) / range * (height - 10))
+                    },
+                    "<circle cx='" & lastX & "' cy='" & lastY & "' r='3' fill='" & dotColor & "'/>"
+                ) &
+                "</svg>"
             )
         )
     )
