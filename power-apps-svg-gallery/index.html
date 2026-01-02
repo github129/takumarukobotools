@@ -992,6 +992,8 @@
                 case 1: // シンプル棒グラフ（ForAllで可変個数対応）
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         data: Table(
             {idx: 1, value: 55, color: "#667eea", label: "1月"},
             {idx: 2, value: 78, color: "#764ba2", label: "2月"},
@@ -1013,7 +1015,7 @@
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
                     Concat(
                         gridLines,
                         With(
@@ -1047,6 +1049,8 @@
                 case 2: // 円グラフ
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         percentage: 75,
         color: "#667eea"
     },
@@ -1056,7 +1060,7 @@
             useFullCircle: percentage >= 99.9
         },
         "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='200' height='200'>" &
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
             "<circle cx='100' cy='100' r='80' fill='#f0f0f0'/>" &
             If(
                 useFullCircle,
@@ -1072,6 +1076,8 @@
                 case 3: // 折れ線グラフ（ForAllで可変個数対応）
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         data: Table(
             {idx: 1, value: 77}, {idx: 2, value: 62}, {idx: 3, value: 46}, {idx: 4, value: 54}, {idx: 5, value: 23}
         ),
@@ -1092,7 +1098,7 @@
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
             "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
                 "<defs><linearGradient id='lineGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.3' /><stop offset='100%' style='stop-color:" & color & ";stop-opacity:0' /></linearGradient></defs>" &
                 Concat(
                     gridLines,
@@ -1151,17 +1157,21 @@
                 case 4: // KPIカード
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         title: "今月の売上",
         value: "¥1.2M",
         change: "+15%",
         changeLabel: "vs 先月"
     },
-    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'><rect width='300' height='150' fill='#ffffff' rx='12'/><rect width='300' height='150' fill='url(#cardGrad)' rx='12' opacity='0.1'/><defs><linearGradient id='cardGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:#667eea' /><stop offset='100%' style='stop-color:#764ba2' /></linearGradient></defs><text x='20' y='40' font-size='14' fill='#666' font-weight='500'>" & title & "</text><text x='20' y='85' font-size='36' fill='#1a1a1a' font-weight='bold'>" & value & "</text><text x='20' y='115' font-size='12' fill='#10b981'>↑ " & change & " " & changeLabel & "</text></svg>")
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'><rect width='300' height='150' fill='#ffffff' rx='12'/><rect width='300' height='150' fill='url(#cardGrad)' rx='12' opacity='0.1'/><defs><linearGradient id='cardGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:#667eea' /><stop offset='100%' style='stop-color:#764ba2' /></linearGradient></defs><text x='20' y='40' font-size='14' fill='#666' font-weight='500'>" & title & "</text><text x='20' y='85' font-size='36' fill='#1a1a1a' font-weight='bold'>" & value & "</text><text x='20' y='115' font-size='12' fill='#10b981'>↑ " & change & " " & changeLabel & "</text></svg>")
 )`;
 
                 case 7: // 積み上げ棒グラフ（ForAllで可変個数対応）
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         data: Table(
             {bar: 1, segment: 1, value: 60, label: "Q1"},
             {bar: 1, segment: 2, value: 40, label: "Q1"},
@@ -1210,7 +1220,7 @@
                     maxTotal: Round(dataMaxTotal + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
                 Concat(
                     gridLines,
                     With(
@@ -1274,6 +1284,8 @@
                 case 8: // 面グラフ（エリアチャート）
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         data: Table(
             {idx: 1, value: 89}, {idx: 2, value: 74}, {idx: 3, value: 59}, {idx: 4, value: 67},
             {idx: 5, value: 44}, {idx: 6, value: 52}, {idx: 7, value: 37}
@@ -1295,7 +1307,7 @@
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
             "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
                 "<defs><linearGradient id='areaGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.5' /><stop offset='100%' style='stop-color:" & color & ";stop-opacity:0.05' /></linearGradient></defs>" &
                 Concat(
                     gridLines,
@@ -1354,6 +1366,8 @@
                 case 13: // ドーナツグラフ
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         data: Table(
             {idx: 1, value: 45, color: "#667eea", label: "商品A"},
             {idx: 2, value: 30, color: "#764ba2", label: "商品B"},
@@ -1369,7 +1383,7 @@
             circumference: 2 * Pi() * radius
         },
         "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='200' height='200'>" &
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
             "<circle cx='100' cy='100' r='" & radius & "' fill='none' stroke='#f0f0f0' stroke-width='" & strokeWidth & "'/>" &
             Concat(
                 data,
@@ -1402,6 +1416,8 @@
                 case 16: // 横棒グラフ（ForAllで可変個数対応）
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         data: Table(
             {idx: 1, dept: "営業部", value: 90, color: "#667eea"},
             {idx: 2, dept: "開発部", value: 70, color: "#764ba2"},
@@ -1425,7 +1441,7 @@
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='300' height='150'>" &
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
                     Concat(
                         gridLines,
                         With(
@@ -1459,6 +1475,8 @@
                 case 17: // ミニKPIカード
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         title: "売上高",
         value: "¥842K",
         change: "+12%",
@@ -1475,20 +1493,22 @@
             currentColor: If(trendType = "positive", positiveColor, If(trendType = "negative", negativeColor, neutralColor)),
             trendIcon: If(trendType = "positive", "↑", If(trendType = "negative", "↓", "−"))
         },
-        "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 100' width='180' height='100'><rect width='180' height='100' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><circle cx='30' cy='30' r='18' fill='" & iconBgColor & "'/><text x='30' y='37' text-anchor='middle' font-size='20' fill='#3b82f6'>" & icon & "</text><text x='65' y='30' font-size='11' fill='#666'>" & title & "</text><text x='20' y='70' font-size='28' fill='#1a1a1a' font-weight='bold'>" & value & "</text><text x='20' y='88' font-size='11' fill='" & currentColor & "'>" & trendIcon & " " & change & " " & changeLabel & "</text></svg>")
+        "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 100' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'><rect width='180' height='100' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><circle cx='30' cy='30' r='18' fill='" & iconBgColor & "'/><text x='30' y='37' text-anchor='middle' font-size='20' fill='#3b82f6'>" & icon & "</text><text x='65' y='30' font-size='11' fill='#666'>" & title & "</text><text x='20' y='70' font-size='28' fill='#1a1a1a' font-weight='bold'>" & value & "</text><text x='20' y='88' font-size='11' fill='" & currentColor & "'>" & trendIcon & " " & change & " " & changeLabel & "</text></svg>")
     )
 )`;
 
                 case 18: // 複数円グラフ比較（ForAllで可変個数対応）
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         data: Table(
             {idx: 1, label: "2024年", percentage: 75, color: "#667eea"},
             {idx: 2, label: "2025年", percentage: 85, color: "#10b981"}
         )
     },
     "data:image/svg+xml," & EncodeUrl(
-        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & (140 * CountRows(data)) & " 140' width='" & (140 * CountRows(data)) & "' height='140'>" &
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & (140 * CountRows(data)) & " 140' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
         Concat(
             data,
             With(
@@ -1506,6 +1526,8 @@
                 case 21: // ダッシュボードヘッダー（ForAllで可変個数対応）
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         kpis: Table(
             {idx: 1, label: "総売上", value: "¥2.4M"},
             {idx: 2, label: "新規顧客", value: "342"},
@@ -1514,7 +1536,7 @@
         )
     },
     "data:image/svg+xml," & EncodeUrl(
-        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80' width='400' height='80'>" &
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
         "<rect width='400' height='80' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/>" &
         Concat(
             kpis,
@@ -1535,6 +1557,8 @@
                 case 23: // 比較カード（ForAllで可変個数対応）
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         title: "売上比較",
         data: Table(
             {idx: 1, year: "2024年", value: "¥1.8M", bgColor: "#f9fafb", textColor: "#666"},
@@ -1547,7 +1571,7 @@
     With(
         {totalWidth: CountRows(data) * 110 + (CountRows(data) + 1) * 20},
         "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & totalWidth & " 140' width='" & totalWidth & "' height='140'>" &
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & totalWidth & " 140' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
             "<rect width='" & totalWidth & "' height='140' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/>" &
             "<text x='20' y='30' font-size='13' fill='#666' font-weight='500'>" & title & "</text>" &
             Concat(
@@ -1572,17 +1596,21 @@
                 case 24: // タスク進捗カード
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         title: "プロジェクト進捗",
         completed: 14,
         total: 20,
         inProgress: 6
     },
-    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 120' width='300' height='120'><rect width='300' height='120' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><text x='20' y='25' font-size='13' fill='#666' font-weight='600'>" & title & "</text><text x='20' y='55' font-size='11' fill='#999'>完了タスク</text><rect x='20' y='62' width='260' height='12' fill='#f0f0f0' rx='6'/><rect x='20' y='62' width='" & (260 * completed / total) & "' height='12' fill='#10b981' rx='6'/><text x='280' y='72' text-anchor='end' font-size='11' fill='#1a1a1a' font-weight='600'>" & completed & "/" & total & "</text><circle cx='25' cy='95' r='4' fill='#10b981'/><text x='35' y='99' font-size='11' fill='#666'>完了: " & completed & "件</text><circle cx='125' cy='95' r='4' fill='#667eea'/><text x='135' y='99' font-size='11' fill='#666'>進行中: " & inProgress & "件</text></svg>")
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 120' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'><rect width='300' height='120' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><text x='20' y='25' font-size='13' fill='#666' font-weight='600'>" & title & "</text><text x='20' y='55' font-size='11' fill='#999'>完了タスク</text><rect x='20' y='62' width='260' height='12' fill='#f0f0f0' rx='6'/><rect x='20' y='62' width='" & (260 * completed / total) & "' height='12' fill='#10b981' rx='6'/><text x='280' y='72' text-anchor='end' font-size='11' fill='#1a1a1a' font-weight='600'>" & completed & "/" & total & "</text><circle cx='25' cy='95' r='4' fill='#10b981'/><text x='35' y='99' font-size='11' fill='#666'>完了: " & completed & "件</text><circle cx='125' cy='95' r='4' fill='#667eea'/><text x='135' y='99' font-size='11' fill='#666'>進行中: " & inProgress & "件</text></svg>")
 )`;
 
                 case 27: // ヒートマップ風カレンダー
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         activityData: Table(
             {row: 1, col: 1, activity: 0}, {row: 1, col: 2, activity: 1}, {row: 1, col: 3, activity: 0}, {row: 1, col: 4, activity: 2},
             {row: 1, col: 5, activity: 0}, {row: 1, col: 6, activity: 3}, {row: 1, col: 7, activity: 1}, {row: 1, col: 8, activity: 0},
@@ -1628,7 +1656,7 @@
         startY: 10
     },
     "data:image/svg+xml," & EncodeUrl(
-        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 230 90' width='230' height='90'>" &
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 230 90' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
         Concat(
             activityData,
             With(
@@ -1647,6 +1675,8 @@
                 case 28: // 統計サマリーカード
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         title: "総アクセス数",
         value: "12.5K",
         change: "+8.3%",
@@ -1666,13 +1696,15 @@
             currentBgColor: If(trendType = "positive", positiveBgColor, If(trendType = "negative", negativeBgColor, neutralBgColor)),
             trendIcon: If(trendType = "positive", "↑", If(trendType = "negative", "↓", "−"))
         },
-        "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 110' width='220' height='110'><rect width='220' height='110' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><rect x='15' y='15' width='40' height='40' fill='" & currentBgColor & "' rx='8'/><text x='35' y='42' text-anchor='middle' font-size='24' fill='" & currentColor & "'>" & trendIcon & "</text><text x='65' y='28' font-size='12' fill='#999'>" & title & "</text><text x='65' y='55' font-size='26' fill='#1a1a1a' font-weight='bold'>" & value & "</text><rect x='15' y='70' width='190' height='25' fill='#f9fafb' rx='6'/><text x='22' y='86' font-size='11' fill='#666'>" & changeLabel & "</text><text x='198' y='86' text-anchor='end' font-size='11' fill='" & currentColor & "' font-weight='600'>" & change & " (" & changeCount & ")</text></svg>")
+        "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 110' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'><rect width='220' height='110' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><rect x='15' y='15' width='40' height='40' fill='" & currentBgColor & "' rx='8'/><text x='35' y='42' text-anchor='middle' font-size='24' fill='" & currentColor & "'>" & trendIcon & "</text><text x='65' y='28' font-size='12' fill='#999'>" & title & "</text><text x='65' y='55' font-size='26' fill='#1a1a1a' font-weight='bold'>" & value & "</text><rect x='15' y='70' width='190' height='25' fill='#f9fafb' rx='6'/><text x='22' y='86' font-size='11' fill='#666'>" & changeLabel & "</text><text x='198' y='86' text-anchor='end' font-size='11' fill='" & currentColor & "' font-weight='600'>" & change & " (" & changeCount & ")</text></svg>")
     )
 )`;
 
                 case 25: // レーダーチャート
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         data: Table(
             {idx: 1, category: "品質", value: 80},
             {idx: 2, category: "価格", value: 60},
@@ -1705,7 +1737,7 @@
                         )
                     },
                 "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='200' height='200'>" &
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
                     Concat(
                         scaleRings,
                         With(
@@ -1775,6 +1807,8 @@
                 case 31: // 集合縦棒グラフ
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         data: Table(
             {period: "Q1", series: 1, value: 70, label: "商品A"},
             {period: "Q1", series: 2, value: 55, label: "商品B"},
@@ -1822,7 +1856,7 @@
                                 periodSpacing: widthPerGroup + minGroupGap
                             },
                 "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
                     Concat(
                         gridLines,
                         With(
@@ -1867,6 +1901,8 @@
                 case 32: // 100%積み上げ縦棒グラフ
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         data: Table(
             {period: 1, segment: 1, value: 40, label: "1月"},
             {period: 1, segment: 2, value: 30, label: "1月"},
@@ -1899,7 +1935,7 @@
                 barWidth: availableWidth / periodCount * 0.65
             },
             "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
                 Concat(
                     gridLines,
                     With(
@@ -1962,6 +1998,8 @@
                 case 33: // 散布図
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         data: Table(
             {x: 30, y: 70, series: 1},
             {x: 60, y: 60, series: 1},
@@ -1997,7 +2035,7 @@
                     maxY: Round(dataMaxY + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
                 "<line x1='30' y1='180' x2='280' y2='180' stroke='#e5e7eb' stroke-width='2'/>" &
                 "<line x1='30' y1='180' x2='30' y2='20' stroke='#e5e7eb' stroke-width='2'/>" &
                 Concat(
@@ -2037,6 +2075,8 @@
                 case 34: // バブルチャート
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         data: Table(
             {x: 40, y: 70, radius: 15, series: 1},
             {x: 90, y: 55, radius: 25, series: 2},
@@ -2088,7 +2128,7 @@
                             rangeY: maxY - minY
                         },
                 "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
                     "<line x1='" & leftMargin & "' y1='" & axisBottom & "' x2='" & (300 - rightMargin) & "' y2='" & axisBottom & "' stroke='#e5e7eb' stroke-width='2'/>" &
                     "<line x1='" & leftMargin & "' y1='" & axisBottom & "' x2='" & leftMargin & "' y2='" & topMargin & "' stroke='#e5e7eb' stroke-width='2'/>" &
                     Concat(
@@ -2131,6 +2171,8 @@
                 case 35: // 縦棒折れ線複合グラフ
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         barData: Table(
             {idx: 1, value: 50, label: "1月"},
             {idx: 2, value: 60, label: "2月"},
@@ -2168,7 +2210,7 @@
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='300' height='200'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
                 Concat(
                     gridLines,
                     With(
@@ -2230,6 +2272,8 @@
                 case 10: // スパークライン
                     return `With(
     {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
         data: Table(
             {idx: 1, value: 30},
             {idx: 2, value: 25},
@@ -2257,7 +2301,7 @@
                 xStep: (width - 10) / (pointCount - 1)
             },
             "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & width & " " & height & "' width='" & width & "' height='" & height & "'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & width & " " & height & "' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
                 "<polyline points='" &
                 Concat(
                     data,
