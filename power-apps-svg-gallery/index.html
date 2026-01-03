@@ -1859,15 +1859,18 @@
             {
                 chartWidth: imgWidth - leftMargin - rightMargin,
                 chartHeight: imgHeight - topMargin - bottomMargin,
-                stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50))),
-                minGroupGap: chartWidth * 0.06
+                stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50)))
             },
             With(
                 {
-                    maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0))),
-                    totalGroupGaps: (periodCount - 1) * minGroupGap,
-                    widthPerGroup: (chartWidth - (periodCount - 1) * minGroupGap) / periodCount
+                    minGroupGap: chartWidth * 0.06,
+                    maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
+                With(
+                    {
+                        totalGroupGaps: (periodCount - 1) * minGroupGap,
+                        widthPerGroup: (chartWidth - (periodCount - 1) * minGroupGap) / periodCount
+                    },
                 With(
                     {
                         barGap: widthPerGroup / (seriesCount * 5)
@@ -1913,6 +1916,7 @@
                             "</svg>"
                         )
                     )
+                )
                 )
             )
         )
