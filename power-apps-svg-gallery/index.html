@@ -1252,37 +1252,41 @@
                             {
                                 barWidth: chartWidth * 0.7 / CountRows(bars),
                                 spacing: chartWidth / CountRows(bars),
-                                x: leftMargin + (barNum - 1) * spacing + (spacing - chartWidth * 0.7 / CountRows(bars)) / 2,
                                 maxSegment: Max(barData, segment)
                             },
-                            Concat(
-                                barData,
-                                With(
-                                    {
-                                        currentSegment: segment,
-                                        colorItem: LookUp(colors, segmentNum = segment),
-                                        isTopSegment: segment = maxSegment
-                                    },
+                            With(
+                                {
+                                    x: leftMargin + (barNum - 1) * spacing + (spacing - barWidth) / 2
+                                },
+                                Concat(
+                                    barData,
                                     With(
                                         {
-                                            segmentHeight: value / maxTotal * chartHeight,
-                                            yPos: topMargin + chartHeight - (Sum(Filter(barData, segment <= currentSegment), value) / maxTotal * chartHeight)
+                                            currentSegment: segment,
+                                            colorItem: LookUp(colors, segmentNum = segment),
+                                            isTopSegment: segment = maxSegment
                                         },
-                                        If(
-                                            isTopSegment,
-                                            "<path d='M " & x & "," & (yPos + segmentHeight) &
-                                            " L " & x & "," & (yPos + 4) &
-                                            " Q " & x & "," & yPos & " " & (x + 4) & "," & yPos &
-                                            " L " & (x + barWidth - 4) & "," & yPos &
-                                            " Q " & (x + barWidth) & "," & yPos & " " & (x + barWidth) & "," & (yPos + 4) &
-                                            " L " & (x + barWidth) & "," & (yPos + segmentHeight) &
-                                            " Z' fill='" & colorItem.color & "'/>",
-                                            "<rect x='" & x & "' y='" & yPos & "' width='" & barWidth & "' height='" & segmentHeight & "' fill='" & colorItem.color & "'/>"
+                                        With(
+                                            {
+                                                segmentHeight: value / maxTotal * chartHeight,
+                                                yPos: topMargin + chartHeight - (Sum(Filter(barData, segment <= currentSegment), value) / maxTotal * chartHeight)
+                                            },
+                                            If(
+                                                isTopSegment,
+                                                "<path d='M " & x & "," & (yPos + segmentHeight) &
+                                                " L " & x & "," & (yPos + 4) &
+                                                " Q " & x & "," & yPos & " " & (x + 4) & "," & yPos &
+                                                " L " & (x + barWidth - 4) & "," & yPos &
+                                                " Q " & (x + barWidth) & "," & yPos & " " & (x + barWidth) & "," & (yPos + 4) &
+                                                " L " & (x + barWidth) & "," & (yPos + segmentHeight) &
+                                                " Z' fill='" & colorItem.color & "'/>",
+                                                "<rect x='" & x & "' y='" & yPos & "' width='" & barWidth & "' height='" & segmentHeight & "' fill='" & colorItem.color & "'/>"
+                                            )
                                         )
                                     )
-                                )
-                            ) &
-                            "<text x='" & (leftMargin + (barNum - 1) * spacing + spacing / 2) & "' y='" & (imgHeight - bottomMargin / 3) & "' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
+                                ) &
+                                "<text x='" & (leftMargin + (barNum - 1) * spacing + spacing / 2) & "' y='" & (imgHeight - bottomMargin / 3) & "' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
+                            )
                         )
                     )
                 ) &
@@ -1426,6 +1430,38 @@
             "<text x='100' y='95' text-anchor='middle' dominant-baseline='middle' font-size='28' font-weight='bold' fill='#1a1a1a'>" & total & "</text>" &
             "<text x='100' y='115' text-anchor='middle' dominant-baseline='middle' font-size='12' fill='#666'>" & centerLabel & "</text>" &
             "</svg>"
+        )
+    )
+)`;
+
+                case 14: // 円形プログレスリング
+                    return `With(
+    {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
+        percentage: 70,
+        progressColor: "#667eea",
+        backgroundColor: "#f0f0f0",
+        strokeWidth: 12,
+        radius: 50
+    },
+    With(
+        {
+            circumference: 2 * Pi() * radius,
+            centerX: imgWidth / 2,
+            centerY: imgHeight / 2
+        },
+        With(
+            {
+                arcLength: circumference * percentage / 100
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & backgroundColor & "' stroke-width='" & strokeWidth & "'/>" &
+                "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & progressColor & "' stroke-width='" & strokeWidth & "' stroke-dasharray='" & arcLength & " " & circumference & "' stroke-dashoffset='0' transform='rotate(-90 " & centerX & " " & centerY & ")' stroke-linecap='round'/>" &
+                "<text x='" & centerX & "' y='" & (centerY + 5) & "' text-anchor='middle' font-size='24' font-weight='bold' fill='#1a1a1a'>" & percentage & "%</text>" &
+                "</svg>"
+            )
         )
     )
 )`;
