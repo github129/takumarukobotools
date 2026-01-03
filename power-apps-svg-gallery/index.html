@@ -1063,19 +1063,26 @@
     },
     With(
         {
-            circumference: 2 * Pi() * 80,
-            useFullCircle: percentage >= 99.9
+            centerX: imgWidth / 2,
+            centerY: imgHeight / 2,
+            radius: Min(imgWidth, imgHeight) * 0.4
         },
-        "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='" & imgWidth & "' height='" & imgHeight & "'>" &
-            "<circle cx='100' cy='100' r='80' fill='#f0f0f0'/>" &
-            If(
-                useFullCircle,
-                "<circle cx='100' cy='100' r='80' fill='none' stroke='" & color & "' stroke-width='160'/>",
-                "<circle cx='100' cy='100' r='80' fill='none' stroke='" & color & "' stroke-width='160' stroke-dasharray='" & (circumference * percentage / 100) & " " & circumference & "' stroke-dashoffset='0' transform='rotate(-90 100 100)'/>"
-            ) &
-            "<text x='100' y='105' text-anchor='middle' font-size='32' font-weight='bold' fill='" & color & "'>" & percentage & "%</text>" &
-            "</svg>"
+        With(
+            {
+                circumference: 2 * Pi() * radius,
+                useFullCircle: percentage >= 99.9
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='#f0f0f0'/>" &
+                If(
+                    useFullCircle,
+                    "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & color & "' stroke-width='" & (radius * 2) & "'/>",
+                    "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & color & "' stroke-width='" & (radius * 2) & "' stroke-dasharray='" & (circumference * percentage / 100) & " " & circumference & "' stroke-dashoffset='0' transform='rotate(-90 " & centerX & " " & centerY & ")'/>"
+                ) &
+                "<text x='" & centerX & "' y='" & (centerY + radius * 0.1) & "' text-anchor='middle' font-size='" & (radius * 0.4) & "' font-weight='bold' fill='" & color & "'>" & percentage & "%</text>" &
+                "</svg>"
+            )
         )
     )
 )`;
@@ -1441,26 +1448,30 @@
         imgHeight: Self.Height,
         percentage: 70,
         progressColor: "#667eea",
-        backgroundColor: "#f0f0f0",
-        strokeWidth: 12,
-        radius: 50
+        backgroundColor: "#f0f0f0"
     },
     With(
         {
-            circumference: 2 * Pi() * radius,
             centerX: imgWidth / 2,
-            centerY: imgHeight / 2
+            centerY: imgHeight / 2,
+            radius: Min(imgWidth, imgHeight) * 0.42,
+            strokeWidth: Min(imgWidth, imgHeight) * 0.1
         },
         With(
             {
-                arcLength: circumference * percentage / 100
+                circumference: 2 * Pi() * radius
             },
-            "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
-                "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & backgroundColor & "' stroke-width='" & strokeWidth & "'/>" &
-                "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & progressColor & "' stroke-width='" & strokeWidth & "' stroke-dasharray='" & arcLength & " " & circumference & "' stroke-dashoffset='0' transform='rotate(-90 " & centerX & " " & centerY & ")' stroke-linecap='round'/>" &
-                "<text x='" & centerX & "' y='" & (centerY + 5) & "' text-anchor='middle' font-size='24' font-weight='bold' fill='#1a1a1a'>" & percentage & "%</text>" &
-                "</svg>"
+            With(
+                {
+                    arcLength: circumference * percentage / 100
+                },
+                "data:image/svg+xml," & EncodeUrl(
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                    "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & backgroundColor & "' stroke-width='" & strokeWidth & "'/>" &
+                    "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & progressColor & "' stroke-width='" & strokeWidth & "' stroke-dasharray='" & arcLength & " " & circumference & "' stroke-dashoffset='0' transform='rotate(-90 " & centerX & " " & centerY & ")' stroke-linecap='round'/>" &
+                    "<text x='" & centerX & "' y='" & (centerY + radius * 0.1) & "' text-anchor='middle' font-size='" & (radius * 0.48) & "' font-weight='bold' fill='#1a1a1a'>" & percentage & "%</text>" &
+                    "</svg>"
+                )
             )
         )
     )
@@ -1482,8 +1493,8 @@
     },
     With(
         {
-            leftMargin: imgWidth * 0.01,
-            rightMargin: imgWidth * 0.01,
+            leftMargin: imgWidth * 0.05,
+            rightMargin: imgWidth * 0.05,
             topMargin: imgHeight * 0.1,
             bottomMargin: imgHeight * 0.067,
             dataMaxValue: Max(data, value)
