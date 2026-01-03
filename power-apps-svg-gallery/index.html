@@ -1015,7 +1015,7 @@
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                     Concat(
                         gridLines,
                         With(
@@ -1060,7 +1060,7 @@
             useFullCircle: percentage >= 99.9
         },
         "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
             "<circle cx='100' cy='100' r='80' fill='#f0f0f0'/>" &
             If(
                 useFullCircle,
@@ -1098,7 +1098,7 @@
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
             "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                 "<defs><linearGradient id='lineGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.3' /><stop offset='100%' style='stop-color:" & color & ";stop-opacity:0' /></linearGradient></defs>" &
                 Concat(
                     gridLines,
@@ -1164,7 +1164,7 @@
         change: "+15%",
         changeLabel: "vs 先月"
     },
-    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'><rect width='300' height='150' fill='#ffffff' rx='12'/><rect width='300' height='150' fill='url(#cardGrad)' rx='12' opacity='0.1'/><defs><linearGradient id='cardGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:#667eea' /><stop offset='100%' style='stop-color:#764ba2' /></linearGradient></defs><text x='20' y='40' font-size='14' fill='#666' font-weight='500'>" & title & "</text><text x='20' y='85' font-size='36' fill='#1a1a1a' font-weight='bold'>" & value & "</text><text x='20' y='115' font-size='12' fill='#10b981'>↑ " & change & " " & changeLabel & "</text></svg>")
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'><rect width='300' height='150' fill='#ffffff' rx='12'/><rect width='300' height='150' fill='url(#cardGrad)' rx='12' opacity='0.1'/><defs><linearGradient id='cardGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:#667eea' /><stop offset='100%' style='stop-color:#764ba2' /></linearGradient></defs><text x='20' y='40' font-size='14' fill='#666' font-weight='500'>" & title & "</text><text x='20' y='85' font-size='36' fill='#1a1a1a' font-weight='bold'>" & value & "</text><text x='20' y='115' font-size='12' fill='#10b981'>↑ " & change & " " & changeLabel & "</text></svg>")
 )`;
 
                 case 7: // 積み上げ棒グラフ（ForAllで可変個数対応）
@@ -1220,7 +1220,7 @@
                     maxTotal: Round(dataMaxTotal + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                 Concat(
                     gridLines,
                     With(
@@ -1307,7 +1307,7 @@
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
             "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                 "<defs><linearGradient id='areaGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.5' /><stop offset='100%' style='stop-color:" & color & ";stop-opacity:0.05' /></linearGradient></defs>" &
                 Concat(
                     gridLines,
@@ -1383,7 +1383,7 @@
             circumference: 2 * Pi() * radius
         },
         "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
             "<circle cx='100' cy='100' r='" & radius & "' fill='none' stroke='#f0f0f0' stroke-width='" & strokeWidth & "'/>" &
             Concat(
                 data,
@@ -1441,7 +1441,7 @@
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                     Concat(
                         gridLines,
                         With(
@@ -1493,7 +1493,7 @@
             currentColor: If(trendType = "positive", positiveColor, If(trendType = "negative", negativeColor, neutralColor)),
             trendIcon: If(trendType = "positive", "↑", If(trendType = "negative", "↓", "−"))
         },
-        "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 100' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'><rect width='180' height='100' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><circle cx='30' cy='30' r='18' fill='" & iconBgColor & "'/><text x='30' y='37' text-anchor='middle' font-size='20' fill='#3b82f6'>" & icon & "</text><text x='65' y='30' font-size='11' fill='#666'>" & title & "</text><text x='20' y='70' font-size='28' fill='#1a1a1a' font-weight='bold'>" & value & "</text><text x='20' y='88' font-size='11' fill='" & currentColor & "'>" & trendIcon & " " & change & " " & changeLabel & "</text></svg>")
+        "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'><rect width='180' height='100' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><circle cx='30' cy='30' r='18' fill='" & iconBgColor & "'/><text x='30' y='37' text-anchor='middle' font-size='20' fill='#3b82f6'>" & icon & "</text><text x='65' y='30' font-size='11' fill='#666'>" & title & "</text><text x='20' y='70' font-size='28' fill='#1a1a1a' font-weight='bold'>" & value & "</text><text x='20' y='88' font-size='11' fill='" & currentColor & "'>" & trendIcon & " " & change & " " & changeLabel & "</text></svg>")
     )
 )`;
 
@@ -1508,7 +1508,7 @@
         )
     },
     "data:image/svg+xml," & EncodeUrl(
-        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & (140 * CountRows(data)) & " 140' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
         Concat(
             data,
             With(
@@ -1536,7 +1536,7 @@
         )
     },
     "data:image/svg+xml," & EncodeUrl(
-        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
         "<rect width='400' height='80' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/>" &
         Concat(
             kpis,
@@ -1571,7 +1571,7 @@
     With(
         {totalWidth: CountRows(data) * 110 + (CountRows(data) + 1) * 20},
         "data:image/svg+xml," & EncodeUrl(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & totalWidth & " 140' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
             "<rect width='" & totalWidth & "' height='140' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/>" &
             "<text x='20' y='30' font-size='13' fill='#666' font-weight='500'>" & title & "</text>" &
             Concat(
@@ -1603,7 +1603,7 @@
         total: 20,
         inProgress: 6
     },
-    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 120' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'><rect width='300' height='120' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><text x='20' y='25' font-size='13' fill='#666' font-weight='600'>" & title & "</text><text x='20' y='55' font-size='11' fill='#999'>完了タスク</text><rect x='20' y='62' width='260' height='12' fill='#f0f0f0' rx='6'/><rect x='20' y='62' width='" & (260 * completed / total) & "' height='12' fill='#10b981' rx='6'/><text x='280' y='72' text-anchor='end' font-size='11' fill='#1a1a1a' font-weight='600'>" & completed & "/" & total & "</text><circle cx='25' cy='95' r='4' fill='#10b981'/><text x='35' y='99' font-size='11' fill='#666'>完了: " & completed & "件</text><circle cx='125' cy='95' r='4' fill='#667eea'/><text x='135' y='99' font-size='11' fill='#666'>進行中: " & inProgress & "件</text></svg>")
+    "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'><rect width='300' height='120' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><text x='20' y='25' font-size='13' fill='#666' font-weight='600'>" & title & "</text><text x='20' y='55' font-size='11' fill='#999'>完了タスク</text><rect x='20' y='62' width='260' height='12' fill='#f0f0f0' rx='6'/><rect x='20' y='62' width='" & (260 * completed / total) & "' height='12' fill='#10b981' rx='6'/><text x='280' y='72' text-anchor='end' font-size='11' fill='#1a1a1a' font-weight='600'>" & completed & "/" & total & "</text><circle cx='25' cy='95' r='4' fill='#10b981'/><text x='35' y='99' font-size='11' fill='#666'>完了: " & completed & "件</text><circle cx='125' cy='95' r='4' fill='#667eea'/><text x='135' y='99' font-size='11' fill='#666'>進行中: " & inProgress & "件</text></svg>")
 )`;
 
                 case 27: // ヒートマップ風カレンダー
@@ -1656,7 +1656,7 @@
         startY: 10
     },
     "data:image/svg+xml," & EncodeUrl(
-        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 230 90' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
         Concat(
             activityData,
             With(
@@ -1696,7 +1696,7 @@
             currentBgColor: If(trendType = "positive", positiveBgColor, If(trendType = "negative", negativeBgColor, neutralBgColor)),
             trendIcon: If(trendType = "positive", "↑", If(trendType = "negative", "↓", "−"))
         },
-        "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 110' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'><rect width='220' height='110' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><rect x='15' y='15' width='40' height='40' fill='" & currentBgColor & "' rx='8'/><text x='35' y='42' text-anchor='middle' font-size='24' fill='" & currentColor & "'>" & trendIcon & "</text><text x='65' y='28' font-size='12' fill='#999'>" & title & "</text><text x='65' y='55' font-size='26' fill='#1a1a1a' font-weight='bold'>" & value & "</text><rect x='15' y='70' width='190' height='25' fill='#f9fafb' rx='6'/><text x='22' y='86' font-size='11' fill='#666'>" & changeLabel & "</text><text x='198' y='86' text-anchor='end' font-size='11' fill='" & currentColor & "' font-weight='600'>" & change & " (" & changeCount & ")</text></svg>")
+        "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'><rect width='220' height='110' fill='#ffffff' rx='12' stroke='#e5e7eb' stroke-width='1'/><rect x='15' y='15' width='40' height='40' fill='" & currentBgColor & "' rx='8'/><text x='35' y='42' text-anchor='middle' font-size='24' fill='" & currentColor & "'>" & trendIcon & "</text><text x='65' y='28' font-size='12' fill='#999'>" & title & "</text><text x='65' y='55' font-size='26' fill='#1a1a1a' font-weight='bold'>" & value & "</text><rect x='15' y='70' width='190' height='25' fill='#f9fafb' rx='6'/><text x='22' y='86' font-size='11' fill='#666'>" & changeLabel & "</text><text x='198' y='86' text-anchor='end' font-size='11' fill='" & currentColor & "' font-weight='600'>" & change & " (" & changeCount & ")</text></svg>")
     )
 )`;
 
@@ -1737,7 +1737,7 @@
                         )
                     },
                 "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                     Concat(
                         scaleRings,
                         With(
@@ -1856,7 +1856,7 @@
                                 periodSpacing: widthPerGroup + minGroupGap
                             },
                 "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                     Concat(
                         gridLines,
                         With(
@@ -1935,7 +1935,7 @@
                 barWidth: availableWidth / periodCount * 0.65
             },
             "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                 Concat(
                     gridLines,
                     With(
@@ -2035,7 +2035,7 @@
                     maxY: Round(dataMaxY + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                 "<line x1='30' y1='180' x2='280' y2='180' stroke='#e5e7eb' stroke-width='2'/>" &
                 "<line x1='30' y1='180' x2='30' y2='20' stroke='#e5e7eb' stroke-width='2'/>" &
                 Concat(
@@ -2128,7 +2128,7 @@
                             rangeY: maxY - minY
                         },
                 "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                     "<line x1='" & leftMargin & "' y1='" & axisBottom & "' x2='" & (300 - rightMargin) & "' y2='" & axisBottom & "' stroke='#e5e7eb' stroke-width='2'/>" &
                     "<line x1='" & leftMargin & "' y1='" & axisBottom & "' x2='" & leftMargin & "' y2='" & topMargin & "' stroke='#e5e7eb' stroke-width='2'/>" &
                     Concat(
@@ -2210,7 +2210,7 @@
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                 Concat(
                     gridLines,
                     With(
@@ -2301,7 +2301,7 @@
                 xStep: (width - 10) / (pointCount - 1)
             },
             "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & width & " " & height & "' width='" & imgWidth & "' height='" & imgHeight & "' preserveAspectRatio='none'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                 "<polyline points='" &
                 Concat(
                     data,
