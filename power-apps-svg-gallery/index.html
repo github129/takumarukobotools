@@ -1003,11 +1003,16 @@
     },
     With(
         {
-            dataMaxValue: Max(data, value),
-            maxHeight: 180
+            leftMargin: imgWidth * 0.1,
+            rightMargin: imgWidth * 0.067,
+            topMargin: imgHeight * 0.1,
+            bottomMargin: imgHeight * 0.15,
+            dataMaxValue: Max(data, value)
         },
         With(
             {
+                chartWidth: imgWidth - leftMargin - rightMargin,
+                chartHeight: imgHeight - topMargin - bottomMargin,
                 stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50)))
             },
             With(
@@ -1015,28 +1020,30 @@
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                     Concat(
                         gridLines,
                         With(
                             {
-                                gridY: maxHeight - (level / 100 * maxHeight),
+                                gridY: topMargin + chartHeight - (level / 100 * chartHeight),
                                 gridValue: Round(maxValue * level / 100, 0)
                             },
-                            "<line x1='30' y1='" & gridY & "' x2='270' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                            "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                            "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (imgWidth - rightMargin) & "' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                            "<text x='" & (leftMargin - 5) & "' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                         )
                     ) &
                     Concat(
                         data,
                         With(
                             {
-                                x: 30 + (idx - 1) * (240 / CountRows(data)),
-                                barHeight: value / maxValue * maxHeight,
-                                y: maxHeight - (value / maxValue * maxHeight)
+                                barWidth: chartWidth * 0.7 / CountRows(data),
+                                spacing: chartWidth / CountRows(data),
+                                x: leftMargin + (idx - 1) * spacing + (spacing - chartWidth * 0.7 / CountRows(data)) / 2,
+                                barHeight: value / maxValue * chartHeight,
+                                y: topMargin + chartHeight - (value / maxValue * chartHeight)
                             },
-                            "<rect x='" & x & "' y='" & y & "' width='" & (200 / CountRows(data)) & "' height='" & barHeight & "' fill='" & color & "' rx='4'/>" &
-                            "<text x='" & (x + 100 / CountRows(data)) & "' y='195' text-anchor='middle' font-size='12' fill='#666'>" & label & "</text>"
+                            "<rect x='" & x & "' y='" & y & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & color & "' rx='4'/>" &
+                            "<text x='" & (leftMargin + (idx - 1) * spacing + spacing / 2) & "' y='" & (imgHeight - bottomMargin / 3) & "' text-anchor='middle' font-size='12' fill='#666'>" & label & "</text>"
                         )
                     ) &
                     "</svg>"
@@ -1086,11 +1093,16 @@
     },
     With(
         {
-            dataMaxValue: Max(data, value),
-            maxHeight: 130
+            leftMargin: imgWidth * 0.1,
+            rightMargin: imgWidth * 0.067,
+            topMargin: imgHeight * 0.1,
+            bottomMargin: imgHeight * 0.133,
+            dataMaxValue: Max(data, value)
         },
         With(
             {
+                chartWidth: imgWidth - leftMargin - rightMargin,
+                chartHeight: imgHeight - topMargin - bottomMargin,
                 stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50)))
             },
             With(
@@ -1098,17 +1110,17 @@
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
             "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                 "<defs><linearGradient id='lineGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.3' /><stop offset='100%' style='stop-color:" & color & ";stop-opacity:0' /></linearGradient></defs>" &
                 Concat(
                     gridLines,
                     With(
                         {
-                            gridY: maxHeight - (level / 100 * maxHeight),
+                            gridY: topMargin + chartHeight - (level / 100 * chartHeight),
                             gridValue: Round(maxValue * level / 100, 0)
                         },
-                        "<line x1='20' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                        "<text x='15' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                        "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (imgWidth - rightMargin) & "' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                        "<text x='" & (leftMargin - 5) & "' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                     )
                 ) &
                 "<polyline points='" &
@@ -1116,8 +1128,8 @@
                     data,
                     With(
                         {
-                            x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                            y: maxHeight - (value / maxValue * maxHeight)
+                            x: leftMargin + (idx - 1) * (chartWidth / (CountRows(data) - 1)),
+                            y: topMargin + chartHeight - (value / maxValue * chartHeight)
                         },
                         x & "," & y
                     ),
@@ -1129,20 +1141,20 @@
                     data,
                     With(
                         {
-                            x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                            y: maxHeight - (value / maxValue * maxHeight)
+                            x: leftMargin + (idx - 1) * (chartWidth / (CountRows(data) - 1)),
+                            y: topMargin + chartHeight - (value / maxValue * chartHeight)
                         },
                         x & "," & y
                     ),
                     " "
                 ) &
-                " 280,130 20,130' fill='url(#lineGrad)'/>" &
+                " " & (imgWidth - rightMargin) & "," & (topMargin + chartHeight) & " " & leftMargin & "," & (topMargin + chartHeight) & "' fill='url(#lineGrad)'/>" &
                 Concat(
                     data,
                     With(
                         {
-                            x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                            y: maxHeight - (value / maxValue * maxHeight)
+                            x: leftMargin + (idx - 1) * (chartWidth / (CountRows(data) - 1)),
+                            y: topMargin + chartHeight - (value / maxValue * chartHeight)
                         },
                         "<circle cx='" & x & "' cy='" & y & "' r='4' fill='" & color & "'/>"
                     )
@@ -1196,12 +1208,10 @@
     },
     With(
         {
-            maxHeight: 160,
-            allBars: AddColumns(
-                bars,
-                totalValue,
-                Sum(Filter(data, bar = barNum), value)
-            ),
+            leftMargin: imgWidth * 0.1,
+            rightMargin: imgWidth * 0.067,
+            topMargin: imgHeight * 0.1,
+            bottomMargin: imgHeight * 0.125,
             dataMaxTotal: Max(
                 AddColumns(
                     bars,
@@ -1213,6 +1223,8 @@
         },
         With(
             {
+                chartWidth: imgWidth - leftMargin - rightMargin,
+                chartHeight: imgHeight - topMargin - bottomMargin,
                 stepSize: If(dataMaxTotal <= 10, 5, If(dataMaxTotal <= 50, 10, If(dataMaxTotal <= 100, 25, 50)))
             },
             With(
@@ -1220,16 +1232,16 @@
                     maxTotal: Round(dataMaxTotal + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                 Concat(
                     gridLines,
                     With(
                         {
-                            gridY: maxHeight - (level / 100 * maxHeight) + 20,
+                            gridY: topMargin + chartHeight - (level / 100 * chartHeight),
                             gridValue: Round(maxTotal * level / 100, 0)
                         },
-                        "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                        "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                        "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (imgWidth - rightMargin) & "' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                        "<text x='" & (leftMargin - 5) & "' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                     )
                 ) &
                 Concat(
@@ -1238,8 +1250,9 @@
                         {barData: Filter(data, bar = barNum)},
                         With(
                             {
-                                x: 30 + (barNum - 1) * (240 / CountRows(bars)),
-                                barWidth: 200 / CountRows(bars),
+                                barWidth: chartWidth * 0.7 / CountRows(bars),
+                                spacing: chartWidth / CountRows(bars),
+                                x: leftMargin + (barNum - 1) * spacing + (spacing - chartWidth * 0.7 / CountRows(bars)) / 2,
                                 maxSegment: Max(barData, segment)
                             },
                             Concat(
@@ -1252,9 +1265,8 @@
                                     },
                                     With(
                                         {
-                                            segmentHeight: value / maxTotal * maxHeight,
-                                            stackY: Sum(Filter(barData, segment <= currentSegment), value) / maxTotal * maxHeight,
-                                            yPos: maxHeight - (Sum(Filter(barData, segment <= currentSegment), value) / maxTotal * maxHeight) + 20
+                                            segmentHeight: value / maxTotal * chartHeight,
+                                            yPos: topMargin + chartHeight - (Sum(Filter(barData, segment <= currentSegment), value) / maxTotal * chartHeight)
                                         },
                                         If(
                                             isTopSegment,
@@ -1270,7 +1282,7 @@
                                     )
                                 )
                             ) &
-                            "<text x='" & (x + barWidth / 2) & "' y='195' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
+                            "<text x='" & (leftMargin + (barNum - 1) * spacing + spacing / 2) & "' y='" & (imgHeight - bottomMargin / 3) & "' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
                         )
                     )
                 ) &
@@ -1295,11 +1307,16 @@
     },
     With(
         {
-            dataMaxValue: Max(data, value),
-            maxHeight: 135
+            leftMargin: imgWidth * 0.1,
+            rightMargin: imgWidth * 0.067,
+            topMargin: imgHeight * 0.1,
+            bottomMargin: imgHeight * 0.1,
+            dataMaxValue: Max(data, value)
         },
         With(
             {
+                chartWidth: imgWidth - leftMargin - rightMargin,
+                chartHeight: imgHeight - topMargin - bottomMargin,
                 stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50)))
             },
             With(
@@ -1307,17 +1324,17 @@
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
             "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                 "<defs><linearGradient id='areaGrad' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.5' /><stop offset='100%' style='stop-color:" & color & ";stop-opacity:0.05' /></linearGradient></defs>" &
                 Concat(
                     gridLines,
                     With(
                         {
-                            gridY: maxHeight - (level / 100 * maxHeight),
+                            gridY: topMargin + chartHeight - (level / 100 * chartHeight),
                             gridValue: Round(maxValue * level / 100, 0)
                         },
-                        "<line x1='20' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                        "<text x='15' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                        "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (imgWidth - rightMargin) & "' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                        "<text x='" & (leftMargin - 5) & "' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                     )
                 ) &
                 "<polygon points='" &
@@ -1325,21 +1342,21 @@
                     data,
                     With(
                         {
-                            x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                            y: maxHeight - (value / maxValue * maxHeight)
+                            x: leftMargin + (idx - 1) * (chartWidth / (CountRows(data) - 1)),
+                            y: topMargin + chartHeight - (value / maxValue * chartHeight)
                         },
                         x & "," & y
                     ),
                     " "
                 ) &
-                " 280,135 20,135' fill='url(#areaGrad)'/>" &
+                " " & (imgWidth - rightMargin) & "," & (topMargin + chartHeight) & " " & leftMargin & "," & (topMargin + chartHeight) & "' fill='url(#areaGrad)'/>" &
                 "<polyline points='" &
                 Concat(
                     data,
                     With(
                         {
-                            x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                            y: maxHeight - (value / maxValue * maxHeight)
+                            x: leftMargin + (idx - 1) * (chartWidth / (CountRows(data) - 1)),
+                            y: topMargin + chartHeight - (value / maxValue * chartHeight)
                         },
                         x & "," & y
                     ),
@@ -1350,8 +1367,8 @@
                     data,
                     With(
                         {
-                            x: 20 + (idx - 1) * (260 / (CountRows(data) - 1)),
-                            y: maxHeight - (value / maxValue * maxHeight)
+                            x: leftMargin + (idx - 1) * (chartWidth / (CountRows(data) - 1)),
+                            y: topMargin + chartHeight - (value / maxValue * chartHeight)
                         },
                         "<circle cx='" & x & "' cy='" & y & "' r='3' fill='" & color & "'/>"
                     )
@@ -1429,11 +1446,16 @@
     },
     With(
         {
-            dataMaxValue: Max(data, value),
-            maxWidth: 200
+            leftMargin: imgWidth * 0.267,
+            rightMargin: imgWidth * 0.067,
+            topMargin: imgHeight * 0.1,
+            bottomMargin: imgHeight * 0.067,
+            dataMaxValue: Max(data, value)
         },
         With(
             {
+                chartWidth: imgWidth - leftMargin - rightMargin,
+                chartHeight: imgHeight - topMargin - bottomMargin,
                 stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50)))
             },
             With(
@@ -1441,28 +1463,30 @@
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                     Concat(
                         gridLines,
                         With(
                             {
-                                gridX: 80 + (level / 100 * maxWidth),
+                                gridX: leftMargin + (level / 100 * chartWidth),
                                 gridValue: Round(maxValue * level / 100, 0)
                             },
-                            "<line x1='" & gridX & "' y1='10' x2='" & gridX & "' y2='140' stroke='#e5e7eb' stroke-width='1'/>" &
-                            If(level > 0, "<text x='" & gridX & "' y='8' text-anchor='middle' font-size='10' fill='#999'>" & gridValue & "</text>", "")
+                            "<line x1='" & gridX & "' y1='" & topMargin & "' x2='" & gridX & "' y2='" & (imgHeight - bottomMargin) & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                            If(level > 0, "<text x='" & gridX & "' y='" & (topMargin - 5) & "' text-anchor='middle' font-size='10' fill='#999'>" & gridValue & "</text>", "")
                         )
                     ) &
                     Concat(
                         data,
                         With(
                             {
-                                y: 10 + (idx - 1) * (130 / CountRows(data)),
-                                barWidth: value / maxValue * maxWidth
+                                barHeight: chartHeight * 0.7 / CountRows(data),
+                                spacing: chartHeight / CountRows(data),
+                                y: topMargin + (idx - 1) * spacing + (spacing - chartHeight * 0.7 / CountRows(data)) / 2,
+                                barWidth: value / maxValue * chartWidth
                             },
-                            "<rect x='80' y='" & y & "' width='" & barWidth & "' height='" & (100 / CountRows(data)) & "' fill='" & color & "' rx='4'/>" &
-                            "<text x='75' y='" & (y + 50 / CountRows(data) + 5) & "' text-anchor='end' font-size='12' fill='" & labelTextColor & "'>" & dept & "</text>" &
-                            "<text x='" & (80 + barWidth - 5) & "' y='" & (y + 50 / CountRows(data) + 5) & "' font-size='12' fill='" & valueTextColor & "' font-weight='600'>" & value & "</text>"
+                            "<rect x='" & leftMargin & "' y='" & y & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & color & "' rx='4'/>" &
+                            "<text x='" & (leftMargin - 5) & "' y='" & (y + barHeight / 2 + 5) & "' text-anchor='end' font-size='12' fill='" & labelTextColor & "'>" & dept & "</text>" &
+                            "<text x='" & (leftMargin + barWidth - 5) & "' y='" & (y + barHeight / 2 + 5) & "' font-size='12' fill='" & valueTextColor & "' font-weight='600'>" & value & "</text>"
                         )
                     ) &
                     "</svg>"
@@ -1823,49 +1847,47 @@
     },
     With(
         {
+            leftMargin: imgWidth * 0.1,
+            rightMargin: imgWidth * 0.067,
+            topMargin: imgHeight * 0.1,
+            bottomMargin: imgHeight * 0.125,
             dataMaxValue: Max(data, value),
-            maxHeight: 160,
             seriesCount: Max(data, series),
-            periodCount: CountRows(periods),
-            availableWidth: 250,
-            minGroupGap: 15,
-            barGapRatio: 0.2
+            periodCount: CountRows(periods)
         },
         With(
             {
+                chartWidth: imgWidth - leftMargin - rightMargin,
+                chartHeight: imgHeight - topMargin - bottomMargin,
                 stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50))),
-                totalGroupGaps: (periodCount - 1) * minGroupGap
+                minGroupGap: chartWidth * 0.06
             },
             With(
                 {
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0))),
-                    widthPerGroup: (availableWidth - totalGroupGaps) / periodCount
+                    totalGroupGaps: (periodCount - 1) * minGroupGap,
+                    widthPerGroup: (chartWidth - (periodCount - 1) * minGroupGap) / periodCount
                 },
                 With(
                     {
-                        barGap: Round(widthPerGroup / (seriesCount * 5), 1)
+                        barGap: widthPerGroup / (seriesCount * 5),
+                        barWidth: (widthPerGroup - (seriesCount - 1) * (widthPerGroup / (seriesCount * 5))) / seriesCount
                     },
                     With(
                         {
-                            totalBarGaps: (seriesCount - 1) * barGap,
-                            barWidth: (widthPerGroup - (seriesCount - 1) * barGap) / seriesCount,
-                            groupWidth: widthPerGroup - barGap
+                            periodSpacing: widthPerGroup + minGroupGap
                         },
-                        With(
-                            {
-                                periodSpacing: widthPerGroup + minGroupGap
-                            },
                 "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                     Concat(
                         gridLines,
                         With(
                             {
-                                gridY: 180 - (level / 100 * maxHeight),
+                                gridY: topMargin + chartHeight - (level / 100 * chartHeight),
                                 gridValue: Round(maxValue * level / 100, 0)
                             },
-                            "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                            "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                            "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (imgWidth - rightMargin) & "' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                            "<text x='" & (leftMargin - 5) & "' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                         )
                     ) &
                     Concat(
@@ -1877,16 +1899,16 @@
                             },
                             With(
                                 {
-                                    barHeight: value / maxValue * maxHeight,
-                                    x: 30 + (periodData.num - 1) * periodSpacing + (series - 1) * (barWidth + barGap)
+                                    barHeight: value / maxValue * chartHeight,
+                                    x: leftMargin + (periodData.num - 1) * periodSpacing + (series - 1) * (barWidth + barGap)
                                 },
-                                "<rect x='" & x & "' y='" & (maxHeight - barHeight + 20) & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & colorData.color & "' rx='3'/>"
+                                "<rect x='" & x & "' y='" & (topMargin + chartHeight - barHeight) & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & colorData.color & "' rx='3'/>"
                             )
                         )
                     ) &
                     Concat(
                         periods,
-                        "<text x='" & (30 + (num - 1) * periodSpacing + widthPerGroup / 2) & "' y='195' text-anchor='middle' font-size='11' fill='#666'>" & name & "</text>"
+                        "<text x='" & (leftMargin + (num - 1) * periodSpacing + widthPerGroup / 2) & "' y='" & (imgHeight - bottomMargin / 3) & "' text-anchor='middle' font-size='11' fill='#666'>" & name & "</text>"
                     ) &
                     "</svg>"
                 )
@@ -1920,28 +1942,31 @@
             {segmentNum: 2, color: "#764ba2"},
             {segmentNum: 3, color: "#f093fb"}
         ),
-        chartHeight: 160,
         gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
     },
     With(
         {
-            periodCount: CountRows(periods),
-            availableWidth: 250,
-            leftMargin: 30
+            leftMargin: imgWidth * 0.1,
+            rightMargin: imgWidth * 0.067,
+            topMargin: imgHeight * 0.1,
+            bottomMargin: imgHeight * 0.125,
+            periodCount: CountRows(periods)
         },
         With(
             {
-                periodWidth: availableWidth / periodCount,
-                barWidth: availableWidth / periodCount * 0.65
+                chartWidth: imgWidth - leftMargin - rightMargin,
+                chartHeight: imgHeight - topMargin - bottomMargin,
+                periodWidth: (imgWidth - leftMargin - rightMargin) / periodCount,
+                barWidth: (imgWidth - leftMargin - rightMargin) / periodCount * 0.65
             },
             "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                 Concat(
                     gridLines,
                     With(
-                        {gridY: 20 + ((100 - level) / 100 * chartHeight)},
-                        "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                        "<text x='25' y='" & (If(level = 0, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & level & "%</text>"
+                        {gridY: topMargin + ((100 - level) / 100 * chartHeight)},
+                        "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (imgWidth - rightMargin) & "' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                        "<text x='" & (leftMargin - 5) & "' y='" & (If(level = 0, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & level & "%</text>"
                     )
                 ) &
                 Concat(
@@ -1967,7 +1992,7 @@
                                         },
                                         With(
                                             {
-                                                y: 20 + yOffset
+                                                y: topMargin + yOffset
                                             },
                                             If(
                                                 isTop,
@@ -1985,7 +2010,7 @@
                                     )
                                 )
                             ) &
-                            "<text x='" & (x + barWidth / 2) & "' y='195' text-anchor='middle' font-size='11' fill='#666'>" & name & "</text>"
+                            "<text x='" & (x + barWidth / 2) & "' y='" & (imgHeight - bottomMargin / 3) & "' text-anchor='middle' font-size='11' fill='#666'>" & name & "</text>"
                         )
                     )
                 ) &
@@ -2017,17 +2042,21 @@
             {x: 230, y: 23, series: 2}
         ),
         colors: Table({series: 1, color: "#667eea"}, {series: 2, color: "#764ba2"}),
-        chartWidth: 250,
-        chartHeight: 160,
         gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
     },
     With(
         {
+            leftMargin: imgWidth * 0.1,
+            rightMargin: imgWidth * 0.067,
+            topMargin: imgHeight * 0.1,
+            bottomMargin: imgHeight * 0.1,
             maxX: Max(data, x),
             dataMaxY: Max(data, y)
         },
         With(
             {
+                chartWidth: imgWidth - leftMargin - rightMargin,
+                chartHeight: imgHeight - topMargin - bottomMargin,
                 stepSize: If(dataMaxY <= 10, 5, If(dataMaxY <= 50, 10, If(dataMaxY <= 100, 25, 50)))
             },
             With(
@@ -2035,18 +2064,18 @@
                     maxY: Round(dataMaxY + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "'>" &
-                "<line x1='30' y1='180' x2='280' y2='180' stroke='#e5e7eb' stroke-width='2'/>" &
-                "<line x1='30' y1='180' x2='30' y2='20' stroke='#e5e7eb' stroke-width='2'/>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                "<line x1='" & leftMargin & "' y1='" & (imgHeight - bottomMargin) & "' x2='" & (imgWidth - rightMargin) & "' y2='" & (imgHeight - bottomMargin) & "' stroke='#e5e7eb' stroke-width='2'/>" &
+                "<line x1='" & leftMargin & "' y1='" & (imgHeight - bottomMargin) & "' x2='" & leftMargin & "' y2='" & topMargin & "' stroke='#e5e7eb' stroke-width='2'/>" &
                 Concat(
                     gridLines,
                     With(
                         {
-                            gridY: 180 - (level / 100 * chartHeight),
+                            gridY: topMargin + chartHeight - (level / 100 * chartHeight),
                             gridValue: Round(maxY * level / 100, 0)
                         },
-                        "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#f0f0f0' stroke-width='1'/>" &
-                        "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                        "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (imgWidth - rightMargin) & "' y2='" & gridY & "' stroke='#f0f0f0' stroke-width='1'/>" &
+                        "<text x='" & (leftMargin - 5) & "' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                     )
                 ) &
                 Concat(
@@ -2058,8 +2087,8 @@
                         With(
                             {
                                 colorData: LookUp(colors, series = currentSeries),
-                                plotX: 30 + (x / maxX) * chartWidth,
-                                plotY: 180 - (y / maxY) * chartHeight
+                                plotX: leftMargin + (x / maxX) * chartWidth,
+                                plotY: topMargin + chartHeight - (y / maxY) * chartHeight
                             },
                             "<circle cx='" & plotX & "' cy='" & plotY & "' r='5' fill='" & colorData.color & "'/>"
                         )
@@ -2096,21 +2125,21 @@
     },
     With(
         {
+            leftMargin: imgWidth * 0.167,
+            rightMargin: imgWidth * 0.133,
+            topMargin: imgHeight * 0.2,
+            bottomMargin: imgHeight * 0.15,
             maxX: Max(data, x),
             dataMaxY: Max(data, y),
             dataMinY: Min(data, y),
-            maxRadius: Max(data, radius),
-            leftMargin: 50,
-            rightMargin: 40,
-            topMargin: 40,
-            bottomMargin: 30
+            maxRadius: Max(data, radius)
         },
         With(
             {
+                chartWidth: imgWidth - leftMargin - rightMargin,
+                chartHeight: imgHeight - topMargin - bottomMargin,
                 dataRangeY: dataMaxY - dataMinY,
-                chartWidth: 300 - leftMargin - rightMargin,
-                chartHeight: 200 - topMargin - bottomMargin,
-                axisBottom: 200 - bottomMargin,
+                axisBottom: imgHeight - bottomMargin,
                 safeMaxRadius: Min(topMargin - 8, bottomMargin - 8, leftMargin / 3, rightMargin / 3)
             },
             With(
@@ -2128,8 +2157,8 @@
                             rangeY: maxY - minY
                         },
                 "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "'>" &
-                    "<line x1='" & leftMargin & "' y1='" & axisBottom & "' x2='" & (300 - rightMargin) & "' y2='" & axisBottom & "' stroke='#e5e7eb' stroke-width='2'/>" &
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                    "<line x1='" & leftMargin & "' y1='" & axisBottom & "' x2='" & (imgWidth - rightMargin) & "' y2='" & axisBottom & "' stroke='#e5e7eb' stroke-width='2'/>" &
                     "<line x1='" & leftMargin & "' y1='" & axisBottom & "' x2='" & leftMargin & "' y2='" & topMargin & "' stroke='#e5e7eb' stroke-width='2'/>" &
                     Concat(
                         gridLines,
@@ -2138,7 +2167,7 @@
                                 gridY: axisBottom - (level / 100 * chartHeight),
                                 gridValue: Round(minY + (rangeY * level / 100), 0)
                             },
-                            "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (300 - rightMargin) & "' y2='" & gridY & "' stroke='#f0f0f0' stroke-width='1'/>" &
+                            "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (imgWidth - rightMargin) & "' y2='" & gridY & "' stroke='#f0f0f0' stroke-width='1'/>" &
                             "<text x='" & (leftMargin - 5) & "' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                         )
                     ) &
@@ -2193,43 +2222,46 @@
     },
     With(
         {
+            leftMargin: imgWidth * 0.1,
+            rightMargin: imgWidth * 0.067,
+            topMargin: imgHeight * 0.1,
+            bottomMargin: imgHeight * 0.125,
             dataMaxValue: Max(Max(barData, value), Max(lineData, value)),
-            maxHeight: 160,
-            barCount: CountRows(barData),
-            availableWidth: 250,
-            leftMargin: 30
+            barCount: CountRows(barData)
         },
         With(
             {
+                chartWidth: imgWidth - leftMargin - rightMargin,
+                chartHeight: imgHeight - topMargin - bottomMargin,
                 stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50))),
-                itemSpacing: availableWidth / barCount,
-                barWidth: availableWidth / barCount * 0.7
+                itemSpacing: (imgWidth - leftMargin - rightMargin) / barCount,
+                barWidth: (imgWidth - leftMargin - rightMargin) / barCount * 0.7
             },
             With(
                 {
                     maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
                 },
                 "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                 Concat(
                     gridLines,
                     With(
                         {
-                            gridY: 180 - (level / 100 * maxHeight),
+                            gridY: topMargin + chartHeight - (level / 100 * chartHeight),
                             gridValue: Round(maxValue * level / 100, 0)
                         },
-                        "<line x1='30' y1='" & gridY & "' x2='280' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                        "<text x='25' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                        "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (imgWidth - rightMargin) & "' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                        "<text x='" & (leftMargin - 5) & "' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
                     )
                 ) &
                 Concat(
                     barData,
                     With(
                         {
-                            barHeight: value / maxValue * maxHeight,
+                            barHeight: value / maxValue * chartHeight,
                             x: leftMargin + (idx - 1) * itemSpacing + (itemSpacing - barWidth) / 2
                         },
-                        "<rect x='" & x & "' y='" & (180 - barHeight) & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & barColor & "' rx='4'/>"
+                        "<rect x='" & x & "' y='" & (topMargin + chartHeight - barHeight) & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & barColor & "' rx='4'/>"
                     )
                 ) &
                 "<polyline points='" &
@@ -2238,7 +2270,7 @@
                     With(
                         {
                             x: leftMargin + (idx - 1) * itemSpacing + itemSpacing / 2,
-                            y: 180 - (value / maxValue * maxHeight)
+                            y: topMargin + chartHeight - (value / maxValue * chartHeight)
                         },
                         x & "," & y
                     ),
@@ -2250,7 +2282,7 @@
                     With(
                         {
                             x: leftMargin + (idx - 1) * itemSpacing + itemSpacing / 2,
-                            y: 180 - (value / maxValue * maxHeight)
+                            y: topMargin + chartHeight - (value / maxValue * chartHeight)
                         },
                         "<circle cx='" & x & "' cy='" & y & "' r='5' fill='" & lineColor & "' stroke='#fff' stroke-width='2'/>"
                     )
@@ -2259,7 +2291,7 @@
                     barData,
                     With(
                         {x: leftMargin + (idx - 1) * itemSpacing + itemSpacing / 2},
-                        "<text x='" & x & "' y='195' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
+                        "<text x='" & x & "' y='" & (imgHeight - bottomMargin / 3) & "' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
                     )
                 ) &
                 "</svg>"
