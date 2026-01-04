@@ -1165,6 +1165,76 @@
     "data:image/svg+xml," & EncodeUrl("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 150' width='" & imgWidth & "' height='" & imgHeight & "'><rect width='300' height='150' fill='#ffffff' rx='12'/><rect width='300' height='150' fill='url(#cardGrad)' rx='12' opacity='0.1'/><defs><linearGradient id='cardGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:#667eea' /><stop offset='100%' style='stop-color:#764ba2' /></linearGradient></defs><text x='20' y='40' font-size='14' fill='#666' font-weight='500'>" & title & "</text><text x='20' y='85' font-size='36' fill='#1a1a1a' font-weight='bold'>" & value & "</text><text x='20' y='115' font-size='12' fill='#10b981'>↑ " & change & " " & changeLabel & "</text></svg>")
 )`;
 
+                case 5: // ステータスカード
+                    return `With(
+    {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
+        status: "success",
+        statusColor: "#10b981",
+        title: "プロジェクト完了",
+        description: "すべてのタスクが完了しました",
+        bgColor: "#ffffff",
+        borderColor: "#e5e7eb"
+    },
+    With(
+        {
+            iconCX: imgWidth * 0.133,
+            iconCY: imgHeight / 2,
+            iconRadius: imgWidth * 0.067,
+            textX: imgWidth * 0.25
+        },
+        "data:image/svg+xml," & EncodeUrl(
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+            "<rect width='" & imgWidth & "' height='" & imgHeight & "' fill='" & bgColor & "' rx='12' stroke='" & borderColor & "' stroke-width='1'/>" &
+            "<circle cx='" & iconCX & "' cy='" & iconCY & "' r='" & iconRadius & "' fill='" & statusColor & "' opacity='0.1'/>" &
+            If(status = "success",
+                "<path d='M " & (iconCX - iconRadius * 0.25) & " " & iconCY & " L " & (iconCX - iconRadius * 0.1) & " " & (iconCY + iconRadius * 0.15) & " L " & (iconCX + iconRadius * 0.25) & " " & (iconCY - iconRadius * 0.2) & "' stroke='" & statusColor & "' stroke-width='2' fill='none' stroke-linecap='round'/>",
+                If(status = "warning",
+                    "<text x='" & iconCX & "' y='" & (iconCY + iconRadius * 0.3) & "' text-anchor='middle' font-size='" & (iconRadius * 1.2) & "' fill='" & statusColor & "' font-weight='bold'>!</text>",
+                    "<line x1='" & (iconCX - iconRadius * 0.3) & "' y1='" & (iconCY - iconRadius * 0.3) & "' x2='" & (iconCX + iconRadius * 0.3) & "' y2='" & (iconCY + iconRadius * 0.3) & "' stroke='" & statusColor & "' stroke-width='2' stroke-linecap='round'/>" &
+                    "<line x1='" & (iconCX - iconRadius * 0.3) & "' y1='" & (iconCY + iconRadius * 0.3) & "' x2='" & (iconCX + iconRadius * 0.3) & "' y2='" & (iconCY - iconRadius * 0.3) & "' stroke='" & statusColor & "' stroke-width='2' stroke-linecap='round'/>"
+                )
+            ) &
+            "<text x='" & textX & "' y='" & (imgHeight * 0.458) & "' font-size='" & (imgHeight * 0.133) & "' fill='#1a1a1a' font-weight='600'>" & title & "</text>" &
+            "<text x='" & textX & "' y='" & (imgHeight * 0.625) & "' font-size='" & (imgHeight * 0.1) & "' fill='#666'>" & description & "</text>" &
+            "</svg>"
+        )
+    )
+)`;
+
+                case 6: // 情報カード
+                    return `With(
+    {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
+        bgColor: "#eff6ff",
+        accentColor: "#3b82f6",
+        icon: "i",
+        title: "重要なお知らせ",
+        description: "システムメンテナンスを実施します"
+    },
+    With(
+        {
+            borderWidth: imgWidth * 0.02,
+            iconCX: imgWidth * 0.117,
+            iconCY: imgHeight / 2,
+            iconRadius: imgWidth * 0.04,
+            textX: imgWidth * 0.2
+        },
+        "data:image/svg+xml," & EncodeUrl(
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+            "<rect width='" & imgWidth & "' height='" & imgHeight & "' fill='" & bgColor & "' rx='12'/>" &
+            "<rect x='0' y='0' width='" & borderWidth & "' height='" & imgHeight & "' fill='" & accentColor & "' rx='12'/>" &
+            "<circle cx='" & iconCX & "' cy='" & iconCY & "' r='" & iconRadius & "' fill='" & accentColor & "' opacity='0.2'/>" &
+            "<text x='" & iconCX & "' y='" & (iconCY + iconRadius * 0.4) & "' font-size='" & (iconRadius * 1.33) & "' fill='" & accentColor & "' font-weight='bold' text-anchor='middle'>" & icon & "</text>" &
+            "<text x='" & textX & "' y='" & (imgHeight * 0.45) & "' font-size='" & (imgHeight * 0.14) & "' fill='#1a1a1a' font-weight='600'>" & title & "</text>" &
+            "<text x='" & textX & "' y='" & (imgHeight * 0.65) & "' font-size='" & (imgHeight * 0.12) & "' fill='#666'>" & description & "</text>" &
+            "</svg>"
+        )
+    )
+)`;
+
                 case 7: // 積み上げ棒グラフ（ForAllで可変個数対応）
                     return `With(
     {
@@ -1364,6 +1434,59 @@
                     )
                 ) &
                 "</svg>"
+                )
+            )
+        )
+    )
+)`;
+
+                case 9: // 半円ゲージ
+                    return `With(
+    {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
+        percentage: 78,
+        needleColor: "#667eea",
+        gradientStart: "#ef4444",
+        gradientMid: "#fbbf24",
+        gradientEnd: "#10b981",
+        bgColor: "#e5e7eb",
+        textColor: "#1a1a1a"
+    },
+    With(
+        {
+            centerX: imgWidth / 2,
+            centerY: imgHeight * 0.833,
+            radius: imgWidth * 0.35,
+            strokeWidth: imgWidth * 0.1
+        },
+        With(
+            {
+                angle: -180 + (percentage * 180 / 100),
+                angleRad: (-180 + (percentage * 180 / 100)) * Pi() / 180,
+                needleLength: radius - strokeWidth / 2
+            },
+            With(
+                {
+                    needleX: centerX + needleLength * Cos(angleRad),
+                    needleY: centerY + needleLength * Sin(angleRad),
+                    arcEndX: centerX + radius * Cos(angleRad),
+                    arcEndY: centerY + radius * Sin(angleRad),
+                    largeArcFlag: If(percentage > 50, 1, 0)
+                },
+                "data:image/svg+xml," & EncodeUrl(
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                    "<defs><linearGradient id='gaugeGrad' x1='0%' y1='0%' x2='100%' y2='0%'>" &
+                    "<stop offset='0%' style='stop-color:" & gradientStart & "' />" &
+                    "<stop offset='50%' style='stop-color:" & gradientMid & "' />" &
+                    "<stop offset='100%' style='stop-color:" & gradientEnd & "' />" &
+                    "</linearGradient></defs>" &
+                    "<path d='M " & (centerX - radius) & " " & centerY & " A " & radius & " " & radius & " 0 0 1 " & (centerX + radius) & " " & centerY & "' fill='none' stroke='" & bgColor & "' stroke-width='" & strokeWidth & "' stroke-linecap='round'/>" &
+                    "<path d='M " & (centerX - radius) & " " & centerY & " A " & radius & " " & radius & " 0 " & largeArcFlag & " 1 " & arcEndX & " " & arcEndY & "' fill='none' stroke='url(#gaugeGrad)' stroke-width='" & strokeWidth & "' stroke-linecap='round'/>" &
+                    "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & (imgWidth * 0.04) & "' fill='" & needleColor & "'/>" &
+                    "<line x1='" & centerX & "' y1='" & centerY & "' x2='" & needleX & "' y2='" & needleY & "' stroke='" & needleColor & "' stroke-width='3' stroke-linecap='round'/>" &
+                    "<text x='" & centerX & "' y='" & (centerY - radius * 0.15) & "' text-anchor='middle' font-size='" & (imgWidth * 0.12) & "' font-weight='bold' fill='" & textColor & "'>" & percentage & "%</text>" &
+                    "</svg>"
                 )
             )
         )
