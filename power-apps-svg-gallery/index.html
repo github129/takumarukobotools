@@ -1069,24 +1069,29 @@
         With(
             {
                 outerRadius: size * 0.4,
-                pathRadius: size * 0.2
+                innerRadius: size * 0.15
             },
             With(
                 {
-                    strokeWidth: outerRadius,
-                    circumference: 2 * Pi() * pathRadius,
-                    useFullCircle: percentage >= 99.9
+                    ringWidth: outerRadius - innerRadius,
+                    pathRadius: (outerRadius + innerRadius) / 2
                 },
-                "data:image/svg+xml," & EncodeUrl(
-                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
-                    "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & outerRadius & "' fill='" & bgColor & "'/>" &
-                    If(
-                        useFullCircle,
-                        "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & pathRadius & "' fill='none' stroke='" & color & "' stroke-width='" & strokeWidth & "'/>",
-                        "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & pathRadius & "' fill='none' stroke='" & color & "' stroke-width='" & strokeWidth & "' stroke-dasharray='" & (circumference * percentage / 100) & " " & circumference & "' stroke-dashoffset='0' transform='rotate(-90 " & centerX & " " & centerY & ")'/>"
-                    ) &
-                    "<text x='" & centerX & "' y='" & (centerY + size * 0.025) & "' text-anchor='middle' font-size='" & (size * 0.16) & "' font-weight='bold' fill='" & textColor & "'>" & percentage & "%</text>" &
-                    "</svg>"
+                With(
+                    {
+                        circumference: 2 * Pi() * pathRadius,
+                        useFullCircle: percentage >= 99.9
+                    },
+                    "data:image/svg+xml," & EncodeUrl(
+                        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                        "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & pathRadius & "' fill='none' stroke='" & bgColor & "' stroke-width='" & ringWidth & "'/>" &
+                        If(
+                            useFullCircle,
+                            "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & pathRadius & "' fill='none' stroke='" & color & "' stroke-width='" & ringWidth & "'/>",
+                            "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & pathRadius & "' fill='none' stroke='" & color & "' stroke-width='" & ringWidth & "' stroke-dasharray='" & (circumference * percentage / 100) & " " & circumference & "' stroke-dashoffset='0' transform='rotate(-90 " & centerX & " " & centerY & ")'/>"
+                        ) &
+                        "<text x='" & centerX & "' y='" & (centerY + size * 0.025) & "' text-anchor='middle' font-size='" & (size * 0.16) & "' font-weight='bold' fill='" & textColor & "'>" & percentage & "%</text>" &
+                        "</svg>"
+                    )
                 )
             )
         )
