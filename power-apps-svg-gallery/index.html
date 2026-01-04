@@ -1058,7 +1058,8 @@
         percentage: 75,
         color: "#667eea",
         bgColor: "#f0f0f0",
-        textColor: "#1a1a1a"
+        textColor: "#1a1a1a",
+        textSize: 32
     },
     With(
         {
@@ -1089,7 +1090,7 @@
                             "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & pathRadius & "' fill='none' stroke='" & color & "' stroke-width='" & ringWidth & "'/>",
                             "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & pathRadius & "' fill='none' stroke='" & color & "' stroke-width='" & ringWidth & "' stroke-dasharray='" & (circumference * percentage / 100) & " " & circumference & "' stroke-dashoffset='0' transform='rotate(-90 " & centerX & " " & centerY & ")'/>"
                         ) &
-                        "<text x='" & centerX & "' y='" & (centerY + size * 0.025) & "' text-anchor='middle' font-size='" & (size * 0.16) & "' font-weight='bold' fill='" & textColor & "'>" & percentage & "%</text>" &
+                        "<text x='" & centerX & "' y='" & (centerY + size * 0.025) & "' text-anchor='middle' font-size='" & textSize & "' font-weight='bold' fill='" & textColor & "'>" & percentage & "%</text>" &
                         "</svg>"
                     )
                 )
@@ -1500,9 +1501,9 @@
                     "<stop offset='50%' style='stop-color:" & gradientMid & "' />" &
                     "<stop offset='100%' style='stop-color:" & gradientEnd & "' />" &
                     "</linearGradient></defs>" &
-                    "<path d='M " & startX & " " & startY & " A " & radius & " " & radius & " 0 0 1 " & (centerX + radius) & " " & centerY & "' fill='none' stroke='" & bgColor & "' stroke-width='" & strokeWidth & "'/>" &
+                    "<path d='M " & startX & " " & startY & " A " & radius & " " & radius & " 0 0 1 " & (centerX + radius) & " " & centerY & "' fill='none' stroke='" & bgColor & "' stroke-width='" & strokeWidth & "' stroke-linecap='butt'/>" &
                     If(percentage > 0,
-                        "<path d='M " & startX & " " & startY & " A " & radius & " " & radius & " 0 " & largeArcFlag & " 1 " & arcEndX & " " & arcEndY & "' fill='none' stroke='url(#gaugeGrad)' stroke-width='" & strokeWidth & "'/>",
+                        "<path d='M " & startX & " " & startY & " A " & radius & " " & radius & " 0 " & largeArcFlag & " 1 " & arcEndX & " " & arcEndY & "' fill='none' stroke='url(#gaugeGrad)' stroke-width='" & strokeWidth & "' stroke-linecap='butt'/>",
                         ""
                     ) &
                     "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & (imgWidth * 0.04) & "' fill='" & needleColor & "'/>" &
