@@ -1057,7 +1057,8 @@
         imgHeight: Self.Height,
         percentage: 75,
         color: "#667eea",
-        bgColor: "#f0f0f0"
+        bgColor: "#f0f0f0",
+        textColor: "#1a1a1a"
     },
     With(
         {
@@ -1084,7 +1085,7 @@
                         "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & pathRadius & "' fill='none' stroke='" & color & "' stroke-width='" & strokeWidth & "'/>",
                         "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & pathRadius & "' fill='none' stroke='" & color & "' stroke-width='" & strokeWidth & "' stroke-dasharray='" & (circumference * percentage / 100) & " " & circumference & "' stroke-dashoffset='0' transform='rotate(-90 " & centerX & " " & centerY & ")'/>"
                     ) &
-                    "<text x='" & centerX & "' y='" & (centerY + size * 0.025) & "' text-anchor='middle' font-size='" & (size * 0.16) & "' font-weight='bold' fill='" & color & "'>" & percentage & "%</text>" &
+                    "<text x='" & centerX & "' y='" & (centerY + size * 0.025) & "' text-anchor='middle' font-size='" & (size * 0.16) & "' font-weight='bold' fill='" & textColor & "'>" & percentage & "%</text>" &
                     "</svg>"
                 )
             )
