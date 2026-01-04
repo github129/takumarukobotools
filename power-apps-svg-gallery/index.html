@@ -1030,13 +1030,17 @@
                         With(
                             {
                                 barWidth: chartWidth * 0.7 / CountRows(data),
-                                spacing: chartWidth / CountRows(data),
-                                x: leftMargin + (idx - 1) * spacing + (spacing - chartWidth * 0.7 / CountRows(data)) / 2,
-                                barHeight: value / maxValue * chartHeight,
-                                y: topMargin + chartHeight - (value / maxValue * chartHeight)
+                                spacing: chartWidth / CountRows(data)
                             },
-                            "<rect x='" & x & "' y='" & y & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & color & "' rx='4'/>" &
-                            "<text x='" & (leftMargin + (idx - 1) * spacing + spacing / 2) & "' y='" & (imgHeight - bottomMargin / 3) & "' text-anchor='middle' font-size='12' fill='#666'>" & label & "</text>"
+                            With(
+                                {
+                                    x: leftMargin + (idx - 1) * spacing + (spacing - barWidth) / 2,
+                                    barHeight: value / maxValue * chartHeight,
+                                    y: topMargin + chartHeight - (value / maxValue * chartHeight)
+                                },
+                                "<rect x='" & x & "' y='" & y & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & color & "' rx='4'/>" &
+                                "<text x='" & (leftMargin + (idx - 1) * spacing + spacing / 2) & "' y='" & (imgHeight - bottomMargin / 3) & "' text-anchor='middle' font-size='12' fill='#666'>" & label & "</text>"
+                            )
                         )
                     ) &
                     "</svg>"
@@ -1052,29 +1056,36 @@
         imgWidth: Self.Width,
         imgHeight: Self.Height,
         percentage: 75,
-        color: "#667eea"
+        color: "#667eea",
+        bgColor: "#f0f0f0"
     },
     With(
         {
+            size: Min(imgWidth, imgHeight),
             centerX: imgWidth / 2,
-            centerY: imgHeight / 2,
-            radius: Min(imgWidth, imgHeight) * 0.4
+            centerY: imgHeight / 2
         },
         With(
             {
-                circumference: 2 * Pi() * radius,
-                useFullCircle: percentage >= 99.9
+                radius: size * 0.4,
+                strokeWidth: size * 0.8
             },
-            "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
-                "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='#f0f0f0'/>" &
-                If(
-                    useFullCircle,
-                    "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & color & "' stroke-width='" & (radius * 2) & "'/>",
-                    "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & color & "' stroke-width='" & (radius * 2) & "' stroke-dasharray='" & (circumference * percentage / 100) & " " & circumference & "' stroke-dashoffset='0' transform='rotate(-90 " & centerX & " " & centerY & ")'/>"
-                ) &
-                "<text x='" & centerX & "' y='" & (centerY + radius * 0.1) & "' text-anchor='middle' font-size='" & (radius * 0.4) & "' font-weight='bold' fill='" & color & "'>" & percentage & "%</text>" &
-                "</svg>"
+            With(
+                {
+                    circumference: 2 * Pi() * radius,
+                    useFullCircle: percentage >= 99.9
+                },
+                "data:image/svg+xml," & EncodeUrl(
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                    "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & bgColor & "' stroke-width='" & strokeWidth & "'/>" &
+                    If(
+                        useFullCircle,
+                        "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & color & "' stroke-width='" & strokeWidth & "'/>",
+                        "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & color & "' stroke-width='" & strokeWidth & "' stroke-dasharray='" & (circumference * percentage / 100) & " " & circumference & "' stroke-dashoffset='0' transform='rotate(-90 " & centerX & " " & centerY & ")'/>"
+                    ) &
+                    "<text x='" & centerX & "' y='" & (centerY + size * 0.025) & "' text-anchor='middle' font-size='" & (size * 0.16) & "' font-weight='bold' fill='" & color & "'>" & percentage & "%</text>" &
+                    "</svg>"
+                )
             )
         )
     )
@@ -1462,9 +1473,10 @@
         },
         With(
             {
-                angle: -180 + (percentage * 180 / 100),
                 angleRad: (-180 + (percentage * 180 / 100)) * Pi() / 180,
-                needleLength: radius - strokeWidth / 2
+                needleLength: radius,
+                startX: centerX - radius,
+                startY: centerY
             },
             With(
                 {
@@ -1481,8 +1493,11 @@
                     "<stop offset='50%' style='stop-color:" & gradientMid & "' />" &
                     "<stop offset='100%' style='stop-color:" & gradientEnd & "' />" &
                     "</linearGradient></defs>" &
-                    "<path d='M " & (centerX - radius) & " " & centerY & " A " & radius & " " & radius & " 0 0 1 " & (centerX + radius) & " " & centerY & "' fill='none' stroke='" & bgColor & "' stroke-width='" & strokeWidth & "' stroke-linecap='round'/>" &
-                    "<path d='M " & (centerX - radius) & " " & centerY & " A " & radius & " " & radius & " 0 " & largeArcFlag & " 1 " & arcEndX & " " & arcEndY & "' fill='none' stroke='url(#gaugeGrad)' stroke-width='" & strokeWidth & "' stroke-linecap='round'/>" &
+                    "<path d='M " & startX & " " & startY & " A " & radius & " " & radius & " 0 0 1 " & (centerX + radius) & " " & centerY & "' fill='none' stroke='" & bgColor & "' stroke-width='" & strokeWidth & "'/>" &
+                    If(percentage > 0,
+                        "<path d='M " & startX & " " & startY & " A " & radius & " " & radius & " 0 " & largeArcFlag & " 1 " & arcEndX & " " & arcEndY & "' fill='none' stroke='url(#gaugeGrad)' stroke-width='" & strokeWidth & "'/>",
+                        ""
+                    ) &
                     "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & (imgWidth * 0.04) & "' fill='" & needleColor & "'/>" &
                     "<line x1='" & centerX & "' y1='" & centerY & "' x2='" & needleX & "' y2='" & needleY & "' stroke='" & needleColor & "' stroke-width='3' stroke-linecap='round'/>" &
                     "<text x='" & centerX & "' y='" & (centerY - radius * 0.15) & "' text-anchor='middle' font-size='" & (imgWidth * 0.12) & "' font-weight='bold' fill='" & textColor & "'>" & percentage & "%</text>" &
