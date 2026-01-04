@@ -1620,6 +1620,86 @@
     )
 )`;
 
+                case 19: // バッテリーインジケーター
+                    return `With(
+    {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
+        percentage: 68,
+        fillColor: "#10b981",
+        borderColor: "#e5e7eb",
+        textColor: "#666"
+    },
+    With(
+        {
+            containerX: imgWidth * 0.133,
+            containerY: imgHeight * 0.3125,
+            containerWidth: imgWidth * 0.667,
+            containerHeight: imgHeight * 0.375,
+            terminalX: imgWidth * 0.8,
+            terminalY: imgHeight * 0.4,
+            terminalWidth: imgWidth * 0.053,
+            terminalHeight: imgHeight * 0.2
+        },
+        With(
+            {
+                fillWidth: containerWidth * percentage / 100,
+                fillX: containerX + containerWidth * 0.04,
+                fillY: containerY + containerHeight * 0.133
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                "<rect x='" & containerX & "' y='" & containerY & "' width='" & containerWidth & "' height='" & containerHeight & "' fill='none' stroke='" & borderColor & "' stroke-width='3' rx='4'/>" &
+                "<rect x='" & terminalX & "' y='" & terminalY & "' width='" & terminalWidth & "' height='" & terminalHeight & "' fill='" & borderColor & "' rx='2'/>" &
+                "<rect x='" & fillX & "' y='" & fillY & "' width='" & fillWidth & "' height='" & (containerHeight * 0.733) & "' fill='" & fillColor & "' rx='2'/>" &
+                "<text x='" & (imgWidth / 2) & "' y='" & (imgHeight * 0.85) & "' text-anchor='middle' font-size='" & (imgHeight * 0.175) & "' fill='" & textColor & "' font-weight='600'>" & percentage & "%</text>" &
+                "</svg>"
+            )
+        )
+    )
+)`;
+
+                case 20: // 温度計ゲージ
+                    return `With(
+    {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
+        percentage: 54,
+        fillColor: "#ef4444",
+        backgroundColor: "#f0f0f0",
+        label: "HIGH",
+        textColor: "#666"
+    },
+    With(
+        {
+            tubeX: imgWidth * 0.4,
+            tubeY: imgHeight * 0.1,
+            tubeWidth: imgWidth * 0.2,
+            tubeHeight: imgHeight * 0.65,
+            bulbCX: imgWidth * 0.5,
+            bulbCY: imgHeight * 0.825,
+            bulbRadius: imgWidth * 0.2
+        },
+        With(
+            {
+                fillY: tubeY + tubeHeight * (1 - percentage / 100),
+                fillHeight: tubeHeight * percentage / 100
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                "<rect x='" & tubeX & "' y='" & tubeY & "' width='" & tubeWidth & "' height='" & tubeHeight & "' fill='" & backgroundColor & "' rx='10'/>" &
+                "<rect x='" & tubeX & "' y='" & fillY & "' width='" & tubeWidth & "' height='" & fillHeight & "' fill='" & fillColor & "' rx='10'/>" &
+                "<circle cx='" & bulbCX & "' cy='" & bulbCY & "' r='" & bulbRadius & "' fill='" & fillColor & "'/>" &
+                "<text x='" & (imgWidth * 0.75) & "' y='" & (bulbCY + bulbRadius * 0.25) & "' font-size='" & (imgWidth * 0.16) & "' fill='" & textColor & "' font-weight='600'>" & label & "</text>" &
+                "<line x1='" & (tubeX + tubeWidth + 5) & "' y1='" & (tubeY + tubeHeight * 0.23) & "' x2='" & (tubeX + tubeWidth + 12) & "' y2='" & (tubeY + tubeHeight * 0.23) & "' stroke='#999' stroke-width='2'/>" &
+                "<line x1='" & (tubeX + tubeWidth + 5) & "' y1='" & (tubeY + tubeHeight * 0.54) & "' x2='" & (tubeX + tubeWidth + 12) & "' y2='" & (tubeY + tubeHeight * 0.54) & "' stroke='#999' stroke-width='2'/>" &
+                "<line x1='" & (tubeX + tubeWidth + 5) & "' y1='" & (tubeY + tubeHeight * 0.85) & "' x2='" & (tubeX + tubeWidth + 12) & "' y2='" & (tubeY + tubeHeight * 0.85) & "' stroke='#999' stroke-width='2'/>" &
+                "</svg>"
+            )
+        )
+    )
+)`;
+
                 case 21: // ダッシュボードヘッダー（ForAllで可変個数対応）
                     return `With(
     {
