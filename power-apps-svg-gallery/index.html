@@ -876,6 +876,111 @@
   <text x="204.93" y="191.67" text-anchor="middle" font-size="11" fill="#666">4月</text>
   <text x="254.91" y="191.67" text-anchor="middle" font-size="11" fill="#666">5月</text>
 </svg>`
+            },
+            {
+                id: 36,
+                title: "横棒グラフアニメーション",
+                category: "animation",
+                description: "左から右に伸びる横棒グラフ。データの変化を動的に表現。",
+                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" width="300" height="150">
+  <defs>
+    <mask id="barMask">
+      <rect x="-300" y="0" width="300" height="150" fill="white">
+        <animate attributeName="x" from="-300" to="0" dur="5s" fill="freeze"/>
+      </rect>
+    </mask>
+  </defs>
+  <rect x="80" y="15" width="180" height="25" fill="#667eea" mask="url(#barMask)" rx="4"/>
+  <text x="75" y="31.5" text-anchor="end" font-size="12" fill="#666">営業部</text>
+  <rect x="80" y="50" width="140" height="25" fill="#764ba2" mask="url(#barMask)" rx="4"/>
+  <text x="75" y="66.5" text-anchor="end" font-size="12" fill="#666">開発部</text>
+  <rect x="80" y="85" width="100" height="25" fill="#f093fb" mask="url(#barMask)" rx="4"/>
+  <text x="75" y="101.5" text-anchor="end" font-size="12" fill="#666">総務部</text>
+  <rect x="80" y="120" width="160" height="25" fill="#4facfe" mask="url(#barMask)" rx="4"/>
+  <text x="75" y="136.5" text-anchor="end" font-size="12" fill="#666">人事部</text>
+</svg>`
+            },
+            {
+                id: 37,
+                title: "縦棒グラフアニメーション",
+                category: "animation",
+                description: "下から上に伸びる縦棒グラフ。進捗や売上の推移を視覚化。",
+                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" width="300" height="200">
+  <defs>
+    <mask id="verticalMask">
+      <rect x="0" y="200" width="300" height="200" fill="white">
+        <animate attributeName="y" from="200" to="0" dur="5s" fill="freeze"/>
+      </rect>
+    </mask>
+  </defs>
+  <line x1="30" y1="180" x2="280" y2="180" stroke="#e5e7eb" stroke-width="2"/>
+  <rect x="45" y="90" width="45" height="90" fill="#667eea" mask="url(#verticalMask)" rx="4"/>
+  <text x="67.5" y="195" text-anchor="middle" font-size="11" fill="#666">1月</text>
+  <rect x="105" y="60" width="45" height="120" fill="#764ba2" mask="url(#verticalMask)" rx="4"/>
+  <text x="127.5" y="195" text-anchor="middle" font-size="11" fill="#666">2月</text>
+  <rect x="165" y="110" width="45" height="70" fill="#f093fb" mask="url(#verticalMask)" rx="4"/>
+  <text x="187.5" y="195" text-anchor="middle" font-size="11" fill="#666">3月</text>
+  <rect x="225" y="50" width="45" height="130" fill="#4facfe" mask="url(#verticalMask)" rx="4"/>
+  <text x="247.5" y="195" text-anchor="middle" font-size="11" fill="#666">4月</text>
+</svg>`
+            },
+            {
+                id: 38,
+                title: "面グラフアニメーション",
+                category: "animation",
+                description: "左から右に表示される面グラフ。時系列データの推移を動的に表現。",
+                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 140" width="280" height="140">
+  <defs>
+    <linearGradient id="areaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:0.5"/>
+      <stop offset="100%" style="stop-color:#667eea;stop-opacity:0.05"/>
+    </linearGradient>
+    <mask id="areaMask">
+      <rect x="-280" y="0" width="280" height="140" fill="white">
+        <animate attributeName="x" from="-280" to="0" dur="5s" fill="freeze"/>
+      </rect>
+    </mask>
+  </defs>
+  <line x1="20" y1="120" x2="260" y2="120" stroke="#e5e7eb" stroke-width="2"/>
+  <polygon points="20,80 60,50 100,65 140,40 180,55 220,30 260,45 260,120 20,120" fill="url(#areaGrad)" mask="url(#areaMask)"/>
+  <polyline points="20,80 60,50 100,65 140,40 180,55 220,30 260,45" fill="none" stroke="#667eea" stroke-width="3" mask="url(#areaMask)"/>
+</svg>`
+            },
+            {
+                id: 39,
+                title: "円形プログレスアニメーション",
+                category: "animation",
+                description: "0%から目標値まで回転する円形プログレス。達成率の視覚化に最適。",
+                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <circle cx="60" cy="60" r="50" fill="none" stroke="#f0f0f0" stroke-width="12"/>
+  <circle cx="60" cy="60" r="50" fill="none" stroke="#667eea" stroke-width="12" stroke-dasharray="220 314" stroke-dashoffset="0" transform="rotate(-90 60 60)" stroke-linecap="round">
+    <animate attributeName="stroke-dasharray" from="0 314" to="220 314" dur="5s" fill="freeze"/>
+  </circle>
+  <text x="60" y="65" text-anchor="middle" font-size="24" font-weight="bold" fill="#1a1a1a">70%</text>
+</svg>`
+            },
+            {
+                id: 40,
+                title: "折れ線グラフアニメーション",
+                category: "animation",
+                description: "線が徐々に描画される折れ線グラフ。トレンドの変化を動的に表示。",
+                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" width="300" height="150">
+  <defs>
+    <mask id="lineMask">
+      <rect x="-300" y="0" width="300" height="150" fill="white">
+        <animate attributeName="x" from="-300" to="0" dur="5s" fill="freeze"/>
+      </rect>
+    </mask>
+  </defs>
+  <line x1="30" y1="130" x2="280" y2="130" stroke="#e5e7eb" stroke-width="2"/>
+  <polyline points="30,80 80,50 130,65 180,40 230,55 280,35" fill="none" stroke="#667eea" stroke-width="3" mask="url(#lineMask)"/>
+  <circle cx="30" cy="80" r="4" fill="#667eea" mask="url(#lineMask)"/>
+  <circle cx="80" cy="50" r="4" fill="#667eea" mask="url(#lineMask)"/>
+  <circle cx="130" cy="65" r="4" fill="#667eea" mask="url(#lineMask)"/>
+  <circle cx="180" cy="40" r="4" fill="#667eea" mask="url(#lineMask)"/>
+  <circle cx="230" cy="55" r="4" fill="#667eea" mask="url(#lineMask)"/>
+  <circle cx="280" cy="35" r="4" fill="#667eea" mask="url(#lineMask)"/>
+</svg>`
             }
         ];
 
@@ -2657,6 +2762,272 @@
                             lastY: height - 5 - ((lastPoint.value - dataMin) / range * (height - 10))
                         },
                         "<circle cx='" & lastX & "' cy='" & lastY & "' r='3' fill='" & dotColor & "'/>"
+                    )
+                ) &
+                "</svg>"
+            )
+        )
+    )
+)`;
+
+                case 36: // 横棒グラフアニメーション
+                    return `With(
+    {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
+        data: Table(
+            {label: "営業部", value: 90, color: "#667eea"},
+            {label: "開発部", value: 70, color: "#764ba2"},
+            {label: "総務部", value: 50, color: "#f093fb"},
+            {label: "人事部", value: 80, color: "#4facfe"}
+        ),
+        animDuration: "5s",
+        repeatCount: "1"
+    },
+    With(
+        {
+            barHeight: imgHeight / CountRows(data) * 0.7,
+            barSpacing: imgHeight / CountRows(data),
+            maxValue: Max(data, value),
+            labelX: imgWidth * 0.25,
+            barStartX: imgWidth * 0.267
+        },
+        "data:image/svg+xml," & EncodeUrl(
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+            "<defs><mask id='barMask'><rect x='-" & imgWidth & "' y='0' width='" & imgWidth & "' height='" & imgHeight & "' fill='white'>" &
+            "<animate attributeName='x' from='-" & imgWidth & "' to='0' dur='" & animDuration & "' fill='freeze' repeatCount='" & repeatCount & "'/>" &
+            "</rect></mask></defs>" &
+            Concat(
+                data,
+                With(
+                    {
+                        y: (idx - 1) * barSpacing + (barSpacing - barHeight) / 2,
+                        barWidth: (imgWidth - barStartX - imgWidth * 0.033) * (value / maxValue)
+                    },
+                    "<rect x='" & barStartX & "' y='" & y & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & color & "' mask='url(#barMask)' rx='4'/>" &
+                    "<text x='" & (labelX - 5) & "' y='" & (y + barHeight / 2 + 4) & "' text-anchor='end' font-size='12' fill='#666'>" & label & "</text>"
+                )
+            ) &
+            "</svg>"
+        )
+    )
+)`;
+
+                case 37: // 縦棒グラフアニメーション
+                    return `With(
+    {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
+        data: Table(
+            {label: "1月", value: 55, color: "#667eea"},
+            {label: "2月", value: 75, color: "#764ba2"},
+            {label: "3月", value: 44, color: "#f093fb"},
+            {label: "4月", value: 81, color: "#4facfe"}
+        ),
+        animDuration: "5s",
+        repeatCount: "1"
+    },
+    With(
+        {
+            leftMargin: imgWidth * 0.1,
+            rightMargin: imgWidth * 0.067,
+            topMargin: imgHeight * 0.1,
+            bottomMargin: imgHeight * 0.125,
+            maxValue: Max(data, value),
+            barCount: CountRows(data)
+        },
+        With(
+            {
+                chartWidth: imgWidth - leftMargin - rightMargin,
+                chartHeight: imgHeight - topMargin - bottomMargin,
+                barWidth: (chartWidth / barCount) * 0.75,
+                barSpacing: chartWidth / barCount
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                "<defs><mask id='verticalMask'><rect x='0' y='" & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "' fill='white'>" &
+                "<animate attributeName='y' from='" & imgHeight & "' to='0' dur='" & animDuration & "' fill='freeze' repeatCount='" & repeatCount & "'/>" &
+                "</rect></mask></defs>" &
+                "<line x1='" & leftMargin & "' y1='" & (imgHeight - bottomMargin) & "' x2='" & (imgWidth - rightMargin) & "' y2='" & (imgHeight - bottomMargin) & "' stroke='#e5e7eb' stroke-width='2'/>" &
+                Concat(
+                    data,
+                    With(
+                        {
+                            x: leftMargin + (idx - 1) * barSpacing + (barSpacing - barWidth) / 2,
+                            barHeight: (value / maxValue) * chartHeight,
+                            y: imgHeight - bottomMargin - barHeight,
+                            labelY: imgHeight - bottomMargin / 3
+                        },
+                        "<rect x='" & x & "' y='" & y & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & color & "' mask='url(#verticalMask)' rx='4'/>" &
+                        "<text x='" & (x + barWidth / 2) & "' y='" & labelY & "' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
+                    )
+                ) &
+                "</svg>"
+            )
+        )
+    )
+)`;
+
+                case 38: // 面グラフアニメーション
+                    return `With(
+    {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
+        data: Table(
+            {idx: 1, value: 50}, {idx: 2, value: 70}, {idx: 3, value: 60},
+            {idx: 4, value: 80}, {idx: 5, value: 65}, {idx: 6, value: 85}, {idx: 7, value: 75}
+        ),
+        color: "#667eea",
+        animDuration: "5s",
+        repeatCount: "1"
+    },
+    With(
+        {
+            leftMargin: imgWidth * 0.071,
+            rightMargin: imgWidth * 0.071,
+            topMargin: imgHeight * 0.071,
+            bottomMargin: imgHeight * 0.143,
+            maxValue: Max(data, value)
+        },
+        With(
+            {
+                chartWidth: imgWidth - leftMargin - rightMargin,
+                chartHeight: imgHeight - topMargin - bottomMargin
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                "<defs>" &
+                "<linearGradient id='areaGrad' x1='0%' y1='0%' x2='0%' y2='100%'>" &
+                "<stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.5'/>" &
+                "<stop offset='100%' style='stop-color:" & color & ";stop-opacity:0.05'/>" &
+                "</linearGradient>" &
+                "<mask id='areaMask'><rect x='-" & imgWidth & "' y='0' width='" & imgWidth & "' height='" & imgHeight & "' fill='white'>" &
+                "<animate attributeName='x' from='-" & imgWidth & "' to='0' dur='" & animDuration & "' fill='freeze' repeatCount='" & repeatCount & "'/>" &
+                "</rect></mask>" &
+                "</defs>" &
+                "<line x1='" & leftMargin & "' y1='" & (imgHeight - bottomMargin) & "' x2='" & (imgWidth - rightMargin) & "' y2='" & (imgHeight - bottomMargin) & "' stroke='#e5e7eb' stroke-width='2'/>" &
+                "<polygon points='" &
+                Concat(
+                    data,
+                    With(
+                        {
+                            x: leftMargin + (idx - 1) * (chartWidth / (CountRows(data) - 1)),
+                            y: topMargin + chartHeight - (value / maxValue * chartHeight)
+                        },
+                        x & "," & y
+                    ),
+                    " "
+                ) &
+                " " & (imgWidth - rightMargin) & "," & (imgHeight - bottomMargin) & " " & leftMargin & "," & (imgHeight - bottomMargin) &
+                "' fill='url(#areaGrad)' mask='url(#areaMask)'/>" &
+                "<polyline points='" &
+                Concat(
+                    data,
+                    With(
+                        {
+                            x: leftMargin + (idx - 1) * (chartWidth / (CountRows(data) - 1)),
+                            y: topMargin + chartHeight - (value / maxValue * chartHeight)
+                        },
+                        x & "," & y
+                    ),
+                    " "
+                ) &
+                "' fill='none' stroke='" & color & "' stroke-width='3' mask='url(#areaMask)'/>" &
+                "</svg>"
+            )
+        )
+    )
+)`;
+
+                case 39: // 円形プログレスアニメーション
+                    return `With(
+    {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
+        percentage: 70,
+        progressColor: "#667eea",
+        backgroundColor: "#f0f0f0",
+        animDuration: "5s",
+        repeatCount: "1"
+    },
+    With(
+        {
+            centerX: imgWidth / 2,
+            centerY: imgHeight / 2,
+            radius: Min(imgWidth, imgHeight) * 0.417,
+            strokeWidth: Min(imgWidth, imgHeight) * 0.1
+        },
+        With(
+            {
+                circumference: 2 * Pi() * radius,
+                arcLength: circumference * percentage / 100
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & backgroundColor & "' stroke-width='" & strokeWidth & "'/>" &
+                "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & radius & "' fill='none' stroke='" & progressColor & "' stroke-width='" & strokeWidth & "' stroke-dasharray='" & arcLength & " " & circumference & "' stroke-dashoffset='0' transform='rotate(-90 " & centerX & " " & centerY & ")' stroke-linecap='round'>" &
+                "<animate attributeName='stroke-dasharray' from='0 " & circumference & "' to='" & arcLength & " " & circumference & "' dur='" & animDuration & "' fill='freeze' repeatCount='" & repeatCount & "'/>" &
+                "</circle>" &
+                "<text x='" & centerX & "' y='" & (centerY + radius * 0.1) & "' text-anchor='middle' font-size='" & (radius * 0.48) & "' font-weight='bold' fill='#1a1a1a'>" & percentage & "%</text>" &
+                "</svg>"
+            )
+        )
+    )
+)`;
+
+                case 40: // 折れ線グラフアニメーション
+                    return `With(
+    {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
+        data: Table(
+            {idx: 1, value: 60}, {idx: 2, value: 80}, {idx: 3, value: 70},
+            {idx: 4, value: 85}, {idx: 5, value: 75}, {idx: 6, value: 90}
+        ),
+        color: "#667eea",
+        animDuration: "5s",
+        repeatCount: "1"
+    },
+    With(
+        {
+            leftMargin: imgWidth * 0.1,
+            rightMargin: imgWidth * 0.067,
+            topMargin: imgHeight * 0.1,
+            bottomMargin: imgHeight * 0.133,
+            maxValue: Max(data, value)
+        },
+        With(
+            {
+                chartWidth: imgWidth - leftMargin - rightMargin,
+                chartHeight: imgHeight - topMargin - bottomMargin
+            },
+            "data:image/svg+xml," & EncodeUrl(
+                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                "<defs><mask id='lineMask'><rect x='-" & imgWidth & "' y='0' width='" & imgWidth & "' height='" & imgHeight & "' fill='white'>" &
+                "<animate attributeName='x' from='-" & imgWidth & "' to='0' dur='" & animDuration & "' fill='freeze' repeatCount='" & repeatCount & "'/>" &
+                "</rect></mask></defs>" &
+                "<line x1='" & leftMargin & "' y1='" & (imgHeight - bottomMargin) & "' x2='" & (imgWidth - rightMargin) & "' y2='" & (imgHeight - bottomMargin) & "' stroke='#e5e7eb' stroke-width='2'/>" &
+                "<polyline points='" &
+                Concat(
+                    data,
+                    With(
+                        {
+                            x: leftMargin + (idx - 1) * (chartWidth / (CountRows(data) - 1)),
+                            y: topMargin + chartHeight - (value / maxValue * chartHeight)
+                        },
+                        x & "," & y
+                    ),
+                    " "
+                ) &
+                "' fill='none' stroke='" & color & "' stroke-width='3' mask='url(#lineMask)'/>" &
+                Concat(
+                    data,
+                    With(
+                        {
+                            x: leftMargin + (idx - 1) * (chartWidth / (CountRows(data) - 1)),
+                            y: topMargin + chartHeight - (value / maxValue * chartHeight)
+                        },
+                        "<circle cx='" & x & "' cy='" & y & "' r='4' fill='" & color & "' mask='url(#lineMask)'/>"
                     )
                 ) &
                 "</svg>"
