@@ -1481,18 +1481,15 @@
         },
         With(
             {
+                circumference: Pi() * radius,
                 angleRad: (-180 + (percentage * 180 / 100)) * Pi() / 180,
-                needleLength: radius,
-                startX: centerX - radius,
-                startY: centerY
+                needleLength: radius
             },
             With(
                 {
+                    arcLength: circumference * percentage / 100,
                     needleX: centerX + needleLength * Cos(angleRad),
-                    needleY: centerY + needleLength * Sin(angleRad),
-                    arcEndX: centerX + radius * Cos(angleRad),
-                    arcEndY: centerY + radius * Sin(angleRad),
-                    largeArcFlag: If(percentage > 50, 1, 0)
+                    needleY: centerY + needleLength * Sin(angleRad)
                 },
                 "data:image/svg+xml," & EncodeUrl(
                     "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
@@ -1501,11 +1498,8 @@
                     "<stop offset='50%' style='stop-color:" & gradientMid & "' />" &
                     "<stop offset='100%' style='stop-color:" & gradientEnd & "' />" &
                     "</linearGradient></defs>" &
-                    "<path d='M " & startX & " " & startY & " A " & radius & " " & radius & " 0 0 1 " & (centerX + radius) & " " & centerY & "' fill='none' stroke='" & bgColor & "' stroke-width='" & strokeWidth & "' stroke-linecap='butt'/>" &
-                    If(percentage > 0,
-                        "<path d='M " & startX & " " & startY & " A " & radius & " " & radius & " 0 " & largeArcFlag & " 1 " & arcEndX & " " & arcEndY & "' fill='none' stroke='url(#gaugeGrad)' stroke-width='" & strokeWidth & "' stroke-linecap='butt'/>",
-                        ""
-                    ) &
+                    "<path d='M " & (centerX - radius) & " " & centerY & " A " & radius & " " & radius & " 0 0 1 " & (centerX + radius) & " " & centerY & "' fill='none' stroke='" & bgColor & "' stroke-width='" & strokeWidth & "'/>" &
+                    "<path d='M " & (centerX - radius) & " " & centerY & " A " & radius & " " & radius & " 0 0 1 " & (centerX + radius) & " " & centerY & "' fill='none' stroke='url(#gaugeGrad)' stroke-width='" & strokeWidth & "' stroke-dasharray='" & arcLength & " " & circumference & "' transform='rotate(0 " & centerX & " " & centerY & ")'/>" &
                     "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & (imgWidth * 0.04) & "' fill='" & needleColor & "'/>" &
                     "<line x1='" & centerX & "' y1='" & centerY & "' x2='" & needleX & "' y2='" & needleY & "' stroke='" & needleColor & "' stroke-width='3' stroke-linecap='round'/>" &
                     "<text x='" & centerX & "' y='" & (centerY - radius * 0.15) & "' text-anchor='middle' font-size='" & (imgWidth * 0.12) & "' font-weight='bold' fill='" & textColor & "'>" & percentage & "%</text>" &
