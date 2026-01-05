@@ -1506,7 +1506,7 @@
                     "<path d='M " & (centerX - radius) & " " & centerY & " A " & radius & " " & radius & " 0 0 1 " & (centerX + radius) & " " & centerY & "' fill='none' stroke='url(#gaugeGrad)' stroke-width='" & strokeWidth & "' stroke-dasharray='" & arcLength & " " & circumference & "' transform='rotate(0 " & centerX & " " & centerY & ")'/>" &
                     "<line x1='" & targetX1 & "' y1='" & targetY1 & "' x2='" & targetX2 & "' y2='" & targetY2 & "' stroke='" & targetColor & "' stroke-width='3' stroke-linecap='round'/>" &
                     "<text x='" & centerX & "' y='" & (centerY - radius * 0.15) & "' text-anchor='middle' font-size='" & (imgWidth * 0.12) & "' font-weight='bold' fill='" & textColor & "'>" & percentage & "%</text>" &
-                    "<text x='" & centerX & "' y='" & (centerY + radius * 0.35) & "' text-anchor='middle' font-size='" & (imgWidth * 0.08) & "' fill='" & targetColor & "'>目標: " & targetPercentage & "%</text>" &
+                    "<text x='" & centerX & "' y='" & (imgHeight * 0.95) & "' text-anchor='middle' font-size='" & (imgWidth * 0.08) & "' fill='" & targetColor & "'>目標: " & targetPercentage & "%</text>" &
                     "</svg>"
                 )
             )
