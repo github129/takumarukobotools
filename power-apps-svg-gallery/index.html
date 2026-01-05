@@ -1465,11 +1465,12 @@
         imgWidth: Self.Width,
         imgHeight: Self.Height,
         percentage: 78,
-        needleColor: "#667eea",
+        targetPercentage: 85,
         gradientStart: "#ef4444",
         gradientMid: "#fbbf24",
         gradientEnd: "#10b981",
         bgColor: "#e5e7eb",
+        targetColor: "#1a1a1a",
         textColor: "#1a1a1a"
     },
     With(
@@ -1482,14 +1483,17 @@
         With(
             {
                 circumference: Pi() * radius,
-                angleRad: (-180 + (percentage * 180 / 100)) * Pi() / 180,
-                needleLength: radius
+                targetAngleRad: (-180 + (targetPercentage * 180 / 100)) * Pi() / 180
             },
             With(
                 {
                     arcLength: circumference * percentage / 100,
-                    needleX: centerX + needleLength * Cos(angleRad),
-                    needleY: centerY + needleLength * Sin(angleRad)
+                    targetX: centerX + radius * Cos(targetAngleRad),
+                    targetY: centerY + radius * Sin(targetAngleRad),
+                    targetX1: centerX + (radius - strokeWidth / 2 - 5) * Cos(targetAngleRad),
+                    targetY1: centerY + (radius - strokeWidth / 2 - 5) * Sin(targetAngleRad),
+                    targetX2: centerX + (radius + strokeWidth / 2 + 5) * Cos(targetAngleRad),
+                    targetY2: centerY + (radius + strokeWidth / 2 + 5) * Sin(targetAngleRad)
                 },
                 "data:image/svg+xml," & EncodeUrl(
                     "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
@@ -1500,9 +1504,9 @@
                     "</linearGradient></defs>" &
                     "<path d='M " & (centerX - radius) & " " & centerY & " A " & radius & " " & radius & " 0 0 1 " & (centerX + radius) & " " & centerY & "' fill='none' stroke='" & bgColor & "' stroke-width='" & strokeWidth & "'/>" &
                     "<path d='M " & (centerX - radius) & " " & centerY & " A " & radius & " " & radius & " 0 0 1 " & (centerX + radius) & " " & centerY & "' fill='none' stroke='url(#gaugeGrad)' stroke-width='" & strokeWidth & "' stroke-dasharray='" & arcLength & " " & circumference & "' transform='rotate(0 " & centerX & " " & centerY & ")'/>" &
-                    "<circle cx='" & centerX & "' cy='" & centerY & "' r='" & (imgWidth * 0.04) & "' fill='" & needleColor & "'/>" &
-                    "<line x1='" & centerX & "' y1='" & centerY & "' x2='" & needleX & "' y2='" & needleY & "' stroke='" & needleColor & "' stroke-width='3' stroke-linecap='round'/>" &
+                    "<line x1='" & targetX1 & "' y1='" & targetY1 & "' x2='" & targetX2 & "' y2='" & targetY2 & "' stroke='" & targetColor & "' stroke-width='3' stroke-linecap='round'/>" &
                     "<text x='" & centerX & "' y='" & (centerY - radius * 0.15) & "' text-anchor='middle' font-size='" & (imgWidth * 0.12) & "' font-weight='bold' fill='" & textColor & "'>" & percentage & "%</text>" &
+                    "<text x='" & centerX & "' y='" & (centerY + radius * 0.35) & "' text-anchor='middle' font-size='" & (imgWidth * 0.08) & "' fill='" & targetColor & "'>目標: " & targetPercentage & "%</text>" &
                     "</svg>"
                 )
             )
