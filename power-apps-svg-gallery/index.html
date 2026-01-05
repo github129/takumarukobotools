@@ -1790,7 +1790,6 @@
         percentage: 54,
         fillColor: "#ef4444",
         backgroundColor: "#f0f0f0",
-        label: "HIGH",
         textColor: "#666"
     },
     With(
@@ -1806,17 +1805,24 @@
         With(
             {
                 fillY: tubeY + tubeHeight * (1 - percentage / 100),
-                fillHeight: tubeHeight * percentage / 100
+                fillHeight: tubeHeight * percentage / 100,
+                scaleX: tubeX - 5
             },
             "data:image/svg+xml," & EncodeUrl(
                 "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
                 "<rect x='" & tubeX & "' y='" & tubeY & "' width='" & tubeWidth & "' height='" & tubeHeight & "' fill='" & backgroundColor & "' rx='10'/>" &
                 "<rect x='" & tubeX & "' y='" & fillY & "' width='" & tubeWidth & "' height='" & fillHeight & "' fill='" & fillColor & "' rx='10'/>" &
                 "<circle cx='" & bulbCX & "' cy='" & bulbCY & "' r='" & bulbRadius & "' fill='" & fillColor & "'/>" &
-                "<text x='" & (imgWidth * 0.75) & "' y='" & (bulbCY + bulbRadius * 0.25) & "' font-size='" & (imgWidth * 0.16) & "' fill='" & textColor & "' font-weight='600'>" & label & "</text>" &
-                "<line x1='" & (tubeX + tubeWidth + 5) & "' y1='" & (tubeY + tubeHeight * 0.23) & "' x2='" & (tubeX + tubeWidth + 12) & "' y2='" & (tubeY + tubeHeight * 0.23) & "' stroke='#999' stroke-width='2'/>" &
-                "<line x1='" & (tubeX + tubeWidth + 5) & "' y1='" & (tubeY + tubeHeight * 0.54) & "' x2='" & (tubeX + tubeWidth + 12) & "' y2='" & (tubeY + tubeHeight * 0.54) & "' stroke='#999' stroke-width='2'/>" &
-                "<line x1='" & (tubeX + tubeWidth + 5) & "' y1='" & (tubeY + tubeHeight * 0.85) & "' x2='" & (tubeX + tubeWidth + 12) & "' y2='" & (tubeY + tubeHeight * 0.85) & "' stroke='#999' stroke-width='2'/>" &
+                "<line x1='" & (tubeX + tubeWidth + 5) & "' y1='" & tubeY & "' x2='" & (tubeX + tubeWidth + 12) & "' y2='" & tubeY & "' stroke='#999' stroke-width='2'/>" &
+                "<text x='" & scaleX & "' y='" & (tubeY + 4) & "' text-anchor='end' font-size='" & (imgWidth * 0.12) & "' fill='" & textColor & "'>100</text>" &
+                "<line x1='" & (tubeX + tubeWidth + 5) & "' y1='" & (tubeY + tubeHeight * 0.25) & "' x2='" & (tubeX + tubeWidth + 12) & "' y2='" & (tubeY + tubeHeight * 0.25) & "' stroke='#999' stroke-width='2'/>" &
+                "<text x='" & scaleX & "' y='" & (tubeY + tubeHeight * 0.25 + 4) & "' text-anchor='end' font-size='" & (imgWidth * 0.12) & "' fill='" & textColor & "'>75</text>" &
+                "<line x1='" & (tubeX + tubeWidth + 5) & "' y1='" & (tubeY + tubeHeight * 0.5) & "' x2='" & (tubeX + tubeWidth + 12) & "' y2='" & (tubeY + tubeHeight * 0.5) & "' stroke='#999' stroke-width='2'/>" &
+                "<text x='" & scaleX & "' y='" & (tubeY + tubeHeight * 0.5 + 4) & "' text-anchor='end' font-size='" & (imgWidth * 0.12) & "' fill='" & textColor & "'>50</text>" &
+                "<line x1='" & (tubeX + tubeWidth + 5) & "' y1='" & (tubeY + tubeHeight * 0.75) & "' x2='" & (tubeX + tubeWidth + 12) & "' y2='" & (tubeY + tubeHeight * 0.75) & "' stroke='#999' stroke-width='2'/>" &
+                "<text x='" & scaleX & "' y='" & (tubeY + tubeHeight * 0.75 + 4) & "' text-anchor='end' font-size='" & (imgWidth * 0.12) & "' fill='" & textColor & "'>25</text>" &
+                "<line x1='" & (tubeX + tubeWidth + 5) & "' y1='" & (tubeY + tubeHeight) & "' x2='" & (tubeX + tubeWidth + 12) & "' y2='" & (tubeY + tubeHeight) & "' stroke='#999' stroke-width='2'/>" &
+                "<text x='" & scaleX & "' y='" & (tubeY + tubeHeight + 4) & "' text-anchor='end' font-size='" & (imgWidth * 0.12) & "' fill='" & textColor & "'>0</text>" &
                 "</svg>"
             )
         )
