@@ -2818,10 +2818,10 @@
         imgWidth: Self.Width,
         imgHeight: Self.Height,
         data: Table(
-            {label: "営業部", value: 90, color: "#667eea"},
-            {label: "開発部", value: 70, color: "#764ba2"},
-            {label: "総務部", value: 50, color: "#f093fb"},
-            {label: "人事部", value: 80, color: "#4facfe"}
+            {idx: 1, label: "営業部", value: 90, color: "#667eea"},
+            {idx: 2, label: "開発部", value: 70, color: "#764ba2"},
+            {idx: 3, label: "総務部", value: 50, color: "#f093fb"},
+            {idx: 4, label: "人事部", value: 80, color: "#4facfe"}
         ),
         animDuration: "5s",
         repeatCount: "1"
@@ -2867,10 +2867,10 @@
         imgWidth: Self.Width,
         imgHeight: Self.Height,
         data: Table(
-            {label: "1月", value: 55, color: "#667eea"},
-            {label: "2月", value: 75, color: "#764ba2"},
-            {label: "3月", value: 44, color: "#f093fb"},
-            {label: "4月", value: 81, color: "#4facfe"}
+            {idx: 1, label: "1月", value: 55, color: "#667eea"},
+            {idx: 2, label: "2月", value: 75, color: "#764ba2"},
+            {idx: 3, label: "3月", value: 44, color: "#f093fb"},
+            {idx: 4, label: "4月", value: 81, color: "#4facfe"}
         ),
         animDuration: "5s",
         repeatCount: "1"
@@ -3021,11 +3021,11 @@
             centerX: imgWidth / 2,
             centerY: imgHeight / 2,
             radius: Min(imgWidth, imgHeight) * 0.417,
-            strokeWidth: Min(imgWidth, imgHeight) * 0.1
+            strokeWidth: Min(imgWidth, imgHeight) * 0.1,
+            circumference: 2 * Pi() * (Min(imgWidth, imgHeight) * 0.417)
         },
         With(
             {
-                circumference: 2 * Pi() * radius,
                 arcLength: circumference * percentage / 100
             },
             "data:image/svg+xml," & EncodeUrl(
