@@ -2887,39 +2887,47 @@
         With(
             {
                 chartWidth: imgWidth - leftMargin - rightMargin,
-                chartHeight: imgHeight - topMargin - bottomMargin,
-                barWidth: (chartWidth / barCount) * 0.75,
-                barSpacing: chartWidth / barCount
+                chartHeight: imgHeight - topMargin - bottomMargin
             },
-            "data:image/svg+xml," & EncodeUrl(
-                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
-                "<defs><mask id='verticalMask'><rect x='0' y='" & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "' fill='white'>" &
-                "<animate attributeName='y' from='" & imgHeight & "' to='0' dur='" & animDuration & "' fill='freeze' repeatCount='" & repeatCount & "'/>" &
-                "</rect></mask></defs>" &
-                "<line x1='" & leftMargin & "' y1='" & topMargin & "' x2='" & (imgWidth - rightMargin) & "' y2='" & topMargin & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                "<text x='" & (leftMargin - 5) & "' y='" & (topMargin + 12) & "' text-anchor='end' font-size='10' fill='#999'>100</text>" &
-                "<line x1='" & leftMargin & "' y1='" & (topMargin + chartHeight * 0.25) & "' x2='" & (imgWidth - rightMargin) & "' y2='" & (topMargin + chartHeight * 0.25) & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                "<text x='" & (leftMargin - 5) & "' y='" & (topMargin + chartHeight * 0.25 + 4) & "' text-anchor='end' font-size='10' fill='#999'>75</text>" &
-                "<line x1='" & leftMargin & "' y1='" & (topMargin + chartHeight * 0.5) & "' x2='" & (imgWidth - rightMargin) & "' y2='" & (topMargin + chartHeight * 0.5) & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                "<text x='" & (leftMargin - 5) & "' y='" & (topMargin + chartHeight * 0.5 + 4) & "' text-anchor='end' font-size='10' fill='#999'>50</text>" &
-                "<line x1='" & leftMargin & "' y1='" & (topMargin + chartHeight * 0.75) & "' x2='" & (imgWidth - rightMargin) & "' y2='" & (topMargin + chartHeight * 0.75) & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                "<text x='" & (leftMargin - 5) & "' y='" & (topMargin + chartHeight * 0.75 + 4) & "' text-anchor='end' font-size='10' fill='#999'>25</text>" &
-                "<line x1='" & leftMargin & "' y1='" & (imgHeight - bottomMargin) & "' x2='" & (imgWidth - rightMargin) & "' y2='" & (imgHeight - bottomMargin) & "' stroke='#e5e7eb' stroke-width='2'/>" &
-                "<text x='" & (leftMargin - 5) & "' y='" & (imgHeight - bottomMargin + 4) & "' text-anchor='end' font-size='10' fill='#999'>0</text>" &
-                Concat(
-                    data,
-                    With(
-                        {
-                            x: leftMargin + (idx - 1) * barSpacing + (barSpacing - barWidth) / 2,
-                            barHeight: (value / maxValue) * chartHeight,
-                            y: imgHeight - bottomMargin - barHeight,
-                            labelY: imgHeight - bottomMargin / 3
-                        },
-                        "<rect x='" & x & "' y='" & y & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & color & "' mask='url(#verticalMask)' rx='4'/>" &
-                        "<text x='" & (x + barWidth / 2) & "' y='" & labelY & "' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
-                    )
-                ) &
-                "</svg>"
+            With(
+                {
+                    barWidth: (chartWidth / barCount) * 0.75,
+                    barSpacing: chartWidth / barCount
+                },
+                "data:image/svg+xml," & EncodeUrl(
+                    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                    "<defs><mask id='verticalMask'><rect x='0' y='" & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "' fill='white'>" &
+                    "<animate attributeName='y' from='" & imgHeight & "' to='0' dur='" & animDuration & "' fill='freeze' repeatCount='" & repeatCount & "'/>" &
+                    "</rect></mask></defs>" &
+                    "<line x1='" & leftMargin & "' y1='" & topMargin & "' x2='" & (imgWidth - rightMargin) & "' y2='" & topMargin & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                    "<text x='" & (leftMargin - 5) & "' y='" & (topMargin + 12) & "' text-anchor='end' font-size='10' fill='#999'>100</text>" &
+                    "<line x1='" & leftMargin & "' y1='" & (topMargin + chartHeight * 0.25) & "' x2='" & (imgWidth - rightMargin) & "' y2='" & (topMargin + chartHeight * 0.25) & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                    "<text x='" & (leftMargin - 5) & "' y='" & (topMargin + chartHeight * 0.25 + 4) & "' text-anchor='end' font-size='10' fill='#999'>75</text>" &
+                    "<line x1='" & leftMargin & "' y1='" & (topMargin + chartHeight * 0.5) & "' x2='" & (imgWidth - rightMargin) & "' y2='" & (topMargin + chartHeight * 0.5) & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                    "<text x='" & (leftMargin - 5) & "' y='" & (topMargin + chartHeight * 0.5 + 4) & "' text-anchor='end' font-size='10' fill='#999'>50</text>" &
+                    "<line x1='" & leftMargin & "' y1='" & (topMargin + chartHeight * 0.75) & "' x2='" & (imgWidth - rightMargin) & "' y2='" & (topMargin + chartHeight * 0.75) & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                    "<text x='" & (leftMargin - 5) & "' y='" & (topMargin + chartHeight * 0.75 + 4) & "' text-anchor='end' font-size='10' fill='#999'>25</text>" &
+                    "<line x1='" & leftMargin & "' y1='" & (imgHeight - bottomMargin) & "' x2='" & (imgWidth - rightMargin) & "' y2='" & (imgHeight - bottomMargin) & "' stroke='#e5e7eb' stroke-width='2'/>" &
+                    "<text x='" & (leftMargin - 5) & "' y='" & (imgHeight - bottomMargin + 4) & "' text-anchor='end' font-size='10' fill='#999'>0</text>" &
+                    Concat(
+                        data,
+                        With(
+                            {
+                                x: leftMargin + (idx - 1) * barSpacing + (barSpacing - barWidth) / 2,
+                                barHeight: (value / maxValue) * chartHeight
+                            },
+                            With(
+                                {
+                                    y: imgHeight - bottomMargin - barHeight,
+                                    labelY: imgHeight - bottomMargin / 3
+                                },
+                                "<rect x='" & x & "' y='" & y & "' width='" & barWidth & "' height='" & barHeight & "' fill='" & color & "' mask='url(#verticalMask)' rx='4'/>" &
+                                "<text x='" & (x + barWidth / 2) & "' y='" & labelY & "' text-anchor='middle' font-size='11' fill='#666'>" & label & "</text>"
+                            )
+                        )
+                    ) &
+                    "</svg>"
+                )
             )
         )
     )
