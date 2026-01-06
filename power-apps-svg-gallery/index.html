@@ -141,6 +141,9 @@
             <button class="category-tag px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200" data-category="indicator">
                 インジケーター
             </button>
+            <button class="category-tag px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200" data-category="animation">
+                アニメーション
+            </button>
         </div>
 
         <!-- 件数表示 -->
@@ -207,7 +210,7 @@
                 <!-- Power Apps用コード -->
                 <div>
                     <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Power Apps用コード</h3>
+                        <h3 class="text-sm font-semibold text-gray-700 tracking-wide">Power Apps用コード</h3>
                         <button onclick="copyPowerAppsCode()" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2">
                             <span class="material-symbols-rounded text-[18px]">content_copy</span>
                             コピー
@@ -880,7 +883,7 @@
             {
                 id: 36,
                 title: "横棒グラフアニメーション",
-                category: "animation",
+                category: ["graph", "animation"],
                 description: "左から右に伸びる横棒グラフ。データの変化を動的に表現。",
                 svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" width="300" height="150">
   <defs>
@@ -911,7 +914,7 @@
             {
                 id: 37,
                 title: "縦棒グラフアニメーション",
-                category: "animation",
+                category: ["graph", "animation"],
                 description: "下から上に伸びる縦棒グラフ。進捗や売上の推移を視覚化。",
                 svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" width="300" height="200">
   <defs>
@@ -944,7 +947,7 @@
             {
                 id: 38,
                 title: "面グラフアニメーション",
-                category: "animation",
+                category: ["graph", "animation"],
                 description: "左から右に表示される面グラフ。時系列データの推移を動的に表現。",
                 svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 140" width="280" height="140">
   <defs>
@@ -988,7 +991,7 @@
             {
                 id: 40,
                 title: "折れ線グラフアニメーション",
-                category: "animation",
+                category: ["graph", "animation"],
                 description: "線が徐々に描画される折れ線グラフ。トレンドの変化を動的に表示。",
                 svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" width="300" height="150">
   <defs>
@@ -1062,7 +1065,8 @@
 
             // フィルタリング
             let filteredSamples = svgSamples.filter(sample => {
-                const matchesCategory = currentCategory === 'all' || sample.category === currentCategory;
+                const categories = Array.isArray(sample.category) ? sample.category : [sample.category];
+                const matchesCategory = currentCategory === 'all' || categories.includes(currentCategory);
                 const matchesSearch = sample.title.toLowerCase().includes(currentSearchTerm) ||
                                      sample.description.toLowerCase().includes(currentSearchTerm);
                 return matchesCategory && matchesSearch;
@@ -1107,9 +1111,12 @@
                 'graph': 'グラフ',
                 'card': 'KPIカード',
                 'dashboard': 'ダッシュボード',
-                'indicator': 'インジケーター'
+                'indicator': 'インジケーター',
+                'animation': 'アニメーション'
             };
-            return labels[category] || category;
+            // 配列の場合は最初のカテゴリを使用
+            const cat = Array.isArray(category) ? category[0] : category;
+            return labels[cat] || cat;
         }
 
         // モーダルを開く
