@@ -2848,12 +2848,9 @@
                         gridValue: Round(maxValue * level / 100, 0)
                     },
                     "<line x1='" & gridX & "' y1='5' x2='" & gridX & "' y2='" & (imgHeight - 5) & "' stroke='#e5e7eb' stroke-width='1'/>" &
-                    If(level = 100,
-                        "<text x='" & (gridX - 5) & "' y='9' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>",
-                        If(level > 0,
-                            "<text x='" & gridX & "' y='" & (imgHeight - 2) & "' text-anchor='middle' font-size='10' fill='#999'>" & gridValue & "</text>",
-                            ""
-                        )
+                    If(level >= 0,
+                        "<text x='" & gridX & "' y='" & (imgHeight - 2) & "' text-anchor='middle' font-size='10' fill='#999'>" & gridValue & "</text>",
+                        ""
                     )
                 )
             ) &
