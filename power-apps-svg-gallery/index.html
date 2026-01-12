@@ -308,6 +308,42 @@
 </svg>`
             },
             {
+                id: 41,
+                title: "複数折れ線グラフ",
+                category: "graph",
+                description: "複数のデータ系列を比較できる折れ線グラフ。各系列を異なる色で表示。",
+                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" width="300" height="150">
+  <line x1="30" y1="15" x2="280" y2="15" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="25" y="27" text-anchor="end" font-size="10" fill="#999">100</text>
+  <line x1="30" y1="43.75" x2="280" y2="43.75" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="25" y="47.75" text-anchor="end" font-size="10" fill="#999">75</text>
+  <line x1="30" y1="72.5" x2="280" y2="72.5" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="25" y="76.5" text-anchor="end" font-size="10" fill="#999">50</text>
+  <line x1="30" y1="101.25" x2="280" y2="101.25" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="25" y="105.25" text-anchor="end" font-size="10" fill="#999">25</text>
+  <line x1="30" y1="130" x2="280" y2="130" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="25" y="134" text-anchor="end" font-size="10" fill="#999">0</text>
+  <polyline points="30,41.45 92.5,58.7 155,77.1 217.5,67.9 280,103.55" fill="none" stroke="#667eea" stroke-width="2.5"/>
+  <circle cx="30" cy="41.45" r="4" fill="#667eea"/>
+  <circle cx="92.5" cy="58.7" r="4" fill="#667eea"/>
+  <circle cx="155" cy="77.1" r="4" fill="#667eea"/>
+  <circle cx="217.5" cy="67.9" r="4" fill="#667eea"/>
+  <circle cx="280" cy="103.55" r="4" fill="#667eea"/>
+  <polyline points="30,88.55 92.5,103.55 155,58.7 217.5,88.55 280,72.5" fill="none" stroke="#f093fb" stroke-width="2.5"/>
+  <circle cx="30" cy="88.55" r="4" fill="#f093fb"/>
+  <circle cx="92.5" cy="103.55" r="4" fill="#f093fb"/>
+  <circle cx="155" cy="58.7" r="4" fill="#f093fb"/>
+  <circle cx="217.5" cy="88.55" r="4" fill="#f093fb"/>
+  <circle cx="280" cy="72.5" r="4" fill="#f093fb"/>
+  <polyline points="30,58.7 92.5,41.45 155,88.55 217.5,103.55 280,58.7" fill="none" stroke="#4ade80" stroke-width="2.5"/>
+  <circle cx="30" cy="58.7" r="4" fill="#4ade80"/>
+  <circle cx="92.5" cy="41.45" r="4" fill="#4ade80"/>
+  <circle cx="155" cy="88.55" r="4" fill="#4ade80"/>
+  <circle cx="217.5" cy="103.55" r="4" fill="#4ade80"/>
+  <circle cx="280" cy="58.7" r="4" fill="#4ade80"/>
+</svg>`
+            },
+            {
                 id: 5,
                 title: "ステータスカード",
                 category: "card",
@@ -392,6 +428,44 @@
   <circle cx="193.3" cy="75" r="3" fill="#10b981"/>
   <circle cx="236.7" cy="63" r="3" fill="#10b981"/>
   <circle cx="280" cy="85.5" r="3" fill="#10b981"/>
+</svg>`
+            },
+            {
+                id: 42,
+                title: "複数面グラフ",
+                category: "graph",
+                description: "複数のデータ系列を面で表現。各系列を異なる色とグラデーションで重ねて表示。",
+                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" width="300" height="150">
+  <defs>
+    <linearGradient id="areaGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#667eea;stop-opacity:0.05" />
+    </linearGradient>
+    <linearGradient id="areaGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f093fb;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#f093fb;stop-opacity:0.05" />
+    </linearGradient>
+    <linearGradient id="areaGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4ade80;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#4ade80;stop-opacity:0.05" />
+    </linearGradient>
+  </defs>
+  <line x1="20" y1="0" x2="280" y2="0" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="15" y="12" text-anchor="end" font-size="10" fill="#999">100</text>
+  <line x1="20" y1="33.75" x2="280" y2="33.75" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="15" y="37.75" text-anchor="end" font-size="10" fill="#999">75</text>
+  <line x1="20" y1="67.5" x2="280" y2="67.5" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="15" y="71.5" text-anchor="end" font-size="10" fill="#999">50</text>
+  <line x1="20" y1="101.25" x2="280" y2="101.25" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="15" y="105.25" text-anchor="end" font-size="10" fill="#999">25</text>
+  <line x1="20" y1="135" x2="280" y2="135" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="15" y="139" text-anchor="end" font-size="10" fill="#999">0</text>
+  <polygon points="20,81 63.3,101.25 106.7,54 150,81 193.3,27 236.7,67.5 280,54 280,135 20,135" fill="url(#areaGrad3)"/>
+  <polyline points="20,81 63.3,101.25 106.7,54 150,81 193.3,27 236.7,67.5 280,54" fill="none" stroke="#4ade80" stroke-width="2"/>
+  <polygon points="20,67.5 63.3,81 106.7,40.5 150,67.5 193.3,94.5 236.7,108 280,81 280,135 20,135" fill="url(#areaGrad2)"/>
+  <polyline points="20,67.5 63.3,81 106.7,40.5 150,67.5 193.3,94.5 236.7,108 280,81" fill="none" stroke="#f093fb" stroke-width="2"/>
+  <polygon points="20,13.5 63.3,34.5 106.7,55.5 150,45 193.3,75 236.7,63 280,85.5 280,135 20,135" fill="url(#areaGrad1)"/>
+  <polyline points="20,13.5 63.3,34.5 106.7,55.5 150,45 193.3,75 236.7,63 280,85.5" fill="none" stroke="#667eea" stroke-width="2"/>
 </svg>`
             },
             {
@@ -1018,42 +1092,6 @@
   <circle cx="180" cy="40" r="4" fill="#667eea" mask="url(#lineMask)"/>
   <circle cx="230" cy="55" r="4" fill="#667eea" mask="url(#lineMask)"/>
   <circle cx="280" cy="35" r="4" fill="#667eea" mask="url(#lineMask)"/>
-</svg>`
-            },
-            {
-                id: 41,
-                title: "複数折れ線グラフ",
-                category: "graph",
-                description: "複数のデータ系列を比較できる折れ線グラフ。各系列を異なる色で表示。",
-                svgCode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" width="300" height="150">
-  <line x1="30" y1="15" x2="280" y2="15" stroke="#e5e7eb" stroke-width="1"/>
-  <text x="25" y="27" text-anchor="end" font-size="10" fill="#999">100</text>
-  <line x1="30" y1="43.75" x2="280" y2="43.75" stroke="#e5e7eb" stroke-width="1"/>
-  <text x="25" y="47.75" text-anchor="end" font-size="10" fill="#999">75</text>
-  <line x1="30" y1="72.5" x2="280" y2="72.5" stroke="#e5e7eb" stroke-width="1"/>
-  <text x="25" y="76.5" text-anchor="end" font-size="10" fill="#999">50</text>
-  <line x1="30" y1="101.25" x2="280" y2="101.25" stroke="#e5e7eb" stroke-width="1"/>
-  <text x="25" y="105.25" text-anchor="end" font-size="10" fill="#999">25</text>
-  <line x1="30" y1="130" x2="280" y2="130" stroke="#e5e7eb" stroke-width="1"/>
-  <text x="25" y="134" text-anchor="end" font-size="10" fill="#999">0</text>
-  <polyline points="30,41.45 92.5,58.7 155,77.1 217.5,67.9 280,103.55" fill="none" stroke="#667eea" stroke-width="2.5"/>
-  <circle cx="30" cy="41.45" r="4" fill="#667eea"/>
-  <circle cx="92.5" cy="58.7" r="4" fill="#667eea"/>
-  <circle cx="155" cy="77.1" r="4" fill="#667eea"/>
-  <circle cx="217.5" cy="67.9" r="4" fill="#667eea"/>
-  <circle cx="280" cy="103.55" r="4" fill="#667eea"/>
-  <polyline points="30,88.55 92.5,103.55 155,58.7 217.5,88.55 280,72.5" fill="none" stroke="#f093fb" stroke-width="2.5"/>
-  <circle cx="30" cy="88.55" r="4" fill="#f093fb"/>
-  <circle cx="92.5" cy="103.55" r="4" fill="#f093fb"/>
-  <circle cx="155" cy="58.7" r="4" fill="#f093fb"/>
-  <circle cx="217.5" cy="88.55" r="4" fill="#f093fb"/>
-  <circle cx="280" cy="72.5" r="4" fill="#f093fb"/>
-  <polyline points="30,58.7 92.5,41.45 155,88.55 217.5,103.55 280,58.7" fill="none" stroke="#4ade80" stroke-width="2.5"/>
-  <circle cx="30" cy="58.7" r="4" fill="#4ade80"/>
-  <circle cx="92.5" cy="41.45" r="4" fill="#4ade80"/>
-  <circle cx="155" cy="88.55" r="4" fill="#4ade80"/>
-  <circle cx="217.5" cy="103.55" r="4" fill="#4ade80"/>
-  <circle cx="280" cy="58.7" r="4" fill="#4ade80"/>
 </svg>`
             }
         ];
@@ -3245,6 +3283,91 @@
                                     },
                                     "<circle cx='" & x & "' cy='" & y & "' r='4' fill='" & color & "'/>"
                                 )
+                            )
+                        ) &
+                        "</svg>"
+                    )
+                )
+            )
+        )
+    )
+)`;
+
+                case 42: // 複数面グラフ
+                    return `With(
+    {
+        imgWidth: Self.Width,
+        imgHeight: Self.Height,
+        areas: Table(
+            {name: "Product A", color: "#667eea", gradId: "areaGrad1", data: Table({idx: 1, value: 90}, {idx: 2, value: 75}, {idx: 3, value: 65}, {idx: 4, value: 70}, {idx: 5, value: 55}, {idx: 6, value: 60}, {idx: 7, value: 45})},
+            {name: "Product B", color: "#f093fb", gradId: "areaGrad2", data: Table({idx: 1, value: 55}, {idx: 2, value: 50}, {idx: 3, value: 75}, {idx: 4, value: 55}, {idx: 5, value: 40}, {idx: 6, value: 30}, {idx: 7, value: 50})},
+            {name: "Product C", color: "#4ade80", gradId: "areaGrad3", data: Table({idx: 1, value: 50}, {idx: 2, value: 35}, {idx: 3, value: 65}, {idx: 4, value: 50}, {idx: 5, value: 85}, {idx: 6, value: 55}, {idx: 7, value: 65})}
+        ),
+        gridLines: Table({level: 0}, {level: 25}, {level: 50}, {level: 75}, {level: 100})
+    },
+    With(
+        {
+            leftMargin: imgWidth * 0.067,
+            rightMargin: imgWidth * 0.067,
+            topMargin: imgHeight * 0,
+            bottomMargin: imgHeight * 0.1,
+            dataCount: CountRows(First(areas).data)
+        },
+        With(
+            {
+                chartWidth: imgWidth - leftMargin - rightMargin,
+                chartHeight: imgHeight - topMargin - bottomMargin,
+                dataMaxValue: Max(ForAll(areas, Max(data, value)), Value)
+            },
+            With(
+                {
+                    stepSize: If(dataMaxValue <= 10, 5, If(dataMaxValue <= 50, 10, If(dataMaxValue <= 100, 25, 50)))
+                },
+                With(
+                    {
+                        maxValue: Round(dataMaxValue + stepSize, If(stepSize >= 50, -2, If(stepSize >= 10, -1, 0)))
+                    },
+                    "data:image/svg+xml," & EncodeUrl(
+                        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & imgWidth & " " & imgHeight & "' width='" & imgWidth & "' height='" & imgHeight & "'>" &
+                        "<defs>" &
+                        Concat(
+                            areas,
+                            "<linearGradient id='" & gradId & "' x1='0%' y1='0%' x2='0%' y2='100%'>" &
+                            "<stop offset='0%' style='stop-color:" & color & ";stop-opacity:0.4'/>" &
+                            "<stop offset='100%' style='stop-color:" & color & ";stop-opacity:0.05'/>" &
+                            "</linearGradient>"
+                        ) &
+                        "</defs>" &
+                        Concat(
+                            gridLines,
+                            With(
+                                {
+                                    gridY: topMargin + chartHeight - (level / 100 * chartHeight),
+                                    gridValue: Round(maxValue * level / 100, 0)
+                                },
+                                "<line x1='" & leftMargin & "' y1='" & gridY & "' x2='" & (imgWidth - rightMargin) & "' y2='" & gridY & "' stroke='#e5e7eb' stroke-width='1'/>" &
+                                "<text x='" & (leftMargin - 5) & "' y='" & (If(level = 100, gridY + 12, gridY + 4)) & "' text-anchor='end' font-size='10' fill='#999'>" & gridValue & "</text>"
+                            )
+                        ) &
+                        Concat(
+                            areas,
+                            With(
+                                {
+                                    points: Concat(
+                                        data,
+                                        With(
+                                            {
+                                                x: leftMargin + (idx - 1) * (chartWidth / (dataCount - 1)),
+                                                y: topMargin + chartHeight - (value / maxValue * chartHeight)
+                                            },
+                                            x & "," & y
+                                        ),
+                                        " "
+                                    ),
+                                    bottomY: imgHeight - bottomMargin
+                                },
+                                "<polygon points='" & points & " " & (imgWidth - rightMargin) & "," & bottomY & " " & leftMargin & "," & bottomY & "' fill='url(#" & gradId & ")'/>" &
+                                "<polyline points='" & points & "' fill='none' stroke='" & color & "' stroke-width='2'/>"
                             )
                         ) &
                         "</svg>"
